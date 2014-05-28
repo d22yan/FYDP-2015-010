@@ -34,6 +34,8 @@ Current plan is to make use of the following technologies in the client stack:
     [implementations](https://github.com/telehash/node-telehash) for the "back-end" AngularJS 
     [service](https://docs.angularjs.org/guide/services).
 
+* [PhoneGap/Apache Cordova](http://phonegap.com/) to port the app to mobile platforms.
+
 Development Workflow
 --------------------
 
