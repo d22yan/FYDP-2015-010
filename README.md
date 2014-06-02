@@ -70,8 +70,16 @@ Development Workflow
     ```
 
     This installs the local dependencies for the repository listed in package.json.
+    
+6. Execute the following command:
+    
+    ```CLI
+    bower install
+    ```
 
-6. Now you can run the basic grunt development server using:
+    This installs the client-side dependencies for the web app.
+
+7. Now you can run the basic grunt development server using:
     
     ```CLI
     grunt serve
@@ -80,7 +88,7 @@ Development Workflow
     This should open a new Chrome tab pointing to the address of the dev server. Grunt's livereload feature will 
         automatically reload the page when it detects any file changes, which is pretty convenient.
 
-7. You can also run tests using:
+8. You can also run tests using:
 
     ```CLI
     grunt test
@@ -89,7 +97,7 @@ Development Workflow
     At the moment the tests are all trivial tests that don't check for anything important. But that should change once 
         we start developing.
         
-8. Lastly decide on an IDE to use. I recommend one of the following:
+9. Lastly decide on an IDE to use. I recommend one of the following:
     
     * [WebStorm](http://www.jetbrains.com/webstorm/). This is what I use. 30 day trial and $30 to buy for the Academic 
         Licence. Has code analytics, refactoring support, full-featured JS debugger, and a huge repository of plugins.
