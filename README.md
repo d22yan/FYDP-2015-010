@@ -103,6 +103,10 @@ Development Workflow
         Licence. Has code analytics, refactoring support, full-featured JS debugger, and a huge repository of plugins.
     * [Sublime Text](http://www.sublimetext.com/). Simple text editor if you don't want/need the heavyweight stuff.
         Unlimited free trial, $70 to buy.
+    * [Brackets](http://brackets.io/). Recently discovered this one. Free open-source IDE built specifically for web 
+        development. Has some very cool features like live HTML updates, inline external style/code editor, and even 
+        an elegant JS debugger/profiler. I'm experimenting with it right now and it's been a pleasure to work with so 
+        far.
 
 Let me know if you encounter any problems with any of the above steps and I can help you troubleshoot and update this 
     guide with additional information if necessary.
