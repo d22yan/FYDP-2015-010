@@ -32,7 +32,10 @@ module.exports = function (grunt) {
         tasks: ['bowerInstall']
       },
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        files: [
+          '<%= yeoman.app %>/scripts/{,*/}*.js',
+          '!<%= yeoman.app %>/scripts/services/communication.js'
+        ],
         tasks: ['newer:jshint:all'],
         options: {
           livereload: true
@@ -103,7 +106,8 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/scripts/{,*/}*.js',
+        '!<%= yeoman.app %>/scripts/services/communication.js'
       ],
       test: {
         options: {
@@ -345,6 +349,14 @@ module.exports = function (grunt) {
       dev: {
         path: 'http://127.0.0.1:9000'
       }
+    },
+
+    // Build browserified version of communication service containing require('telehash')
+    browserify: {
+      communication: {
+        src: [ 'app/scripts/services/communication.src.js' ],
+        dest: 'app/scripts/services/communication.js'
+      }
     }
   });
 
@@ -357,6 +369,8 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'bowerInstall',
+      'browserify:communication',
+      'newer:jshint',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -372,6 +386,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'browserify:communication',
+    'newer:jshint',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
@@ -381,6 +397,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'bowerInstall',
+    'browserify:communication',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
@@ -400,4 +417,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  grunt.loadNpmTasks('grunt-browserify');
 };

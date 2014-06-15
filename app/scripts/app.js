@@ -5,8 +5,12 @@ angular
     'ngCookies',
     'ngResource',
     'ngSanitize',
-    'ngRoute'
+    'ngRoute',
+    'LocalStorageModule'
   ])
+  .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    localStorageServiceProvider.setPrefix('rtmsg');
+  }])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
