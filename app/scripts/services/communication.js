@@ -9,12 +9,11 @@
  * Service in the rtmsgApp. Built into communication.js with telehash library using grunt-browserify task
  */
 angular.module('rtmsgApp')
-  .service('Communication', function Communication($q) {
+  .service('Communication', function Communication($q, $log) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var telehash = require('telehash');
 
-    // TODO: Should abstract telehash implementation details
     this.initialize = function() {
       return (function() {
         var deferred = $q.defer();
@@ -35,7 +34,7 @@ angular.module('rtmsgApp')
 
           return deferred.promise;
         }, function (error) {
-          return console.error('failed to generate user keypair. msg: ' + error);
+          return $log.error('failed to generate user keypair. msg: ' + error);
         }
       );
     };
