@@ -10,17 +10,13 @@
 angular.module('rtmsgApp')
   .controller('UserCtrl', function ($scope, Communication) {
     $scope.createUser = function() {
-      Communication.initialize({}, function (error, keypair) {
-        if(error) { return console.error('failed to generate user keypair'); }
+      return Communication.initialize().then(function (session) {
+        console.dir(session);
+        $scope.userId = session.hashname;
 
-        console.dir(keypair.id);
-
-        Communication.initialize({id: keypair.id}, function (error, user) {
-          if(error) { return console.error('failed to generate user hashname'); }
-
-          console.dir(user.hashname);
-          $scope.id = user.hashname;
-        });
+        return session;
+      }, function (error) {
+        return console.error('failed to create new user. msg: ' + error);
       });
     };
   });

@@ -347,7 +347,8 @@ module.exports = function (grunt) {
     // Open in custom browser
     open: {
       dev: {
-        path: 'http://127.0.0.1:9000'
+        path: 'http://127.0.0.1:9000',
+        app: 'Chrome'
       }
     },
 

@@ -11,8 +11,9 @@ describe('Service: Communication', function () {
     Communication = _Communication_;
   }));
 
-  it('should do something', function () {
-
+  it('should return session variable with expected parameters when initialized', function () {
+    Communication.initialize().then(function (session) {
+      expect(session.hashname).not.toBe(null);
+    });
   });
-
 });
