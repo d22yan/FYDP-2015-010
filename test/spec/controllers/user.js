@@ -18,7 +18,7 @@ describe('Controller: UserCtrl', function () {
 
   it('should attach user id to scope when creating new user', function (done) {
     scope.createUser().then(function () {
-      expect(scope.id).not.toBe(null);
+      expect(scope.user.id).not.toBe(null);
     });
 
     scope.$digest();

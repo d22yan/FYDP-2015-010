@@ -9,55 +9,43 @@
  * Service in the rtmsgApp. Built into communication.js with telehash library using grunt-browserify task
  */
 angular.module('rtmsgApp')
-  .service('Communication', function Communication($q, $log, Storage) {
+  .service('Communication', function Communication($q, $log) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var telehash = require('telehash');
 
     this.initialize = function() {
-      var keypair = Storage.read('keypair');
+      //generate new user
+      var deferred = $q.defer();
 
-      //TODO: refactor promise conversion into reusable function
-      if (keypair) {
-        //initialize session with existing keypair
-        var deferred = $q.defer();
+      telehash.init({}, function (error, newUser) {
+        if (error) {
+          deferred.reject(error);
+        } else {
+          var user = {
+            id: newUser.hashname,
+            keypair: newUser.id,
+            name: 'Anonymous'
+          };
+          $log.info(user);
 
-        telehash.init({id: keypair}, function (error, session) {
-          if (error) { deferred.reject(error); }
-          else { deferred.resolve(session); }
-        });
+          deferred.resolve(user);
+        }
+      });
 
-        return deferred.promise;
-      } else {
-        return (function() {
-          //generate new keypair
-          var deferred = $q.defer();
+      return deferred.promise;
+    };
 
-          telehash.init({}, function (error, self) {
-            if (error) { deferred.reject(error); }
-            else { deferred.resolve(self); }
-          });
+    this.connect = function(user) {
+      //initialize session with existing user
+      var deferred = $q.defer();
 
-          return deferred.promise;
-        }) ().then(function (self) {
-            //initialize session with new keypair and save to storage
-            Storage.save('keypair', self.id);
+      telehash.init({id: user.keypair}, function (error, newSession) {
+        if (error) { deferred.reject(error); }
+        else { deferred.resolve(newSession); }
+      });
 
-            var deferred = $q.defer();
-
-            telehash.init({id: self.id}, function (error, session) {
-              if (error) { deferred.reject(error); }
-              else { deferred.resolve(session); }
-            });
-
-            return deferred.promise;
-          }, function (error) {
-            return $log.error('failed to generate user keypair. msg: ' + error);
-          }
-        );
-      }
-
-
+      return deferred.promise;
     };
   });
 },{"telehash":39}],2:[function(require,module,exports){
