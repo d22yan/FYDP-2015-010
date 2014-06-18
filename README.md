@@ -39,7 +39,8 @@ Current plan is to make use of the following technologies in the client stack:
     synchronization between clients.
 
 * [angular-local-storage](https://github.com/grevory/angular-local-storage) for storing user & contacts data locally, 
-    [Google Drive] API for storing data to be synchronized across multiple devices.
+    [Google Drive API](https://developers.google.com/drive/) for storing data to be synchronized across multiple 
+    devices.
 
 * [sjcl](https://github.com/bitwiseshiftleft/sjcl) for client-side password-based data encryption.
 
