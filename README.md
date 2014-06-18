@@ -137,6 +137,7 @@ For now just try to take a look through my code and the AngularJS docs to get a 
     far. We can meet sometime in the near future to discuss the code and divide work for later stages of the project.
 
 Some learning resources:
+
     * Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
         up on the basics of JS and Angular is always a good idea. 
     * [CodeSchool] has some nice interactive courses on web development in general, and on AngularJS and Javascript.
