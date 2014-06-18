@@ -16,16 +16,7 @@ describe('Controller: UserCtrl', function () {
     });
   }));
 
-  it('should attach user id to scope when creating new user', function (done) {
-    scope.createUser().then(function () {
-      expect(scope.user.id).not.toBe(null);
-    });
-
-    scope.$digest();
-    done();
-  });
-
-  it('should store user id to storage service when creating new user', function () {
-
+  it('should attach a list of awesomeThings to the scope', function () {
+    expect(scope.awesomeThings.length).toBe(3);
   });
 });

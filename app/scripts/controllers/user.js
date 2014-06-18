@@ -8,23 +8,30 @@
  * Controller of the rtmsgApp
  */
 angular.module('rtmsgApp')
-  .controller('UserCtrl', function ($scope, $log, Communication, Storage) {
-    var existingUser = Storage.read('user');
-
-    if (!existingUser) {
-      $scope.user = { name: 'New User' };
-    } else {
-      $scope.user = existingUser;
+  .controller('UserCtrl', function ($scope, $log, Communication, Identity) {
+    if (!Identity.self) {
+      Identity.updateSelf({ name: 'New User' });
     }
+    $scope.user = Identity.self;
 
     $scope.createUser = function() {
-      Communication.initialize().then(saveUser);
+      Communication.initialize().then(function (newUser) {
+        var user = {
+          id: newUser.hashname,
+          keypair: newUser.id,
+          name: $scope.user.name
+        };
+
+        $log.info(user);
+
+        Identity.updateSelf(user);
+        $scope.user = Identity.self;
+      }, function (error) {
+        $log.error(error);
+      });
     };
 
-    function saveUser(user) {
-      $log.info(user);
-      //TODO: investigate databinding bug here
-      $scope.user = user;
-      Storage.save('user', user);
-    }
+    $scope.saveUser = function() {
+      Identity.updateSelf($scope.user);
+    };
   });

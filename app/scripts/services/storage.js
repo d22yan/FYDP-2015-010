@@ -8,7 +8,7 @@
  * Service in the rtmsgApp.
  */
 angular.module('rtmsgApp')
-  .service('Storage', function Storage($q, $log, localStorageService) {
+  .service('Storage', function Storage($log, localStorageService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.save = function (id, data) {
       var result = localStorageService.set(id, data);

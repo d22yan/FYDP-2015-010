@@ -1,11 +1,17 @@
 'use strict';
 
+/**
+ * @ngdoc function
+ * @name rtmsgApp.controller:MessageCtrl
+ * @description
+ * # MessageCtrl
+ * Controller of the rtmsgApp
+ */
 angular.module('rtmsgApp')
   .controller('MessageCtrl', function ($scope) {
-    $scope.messages = [
-      {sender:'lewis', content:'I\'m great'},
-      {sender:'asif', content:'AngularJS is great'},
-      {sender:'danny', content:'HTML5 is great'},
-      {sender:'sang', content:'Bootstrap is great'}
+    $scope.awesomeThings = [
+      'HTML5 Boilerplate',
+      'AngularJS',
+      'Karma'
     ];
   });

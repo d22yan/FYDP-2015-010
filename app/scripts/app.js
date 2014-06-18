@@ -1,11 +1,21 @@
 'use strict';
 
+/**
+ * @ngdoc overview
+ * @name rtmsgApp
+ * @description
+ * # rtmsgApp
+ *
+ * Main module of the application.
+ */
 angular
   .module('rtmsgApp', [
+    'ngAnimate',
     'ngCookies',
     'ngResource',
-    'ngSanitize',
     'ngRoute',
+    'ngSanitize',
+    'ngTouch',
     'LocalStorageModule'
   ])
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){
@@ -16,6 +26,14 @@ angular
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
+      })
+      .when('/about', {
+        templateUrl: 'views/about.html',
+        controller: 'AboutCtrl'
+      })
+      .when('/user', {
+        templateUrl: 'views/user.html',
+        controller: 'UserCtrl'
       })
       .otherwise({
         redirectTo: '/'

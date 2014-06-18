@@ -1,3 +1,15 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+// endbower
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
@@ -6,7 +18,7 @@ body {
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.message-area,
+.marketing,
 .footer {
   padding-left: 15px;
   padding-right: 15px;
@@ -15,13 +27,14 @@ body {
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
 }
 
 /* Custom page footer */
@@ -31,12 +44,6 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
-/* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
 .container-narrow > hr {
   margin: 30px 0;
 }
@@ -45,25 +52,31 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
 }
 
 /* Supporting marketing content */
-.message-area {
+.marketing {
   margin: 40px 0;
-}
-.message-area p + h4 {
-  margin-top: 28px;
+
+  p + h4 {
+    margin-top: 28px;
+  }
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
   /* Remove the padding we set earlier */
   .header,
-  .message-area,
+  .marketing,
   .footer {
     padding-left: 0;
     padding-right: 0;
