@@ -141,8 +141,11 @@ For now just try to take a look through my code and the AngularJS docs to get a 
 
 * Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
     up on the basics of JS and Angular is always a good idea.       
-* [CodeSchool] has some nice interactive courses on web development in general, and on AngularJS and Javascript.
-* Here's a nice article on [Javascript Promises] and their implementation in Angular in the form of the $q service.
+* [CodeSchool](https://www.codeschool.com/) has some nice interactive courses on web development in general, and on 
+    AngularJS and Javascript.
+* Here's a nice article on 
+    [Javascript Promises](http://strongloop.com/strongblog/promises-in-node-js-with-q-an-alternative-to-callbacks/) and 
+    their implementation in Angular in the form of the $q service.
 
 If you come across anything else you found useful for learning, please share it here.
 
