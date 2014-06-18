@@ -137,12 +137,12 @@ For now just try to take a look through my code and the AngularJS docs to get a 
     app. I have only the Telehash user id generation and user info saving/loading from local storage implemented so 
     far. We can meet sometime in the near future to discuss the code and divide work for later stages of the project.
 
-Some learning resources:
+### Learning Resources:
 
-    * Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
-        up on the basics of JS and Angular is always a good idea. 
-    * [CodeSchool] has some nice interactive courses on web development in general, and on AngularJS and Javascript.
-    * Here's a nice article on [Javascript Promises] and their implementation in Angular in the form of the $q service.
+* Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
+    up on the basics of JS and Angular is always a good idea.       
+* [CodeSchool] has some nice interactive courses on web development in general, and on AngularJS and Javascript.
+* Here's a nice article on [Javascript Promises] and their implementation in Angular in the form of the $q service.
 
 If you come across anything else you found useful for learning, please share it here.
 
