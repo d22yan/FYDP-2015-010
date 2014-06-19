@@ -16,7 +16,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'ui.bootstrap',
+    'ngClickSelect'
   ])
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){
     localStorageServiceProvider.setPrefix('rtmsg');

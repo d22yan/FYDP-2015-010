@@ -9,29 +9,23 @@
  */
 angular.module('rtmsgApp')
   .controller('UserCtrl', function ($scope, $log, Communication, Identity) {
-    if (!Identity.self) {
-      Identity.updateSelf({ name: 'New User' });
+    if (!Identity.currentUser) {
+      Identity.updateUser({ name: 'New User' });
     }
-    $scope.user = Identity.self;
+
+    $scope.user = Identity.currentUser;
+
+    $scope.$watch(function() { return Identity.currentUser; }, function() {
+      $scope.user = Identity.currentUser;
+    });
 
     $scope.createUser = function() {
-      Communication.initialize().then(function (newUser) {
-        var user = {
-          id: newUser.hashname,
-          keypair: newUser.id,
-          name: $scope.user.name
-        };
-
-        $log.info(user);
-
-        Identity.updateSelf(user);
-        $scope.user = Identity.self;
-      }, function (error) {
+      Identity.createUser($scope.user).then(null, function (error) {
         $log.error(error);
       });
     };
 
-    $scope.saveUser = function() {
-      Identity.updateSelf($scope.user);
+    $scope.updateUser = function() {
+      Identity.updateUser($scope.user);
     };
   });
