@@ -9,6 +9,10 @@
  */
 angular.module('rtmsgApp')
   .controller('UserCtrl', function ($scope, $log, Communication, Identity) {
+    $scope.accordion = {
+      open: true
+    };
+
     if (!Identity.currentUser) {
       Identity.updateUser({ name: 'New User' });
     }
