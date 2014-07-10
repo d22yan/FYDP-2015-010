@@ -16,7 +16,7 @@ describe('Controller: UserCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  it('should have a scope', function () {
+    expect(scope).to.exist;
   });
 });

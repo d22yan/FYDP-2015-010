@@ -12,7 +12,7 @@ module.exports = function(config) {
     basePath: '../',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -24,6 +24,11 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/angular-local-storage/angular-local-storage.js',
+      'bower_components/angular-snap/angular-snap.js',
+      'bower_components/angular-strap/dist/angular-strap.js',
+      'bower_components/angular-bootstrap/ui-bootstrap.js',
+      'bower_components/ng-click-select/ng-click-select.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
@@ -50,7 +55,11 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       'karma-phantomjs-launcher',
-      'karma-jasmine'
+      'karma-chrome-launcher',
+      'karma-mocha',
+      'karma-chai',
+      'karma-ng-scenario',
+      'karma-ng-html2js-preprocessor'
     ],
 
     // Continuous Integration mode

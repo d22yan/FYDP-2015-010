@@ -12,7 +12,7 @@ describe('Service: Identity', function () {
   }));
 
   it('should do something', function () {
-    expect(!!Identity).toBe(true);
+    expect(!!Identity).to.be.true;
   });
 
 });

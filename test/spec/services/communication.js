@@ -12,7 +12,7 @@ describe('Service: Communication', function () {
   }));
 
   it('should do something', function () {
-    expect(!!Communication).toBe(true);
+    expect(!!Communication).to.be.true;
   });
 
 });
