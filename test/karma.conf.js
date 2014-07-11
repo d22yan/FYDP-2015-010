@@ -29,6 +29,7 @@ module.exports = function(config) {
       'bower_components/angular-strap/dist/angular-strap.js',
       'bower_components/angular-bootstrap/ui-bootstrap.js',
       'bower_components/ng-click-select/ng-click-select.js',
+      'bower_components/angular-underscore-module/angular-underscore-module.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'

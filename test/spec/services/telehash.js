@@ -12,7 +12,7 @@ describe('Service: Telehash', function () {
   }));
 
   it('should do something', function () {
-    expect(!!Telehash).toBe(true);
+    expect(!!Telehash).to.be.true;
   });
 
 });
