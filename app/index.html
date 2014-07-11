@@ -31,23 +31,22 @@
         </accordion>
       </div>
     </div>
-    <div snap-content>
-      <div class="container-fluid">
-        <div class="header">
+    <div snap-content snap-options="{{snapOptions}}">
+      <div id="page-wrap" class="container-fluid">
+        <div class="header bg-primary">
           <span class="btn pull-left" snap-toggle>
-            <i class="icon-light fa fa-users fa-fw"></i>
+            <i class="fa fa-users fa-fw"></i>
           </span>
           <span class="btn pull-right" snap-toggle="right">
-            <i class="icon-light fa fa-bars fa-fw"></i>
+            <i class="fa fa-bars fa-fw"></i>
           </span>
-          <h3 class="text-center">Real-Time Messaging</h3>
+          <h3 class="text-center">Distributed Messaging</h3>
         </div>
 
         <div ng-view=""></div>
-
-        <div class="footer">
-          <p>By Lewis Liu, SangHoon Lee, Danny Yan, Asif Arman</p>
-        </div>
+      </div>
+      <div id="footer" class="bg-primary">
+        <p class="text-center">By Lewis Liu, SangHoon Lee, Danny Yan, Asif Arman</p>
       </div>
     </div>
     <div snap-drawer="right">
@@ -105,6 +104,7 @@
     <script src="bower_components/angular-snap/angular-snap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/sjcl/sjcl.js"></script>
+    <script src="bower_components/angular-underscore-module/angular-underscore-module.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

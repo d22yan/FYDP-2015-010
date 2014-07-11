@@ -4,25 +4,32 @@
        ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
     {{user.name}}
   </accordion-heading>
-  <form class="form-horizontal" role="form">
-    <div class="form-group">
-      <label class="col-xs-4 control-label" for="id">User ID</label>
-      <div class="col-xs-8">
-        <input type="text" class="form-control" id="id" ng-model="user.id" ng-readonly="true" ng-click-select>
+  <div class="user-container">
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="col-xs-2 control-label" for="id">ID</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" id="id" ng-model="user.id" ng-readonly="true" ng-click-select>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-xs-4 control-label" for="name">Name</label>
-      <div class="col-xs-8">
-        <input type="text" class="form-control" id="name" ng-model="user.name">
+      <div class="form-group">
+        <label class="col-xs-2 control-label" for="name">Name</label>
+        <div class="col-xs-10">
+          <input type="text" class="form-control" id="name" ng-model="user.name">
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <div class="col-xs-offset-4 col-xs-8">
-        <button type="submit" class="btn btn-default" ng-click="createUser()" ng-hide="user.keypair">Create User</button>
-        <button type="submit" class="btn btn-default" ng-click="updateUser()" ng-show="user.keypair">Update</button>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-show="user.keypair">Delete User</button>
+        </div>
+        <div class="col-xs-6" ng-hide="user.keypair">
+          <button type="submit" class="btn btn-primary btn-block" ng-click="createUser()">Create User</button>
+        </div>
+        <div class="col-xs-6" ng-show="user.keypair">
+          <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()">Update</button>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </accordion-group>
 

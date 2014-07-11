@@ -20,6 +20,7 @@ angular
     'mgcrea.ngStrap',
     'ui.bootstrap',
     'ngClickSelect',
+    'underscore',
     'snap'
   ])
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){

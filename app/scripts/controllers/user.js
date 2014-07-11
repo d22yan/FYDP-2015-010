@@ -32,4 +32,8 @@ angular.module('rtmsgApp')
     $scope.updateUser = function() {
       Identity.updateUser($scope.user);
     };
+
+    $scope.deleteUser = function() {
+      Identity.deleteUser();
+    };
   });

@@ -4,5 +4,6 @@
        ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
     Contacts
   </accordion-heading>
-  <div class="contact" ng-repeat="contact in contacts">{{contact.name}}</div>
+
+  <a href="#" ng-repeat="contact in contacts" ng-click="contact.openChat()"><div class="contact">{{contact.name}}</div></a>
 </accordion-group>

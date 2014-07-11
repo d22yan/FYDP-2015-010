@@ -30,39 +30,39 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e7e7e7;
-  background-color: #f5f5f5;
-
   /* Make the masthead heading the same height as the navigation */
   h3 {
     margin-top: 0;
     margin-bottom: 0;
     line-height: 1.5em;
     padding-bottom: 0px;
-    color: #777777;
   }
 }
 
 /* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+#footer {
+  height: 30px;
+}
+
+#page-wrap {
+  min-height: 100%;
+  height: auto;
+  margin: 0px auto -30px;
+}
+
+.chat-footer {
+  height: 60px;
+}
+
+.tab-content {
+  min-height: 100%;
+  height: auto;
+  margin: 0px auto -60px;
+
 }
 
 .container-narrow > hr {
   margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
 }
 
 /* Supporting marketing content */
@@ -91,19 +91,25 @@ body {
   }
 }
 
-.icon-light {
-  color: #777777;
-}
-
 .snap-content {
-  background-color: #fcfcfc;
-  box-shadow: 0px 0px 5px #888888;
+  background-color: white;
+  box-shadow: 0px 0px 6px #888888;
 }
 
 .panel-group .panel {
   border-radius: 0px;
 }
 
-.panel-default > .panel-heading {
-  background-color: whitesmoke;
+.panel-body {
+  padding: 0px;
+}
+
+.user-container {
+  padding: 6px;
+}
+
+.contact {
+  box-sizing: border-box;
+  padding: 6px;
+  border-bottom: 1px solid #dddddd;
 }

@@ -1,1 +1,25 @@
-<p>This is the new chat view.</p>
+<tabset>
+  <tab ng-repeat="chat in chats" ng-show="chat.isOpen" active="chat.isActive">
+    <tab-heading>
+      <i class="fa fa-comment fa-fw" ng-show="chat.hasUnread"></i> {{chat.name}}
+      <a href="#" ng-click="chat.closeChat()"><i class="fa fa-times fa-fw"></i></a>
+    </tab-heading>
+    <div class="chat-wrap">
+      <div ng-repeat="message in chat.messages">
+        {{message.author}} said: {{message.content}}
+      </div>
+    </div>
+    <div class="chat-footer">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <div class="col-xs-10">
+            <input type="text" class="form-control" id="message" ng-model="chat.newMessage">
+          </div>
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-success btn-block">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </tab>
+</tabset>
