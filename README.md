@@ -140,7 +140,7 @@ For now just try to take a look through my code and the AngularJS docs to get a 
 ### Learning Resources:
 
 * Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
-    up on the basics of JS and Angular is always a good idea.       
+    up on the basics of JS and Angular is always a good idea. This [one](http://jstherightway.org/) is a great quick reference.
 * [CodeSchool](https://www.codeschool.com/) has some nice interactive courses on web development in general, and on 
     AngularJS and Javascript.
 * Here's a nice article on 
