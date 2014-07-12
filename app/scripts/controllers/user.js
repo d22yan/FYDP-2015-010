@@ -13,20 +13,10 @@ angular.module('rtmsgApp')
       open: true
     };
 
-    if (!Identity.currentUser) {
-      Identity.updateUser({ name: 'New User' });
-    }
-
     $scope.user = Identity.currentUser;
 
-    $scope.$watch(function() { return Identity.currentUser; }, function() {
-      $scope.user = Identity.currentUser;
-    });
-
     $scope.createUser = function() {
-      Identity.createUser($scope.user).then(null, function (error) {
-        $log.error(error);
-      });
+      Identity.createUser($scope.user);
     };
 
     $scope.updateUser = function() {
@@ -38,13 +28,7 @@ angular.module('rtmsgApp')
     };
 
     $scope.connectUser = function() {
-      $log.info('connecting');
-      Communication.connect(Identity.currentUser).then(function (session) {
-        Communication.session = session;
-        $log.info(session);
-      }, function (error) {
-        $log.error(error);
-      });
+      Communication.connect(Identity.currentUser);
     };
 
     $scope.startListening = function() {

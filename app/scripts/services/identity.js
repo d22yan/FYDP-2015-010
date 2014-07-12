@@ -13,13 +13,21 @@ angular.module('rtmsgApp')
 
     this.currentUser = Storage.read('user');
 
+    if (!this.currentUser) {
+      this.updateUser({ name: 'New User' });
+    }
+
+    if(this.currentUser.keypair) {
+      Communication.connect(this.currentUser);
+    }
+
     var open = function() { this.isOpen = true; this.isActive = true; };
     var close = function() { this.isOpen = false; this.isActive = false; };
 
     this.contacts = [
       {id:'5993603b6c6c9ba72075932cf5951cb7ab025149c350f2ce9b57dafefadd4e12', name: 'contact1', isOpen: true, isActive: true, hasUnread: true, openChat: open, closeChat: close, message: ''},
       {id:'904bq87gbq348fbqa3097849432', name: 'contact2', isOpen: false, isActive: false, hasUnread: false, openChat: open, closeChat: close, message: '',
-        messages: [{content: "1", author: "contact2"},{content: "2", author: "contact2"},{content: "3", author: "contact2"},{content: "4", author: "contact2"}]},
+        messages: [{content: '1', author: 'contact2'},{content: '2', author: 'contact2'},{content: '3', author: 'contact2'},{content: '4', author: 'contact2'}]},
       {id:'978432qgb8q37gb4587g43qb987', name: 'contact3', isOpen: true, isActive: false, hasUnread: false, openChat: open, closeChat: close, message: ''}
     ];
 
@@ -30,15 +38,21 @@ angular.module('rtmsgApp')
           keypair: newUser.id,
           name: user.name
         });
-      }.bind(this));
+
+        Communication.connect(newUser);
+      }.bind(this)).then(null, function (error) {
+        $log.error('unable to create user');
+        $log.error(error);
+      });
     };
 
     this.updateUser = function(user) {
-      this.currentUser = user;
+      angular.copy(user, this.currentUser);
+
       return Storage.save('user', user);
-    };
+    }.bind(this);
 
     this.deleteUser = function() {
-      return this.updateUser({name: "New User"});
-    };
+      return this.updateUser({ name: 'New User' });
+    }.bind(this);
   });

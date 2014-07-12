@@ -10,56 +10,67 @@
 angular.module('rtmsgApp')
   .service('Communication', function Communication($q, $log, Telehash) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-    var self = this;
 
     this.session = null;
 
+    //generate new user with id and keypair
     this.initialize = function() {
-      //generate new user
-      var deferred = $q.defer();
+
+      var deferredUser = $q.defer();
 
       Telehash.init({}, function (error, newUser) {
-        if (error) { deferred.reject(error); }
-        else { deferred.resolve(newUser); }
+        if (error) { deferredUser.reject(error); }
+        else { deferredUser.resolve(newUser); }
       });
 
-      return deferred.promise;
+      return deferredUser.promise;
     };
 
+    //connect to network with existing user and start listening for messages
     this.connect = function(user) {
-      //initialize session with existing user
-      var deferred = $q.defer();
+      $log.info('connecting to network');
+      var deferredSession = $q.defer();
 
       Telehash.init({id: user.keypair}, function (error, newSession) {
-        if (error) { deferred.reject(error); }
-        else { deferred.resolve(newSession); }
+        if (error) { deferredSession.reject(error); }
+        else { deferredSession.resolve(newSession); }
       });
 
-      return deferred.promise;
-    };
+      return deferredSession.promise.then(function(newSession) {
+        this.session = newSession;
+        $log.info('new session established');
+        $log.info(this.session);
 
-    this.listen = function() {
-      var channelName = 'rtmsg';
+        var channelName = 'rtmsg';
 
-      function packetHandler (err, packet, channel, callback) {
-        if (err) return $log.error(err);
+        function packetHandler (error, packet, channel, callback) {
+          if (error) return $log.error(error);
 
-        $log.info(packet.js);
+          $log.info(packet.js);
 
-        callback(true);
-      };
+          callback(true);
+        };
 
-      self.session.listen(channelName, packetHandler);
-      $log.info('listening');
-    };
+        $log.info('listening');
+        this.session.listen(channelName, packetHandler);
+      }.bind(this), function (error) {
+        $log.error('unable to connect to network');
+        $log.error(error);
+      }).then(null, function(error) {
+        $log.error('unable to start listening');
+        $log.error(error);
+      });
+    }.bind(this);
 
     this.send = function (id, message) {
-      function packetHandler (err, packet, channel, callback) {
-        if (err) return $log.error(err);
+      if (!this.session) return $log.error('cannot send message: not connected to network');
+
+      function packetHandler (error, packet, channel, callback) {
+        if (error) return $log.error(error);
 
         $log.info(packet.js);
       };
 
-      self.session.start(id, 'rtmsg', {js: {msg: message}}, packetHandler);
-    };
+      this.session.start(id, 'rtmsg', {js: {msg: message}}, packetHandler);
+    }.bind(this);
   });
