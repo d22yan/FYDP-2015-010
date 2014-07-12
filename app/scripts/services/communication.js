@@ -69,6 +69,8 @@ angular.module('rtmsgApp')
         if (error) return $log.error(error);
 
         $log.info(packet.js);
+
+        callback(true);
       };
 
       this.session.start(id, 'rtmsg', {js: {msg: message}}, packetHandler);
