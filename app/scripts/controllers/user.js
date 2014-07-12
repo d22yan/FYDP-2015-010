@@ -36,4 +36,18 @@ angular.module('rtmsgApp')
     $scope.deleteUser = function() {
       Identity.deleteUser();
     };
+
+    $scope.connectUser = function() {
+      $log.info('connecting');
+      Communication.connect(Identity.currentUser).then(function (session) {
+        Communication.session = session;
+        $log.info(session);
+      }, function (error) {
+        $log.error(error);
+      });
+    };
+
+    $scope.startListening = function() {
+      Communication.listen();
+    };
   });

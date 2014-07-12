@@ -29,6 +29,14 @@
           <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()">Update</button>
         </div>
       </div>
+      <div class="form-group">
+        <div class="col-xs-6">
+          <button type="submit" class="btn btn-primary btn-block" ng-click="connectUser()" ng-show="user.keypair">Connect</button>
+        </div>
+        <div class="col-xs-6">
+          <button type="submit" class="btn btn-primary btn-block" ng-click="startListening()" ng-show="user.keypair">Listen</button>
+        </div>
+      </div>
     </form>
   </div>
 </accordion-group>

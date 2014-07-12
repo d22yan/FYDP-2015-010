@@ -8,8 +8,11 @@
  * Service in the rtmsgApp. Built into communication.js with telehash library using grunt-browserify task
  */
 angular.module('rtmsgApp')
-  .service('Communication', function Communication($q, Telehash) {
+  .service('Communication', function Communication($q, $log, Telehash) {
     // AngularJS will instantiate a singleton by calling "new" on this function
+    var self = this;
+
+    this.session = null;
 
     this.initialize = function() {
       //generate new user
@@ -33,5 +36,30 @@ angular.module('rtmsgApp')
       });
 
       return deferred.promise;
+    };
+
+    this.listen = function() {
+      var channelName = 'rtmsg';
+
+      function packetHandler (err, packet, channel, callback) {
+        if (err) return $log.error(err);
+
+        $log.info(packet.js);
+
+        callback(true);
+      };
+
+      self.session.listen(channelName, packetHandler);
+      $log.info('listening');
+    };
+
+    this.send = function (id, message) {
+      function packetHandler (err, packet, channel, callback) {
+        if (err) return $log.error(err);
+
+        $log.info(packet.js);
+      };
+
+      self.session.start(id, 'rtmsg', {js: {msg: message}}, packetHandler);
     };
   });

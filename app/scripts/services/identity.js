@@ -17,10 +17,10 @@ angular.module('rtmsgApp')
     var close = function() { this.isOpen = false; this.isActive = false; };
 
     this.contacts = [
-      {id:'s9hqn489g7hb43q89r7bg8gq34t', name: 'contact1', isOpen: true, isActive: true, hasUnread: true, openChat: open, closeChat: close},
-      {id:'904bq87gbq348fbqa3097849432', name: 'contact2', isOpen: false, isActive: false, hasUnread: false, openChat: open, closeChat: close,
+      {id:'5993603b6c6c9ba72075932cf5951cb7ab025149c350f2ce9b57dafefadd4e12', name: 'contact1', isOpen: true, isActive: true, hasUnread: true, openChat: open, closeChat: close, message: ''},
+      {id:'904bq87gbq348fbqa3097849432', name: 'contact2', isOpen: false, isActive: false, hasUnread: false, openChat: open, closeChat: close, message: '',
         messages: [{content: "1", author: "contact2"},{content: "2", author: "contact2"},{content: "3", author: "contact2"},{content: "4", author: "contact2"}]},
-      {id:'978432qgb8q37gb4587g43qb987', name: 'contact3', isOpen: true, isActive: false, hasUnread: false, openChat: open, closeChat: close}
+      {id:'978432qgb8q37gb4587g43qb987', name: 'contact3', isOpen: true, isActive: false, hasUnread: false, openChat: open, closeChat: close, message: ''}
     ];
 
     this.createUser = function(user) {
