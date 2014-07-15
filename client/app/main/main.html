@@ -1,0 +1,29 @@
+<div snap-drawer>
+  <div class="container-fluid">
+    <accordion>
+      <div ng-include src="'app/user/user.html'" ng-controller="UserCtrl"></div>
+      <div ng-include src="'app/contact/contact.html'" ng-controller="ContactCtrl"></div>
+    </accordion>
+  </div>
+</div>
+<div snap-content snap-options="{{snapOptions}}">
+  <div id="page-wrap" class="container-fluid">
+    <div class="header bg-primary">
+          <span class="btn pull-left" snap-toggle>
+            <i class="fa fa-users fa-fw"></i>
+          </span>
+          <span class="btn pull-right" snap-toggle="right">
+            <i class="fa fa-bars fa-fw"></i>
+          </span>
+      <h3 class="text-center">Distributed Messaging</h3>
+    </div>
+
+    <div ng-include src="'app/chat/chat.html'" ng-controller="ChatCtrl"></div>
+  </div>
+  <div id="footer" class="bg-primary">
+    <p class="text-center">By Lewis Liu, SangHoon Lee, Danny Yan, Asif Arman</p>
+  </div>
+</div>
+<div snap-drawer="right">
+  <div ng-include src="'app/option/option.html'" ng-controller="OptionCtrl"></div>
+</div>
