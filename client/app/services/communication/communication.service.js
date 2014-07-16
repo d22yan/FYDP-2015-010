@@ -5,9 +5,7 @@ angular.module('dtmsgApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
 
-    this.channels = Storage.read('channels');
-
-    this.newChannelName = function (id1, id2) {
+    this.createChannelName = function (id1, id2) {
       var channelName = id1 < id2 ? id1 + id2 : id2 + id1;
       return 'dtmsg-' + channelName;
     };
@@ -42,6 +40,7 @@ angular.module('dtmsgApp')
 
         var channelName = 'dtmsg-invite';
 
+        //handles new invites
         function packetHandler (error, packet, channel, callback) {
           if (error) return $log.error(error);
 
@@ -50,10 +49,11 @@ angular.module('dtmsgApp')
           callback(true);
         };
 
+        //listen for new invites
         this.session.listen(channelName, packetHandler);
 
         //verification by sending empty message to always-on seed
-        this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
+        //this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
 
         $log.info('listening');
       }.bind(this), function (error) {
@@ -64,6 +64,24 @@ angular.module('dtmsgApp')
         $log.error(error);
       });
     }.bind(this);
+
+    this.listen = function (user, id, messages) {
+      function packetHandler (error, packet, channel, callback) {
+        if (error) return $log.error(error);
+
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
+
+        callback(true);
+
+        messages.push({
+          contact: packet.from.hashname,
+          message: packet.js.m
+        });
+      };
+
+      $log.info('listening to ' + id);
+      this.session.listen(this.createChannelName(id, user.id), packetHandler);
+    };
 
     this.send = function (user, id, message) {
       if (!this.session) return $log.error('cannot send message: not connected to network');
@@ -79,10 +97,10 @@ angular.module('dtmsgApp')
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
-        callback();
+        callback(true);
       };
 
       $log.info(JSON.stringify({m: message}) + ' to ' + id);
-      this.session.start(id, 'dtmsg-invite' + id, {js: {m: message}}, packetHandler.bind(this));
+      this.session.start(id, this.createChannelName(id, user.id), {js: {m: message}}, packetHandler.bind(this));
     }.bind(this);
   });

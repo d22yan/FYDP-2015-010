@@ -16,6 +16,9 @@ angular.module('dtmsgApp')
       },
       'b808c525f57d2a8b4dd4b75f4f27181095dc2f9f567165b3e7a7dd34a6881285': {
         isOpen: false, isActive: false, hasUnread: false, open: open, close: close, messages: []
+      },
+      '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac': {
+        isOpen: false, isActive: false, hasUnread: false, open: open, close: close, messages: []
       }
     };
   });
