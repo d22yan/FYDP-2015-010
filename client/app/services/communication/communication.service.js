@@ -78,6 +78,6 @@ angular.module('dtmsgApp')
     }.bind(this);
 
     this.verify = function (user) {
-      this.send(user, '24852a9f6b591629dbf29cbb7e507bd855ec78d38767a9a18acab4dbc7fd5224', '');
+      this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
     }.bind(this);
   });
