@@ -73,7 +73,7 @@ angular.module('dtmsgApp')
         callback(true);
       };
 
-      $log.info(JSON.stringify({msg: message}));
+      $log.info(JSON.stringify({msg: message}) + ' to ' + id);
       this.session.start(id, 'dtmsg', {js: {msg: message}}, packetHandler.bind(this));
     }.bind(this);
 
