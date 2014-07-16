@@ -11,8 +11,6 @@ angular.module('dtmsgApp')
     }
 
     if (Identity.currentUser.keypair) {
-      Communication.connect(Identity.currentUser).then(function() {
-        Communication.verify(Identity.currentUser);
-      });
+      Communication.connect(Identity.currentUser);
     }
   });

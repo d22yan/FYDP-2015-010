@@ -44,6 +44,10 @@ angular.module('dtmsgApp')
         };
 
         this.session.listen(channelName, packetHandler);
+
+        //verification by sending empty message to always-on seed
+        this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
+
         $log.info('listening');
       }.bind(this), function (error) {
         $log.error('unable to connect to network');
@@ -75,9 +79,5 @@ angular.module('dtmsgApp')
 
       $log.info(JSON.stringify({msg: message}) + ' to ' + id);
       this.session.start(id, 'dtmsg', {js: {msg: message}}, packetHandler.bind(this));
-    }.bind(this);
-
-    this.verify = function (user) {
-      this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
     }.bind(this);
   });
