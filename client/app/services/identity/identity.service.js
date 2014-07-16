@@ -8,7 +8,6 @@ angular.module('dtmsgApp')
 
     if (!this.currentUser) {
       this.currentUser = { name: 'New User' };
-      Storage.save('user', this.currentUser);
     }
 
     if (this.currentUser.keypair) {
