@@ -1,9 +1,16 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($q, $log, Telehash) {
+  .service('Communication', function Communication($q, $log, Telehash, Storage) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
+
+    this.channels = Storage.read('channels');
+
+    this.newChannelName = function (id1, id2) {
+      var channelName = id1 < id2 ? id1 + id2 : id2 + id1;
+      return 'dtmsg-' + channelName;
+    };
 
     //generate new user with id and keypair
     this.initialize = function() {
@@ -33,7 +40,7 @@ angular.module('dtmsgApp')
         $log.info('new session established');
         $log.info(this.session);
 
-        var channelName = 'dtmsg';
+        var channelName = 'dtmsg-invite';
 
         function packetHandler (error, packet, channel, callback) {
           if (error) return $log.error(error);
@@ -66,9 +73,6 @@ angular.module('dtmsgApp')
           $log.error(error);
           //reconnection on timeouts
           if (error === 'timeout') {
-            this.connect(user).then(function () {
-              this.send(user, id, message);
-            });
           }
           return;
         }
@@ -79,6 +83,6 @@ angular.module('dtmsgApp')
       };
 
       $log.info(JSON.stringify({m: message}) + ' to ' + id);
-      this.session.start(id, 'dtmsg', {js: {m: message}}, packetHandler.bind(this));
+      this.session.start(id, 'dtmsg-invite' + id, {js: {m: message}}, packetHandler.bind(this));
     }.bind(this);
   });

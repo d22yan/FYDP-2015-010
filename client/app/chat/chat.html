@@ -1,10 +1,10 @@
 <tabset>
   <tab ng-repeat="(id, chat) in chats" ng-show="chat.isOpen" active="chat.isActive">
     <tab-heading>
-      <i class="fa fa-comment fa-fw" ng-show="chat.hasUnread"></i> {{chat.name}}
-      <a href="#" ng-click="chat.closeChat()"><i class="fa fa-times fa-fw"></i></a>
+      <i class="fa fa-comment fa-fw" ng-show="chat.hasUnread"></i> {{getChatName(id)}}
+      <a href="#" ng-click="chat.close()"><i class="fa fa-times fa-fw"></i></a>
     </tab-heading>
-    <div class="tab-content" ng-show="chat.isOpen">
+    <div id="chat-{{getChatName(id)}}" class="tab-content" ng-show="chat.isOpen">
       <div class="chat-wrap">
         <div ng-repeat="message in chat.messages">
           {{message.author}} said: {{message.content}}

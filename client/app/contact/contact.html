@@ -5,5 +5,5 @@
     Contacts
   </accordion-heading>
 
-  <a href="#" ng-repeat="contact in contacts" ng-click="contact.openChat()"><div class="contact">{{contact.name}}</div></a>
+  <a href="#" ng-repeat="(id, contact) in contacts" ng-click="openChat(id)"><div class="contact">{{contact.name}}</div></a>
 </accordion-group>
