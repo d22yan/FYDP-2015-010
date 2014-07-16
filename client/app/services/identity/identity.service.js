@@ -4,16 +4,6 @@ angular.module('dtmsgApp')
   .service('Identity', function Identity($log, Storage, Communication) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-    this.currentUser = Storage.read('user');
-
-    if (!this.currentUser) {
-      this.currentUser = { name: 'New User' };
-    }
-
-    if (this.currentUser.keypair) {
-      Communication.connect(this.currentUser);
-    }
-
     var open = function() { this.isOpen = true; this.isActive = true; };
     var close = function() { this.isOpen = false; this.isActive = false; };
 

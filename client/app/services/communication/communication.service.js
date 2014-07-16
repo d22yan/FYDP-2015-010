@@ -54,17 +54,30 @@ angular.module('dtmsgApp')
       });
     }.bind(this);
 
-    this.send = function (id, message) {
+    this.send = function (user, id, message) {
       if (!this.session) return $log.error('cannot send message: not connected to network');
 
       function packetHandler (error, packet, channel, callback) {
-        if (error) return $log.error(error);
+        if (error) {
+          $log.error(error);
+          //reconnection on timeouts
+          if (error === 'timeout') {
+            this.connect(user);
+            this.send(user, id, message);
+          }
+          return;
+        }
 
         $log.info(packet.js);
 
         callback(true);
       };
 
-      this.session.start(id, 'dtmsg', {js: {msg: message}}, packetHandler);
+      $log.info(JSON.stringify({msg: message}));
+      this.session.start(id, 'dtmsg', {js: {msg: message}}, packetHandler.bind(this));
+    }.bind(this);
+
+    this.verify = function (user) {
+      this.send(user, '24852a9f6b591629dbf29cbb7e507bd855ec78d38767a9a18acab4dbc7fd5224', '');
     }.bind(this);
   });
