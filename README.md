@@ -53,11 +53,14 @@ Development Workflow
     
     This installs the following CLI tools globally (hence the -g switch):
     
-        * [Yeoman](http://yeoman.io/) and the AngularJS fullstack generator for Yeoman
-        * [Grunt](http://gruntjs.com/) for task automation
-        * [Bower](http://bower.io/) for client-side dependency management
-        * [Karma](http://karma-runner.github.io/0.12/index.html) for unit testing
-
+    * [Yeoman](http://yeoman.io/) and the AngularJS fullstack generator for Yeoman
+    
+    * [Grunt](http://gruntjs.com/) for task automation
+    
+    * [Bower](http://bower.io/) for client-side dependency management
+    
+    * [Karma](http://karma-runner.github.io/0.12/index.html) for unit testing
+    
 5. Execute the following command:
 
     ```CLI
@@ -120,10 +123,10 @@ For now just try to take a look through my code and the AngularJS docs to get a 
 
 My personal reading commendations: 
 
-    * [JS: The Right Way](http://jstherightway.org/), great quick overview/reference.
-    * [Idiomatic.js](https://github.com/rwaldron/idiomatic.js), describes coding conventions and best practices. 
-    * [A Baseline for Front-End Developers](http://rmurphey.com/blog/2012/04/12/a-baseline-for-front-end-developers/), concepts, tools and workflows for efficent front-end development. 
-    * [Eloquent JavaScript](http://eloquentjavascript.net/), my favorite "full" JS book, there's a version 2 as a work in progress [here](https://github.com/marijnh/Eloquent-JavaScript).
+* [JS: The Right Way](http://jstherightway.org/), great quick overview/reference.
+* [Idiomatic.js](https://github.com/rwaldron/idiomatic.js), describes coding conventions and best practices. 
+* [A Baseline for Front-End Developers](http://rmurphey.com/blog/2012/04/12/a-baseline-for-front-end-developers/), concepts, tools and workflows for efficent front-end development. 
+* [Eloquent JavaScript](http://eloquentjavascript.net/), my favorite "full" JS book, there's a version 2 as a work in progress [here](https://github.com/marijnh/Eloquent-JavaScript).
 
 If you come across anything else you found useful for learning, please share it here.
 
