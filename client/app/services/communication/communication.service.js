@@ -75,7 +75,7 @@ angular.module('dtmsgApp')
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
-        callback(true);
+        callback();
       };
 
       $log.info(JSON.stringify({m: message}) + ' to ' + id);
