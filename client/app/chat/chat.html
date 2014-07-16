@@ -1,5 +1,5 @@
 <tabset>
-  <tab ng-repeat="chat in chats" ng-show="chat.isOpen" active="chat.isActive">
+  <tab ng-repeat="(id, chat) in chats" ng-show="chat.isOpen" active="chat.isActive">
     <tab-heading>
       <i class="fa fa-comment fa-fw" ng-show="chat.hasUnread"></i> {{chat.name}}
       <a href="#" ng-click="chat.closeChat()"><i class="fa fa-times fa-fw"></i></a>
@@ -17,7 +17,7 @@
               <input type="text" class="form-control" id="message" ng-model="chat.message">
             </div>
             <div class="col-xs-2">
-              <button type="submit" class="btn btn-success btn-block" ng-click="send(chat, chat.message)">Send</button>
+              <button type="submit" class="btn btn-success btn-block" ng-click="send(id, chat.message)">Send</button>
             </div>
           </div>
         </form>
