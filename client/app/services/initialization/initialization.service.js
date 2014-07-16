@@ -14,6 +14,7 @@ angular.module('dtmsgApp')
       Communication.connect(Identity.currentUser).then(function() {
         for (var conversation in Conversation.conversations) {
           Communication.listen(Identity.currentUser, conversation, conversation.messages);
+          Communication.sendStatusUpdate(Identity.currentUser, conversation, 'online');
         }
       }).then(null, function(error) {
           $log.error('failed to listen to all conversations');

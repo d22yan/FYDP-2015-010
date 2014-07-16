@@ -87,7 +87,7 @@ angular.module('dtmsgApp')
       this.session.listen(channelName, packetHandler);
     };
 
-    this.send = function (user, id, message) {
+    this.send = function (user, id, payload) {
       if (!this.session) return $log.error('cannot send message: not connected to network');
 
       function packetHandler (error, packet, channel, callback) {
@@ -106,9 +106,25 @@ angular.module('dtmsgApp')
 
       var channelName = this.createChannelName(id, user.id);
 
-      $log.info(JSON.stringify({m: message}) + ' to ' + id);
+      $log.info(JSON.stringify(payload) + ' to ' + id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(id, channelName, {js: {m: message}}, packetHandler.bind(this));
+      this.session.start(id, channelName, {js: payload}, packetHandler.bind(this));
     }.bind(this);
+
+    this.sendMessage = function (user, id, message) {
+      var payload = {
+        m: message
+      };
+
+      this.send(user, id, payload);
+    };
+
+    this.sendStatusUpdate = function (user, id, status) {
+      var payload = {
+        s: status
+      };
+
+      this.send(user, id, payload);
+    };
   });

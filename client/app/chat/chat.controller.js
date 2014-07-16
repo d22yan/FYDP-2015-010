@@ -6,7 +6,7 @@ angular.module('dtmsgApp')
     $scope.chats = Conversation.conversations;
 
     $scope.send = function (id, message) {
-      Communication.send(Identity.currentUser, id, message);
+      Communication.sendMessage(Identity.currentUser, id, message);
     };
 
     $scope.getChatName = function (id) {
