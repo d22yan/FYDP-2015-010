@@ -46,7 +46,7 @@ angular.module('dtmsgApp')
         this.session.listen(channelName, packetHandler);
 
         //verification by sending empty message to always-on seed
-        this.session.start('20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', 'dtmsg', {js: ''}, packetHandler);
+        this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
 
         $log.info('listening');
       }.bind(this), function (error) {
@@ -66,8 +66,9 @@ angular.module('dtmsgApp')
           $log.error(error);
           //reconnection on timeouts
           if (error === 'timeout') {
-            this.connect(user);
-            this.send(user, id, message);
+            this.connect(user).then(function () {
+              this.send(user, id, message);
+            });
           }
           return;
         }
