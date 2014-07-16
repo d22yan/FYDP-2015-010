@@ -1,27 +1,10 @@
-Real-Time Instant Messaging System
-==================================
+Distributed Instant Messaging System
+====================================
 
 Project Abstract
 ----------------
 
->Instant messaging systems of today are instant in name only. 
-
->Messages are sent when the send button is pressed by the sender, and no feedback to the receiver is presented during 
-the waiting period except a wholly inadequate “user is typing” notification. This disruptive downtime between message 
-and reply in modern instant messaging systems is becoming more apparent day by day. 
-
->The Real-Time Instant Messaging System mimics the free-flowing experience of natural, in-person conversations, by 
-updating messages on the receiver side as they are being written in real time. 
-
->Our design involves only a client-side application, using a peer-to-peer distributed protocol to identify other 
-clients, and advanced networking protocols for real-time communication between clients. This direct, peer-to-peer 
-communication model removes the need for messages to traverse through a centralized server, and in doing so, addresses 
-the increasing concerns over privacy in modern communications systems by granting clients exclusive ownership over 
-their messages. 
-
->The main advantages of the Real Time Instant Messaging System over existing instant messaging systems include its 
-focus on true real-time communications and its implications for privacy and message ownership resulting from its 
-peer-to-peer communication model. 
+>*To Be Updated
 
 Implementation Plan
 -------------------
@@ -39,53 +22,43 @@ Current plan is to make use of the following technologies in the client stack:
     synchronization between clients.
 
 * [angular-local-storage](https://github.com/grevory/angular-local-storage) for storing user & contacts data locally, 
-    [Google Drive API](https://developers.google.com/drive/) for storing data to be synchronized across multiple 
+    [Dropbox API](https://www.dropbox.com/developers) for storing data to be synchronized across multiple 
     devices.
 
 * [sjcl](https://github.com/bitwiseshiftleft/sjcl) for client-side password-based data encryption.
 
 * [PhoneGap/Apache Cordova](http://phonegap.com/) to port the app to mobile platforms.
 
+* [Chromium Embedded Framework](http://code.google.com/p/chromiumembedded/) to port the app to Windows Desktop.
+
+
 Development Workflow
 --------------------
 
 ### Quickstart Guide
 
-1. Install [Node.js](http://nodejs.org/) if you don't already have it. We'll eventually be using Node.js + Express.js 
-    to host the web app version of the client, but for now, we need npm to install all the development and testing 
-    workflow tools needed to even start developing.
+1. Install [Node.js](http://nodejs.org/) if you don't already have it. We need npm to install all the development and 
+    testing workflow tools we'll be using, and Express.js to serve our webapp for development.
     
-2. Install [Ruby](https://www.ruby-lang.org/en/installation/) in order to use SASS with Compass. Add Ruby to PATH in 
-    the installer options.
-
-3. Clone the repo to a directory of your choice. [SourceTree](http://www.sourcetreeapp.com/) is recommended if you want 
+2. Clone the repo to a directory of your choice. [SourceTree](http://www.sourcetreeapp.com/) is recommended if you want 
     a GUI tool for git.
 
-4. Open a command prompt or PowerShell window and navigate to the directory of the repo.
+3. Open a command prompt or PowerShell window and navigate to the directory of the repo.
 
-5. Execute the following command:
+4. Execute the following command:
     
     ```CLI
-    npm install -g yo generator-angular grunt-cli bower karma-cli
+    npm install -g yo generator-angular-fullstack grunt-cli bower karma-cli
     ```
     
     This installs the following CLI tools globally (hence the -g switch):
     
-    * [Yeoman](http://yeoman.io/) and the AngularJS generator for Yeoman, for best-practice based code scaffolding
-    * [Grunt](http://gruntjs.com/) for task automation
-    * [Bower](http://bower.io/) for client-side dependency management
-    * [Karma](http://karma-runner.github.io/0.12/index.html) for unit testing
+        * [Yeoman](http://yeoman.io/) and the AngularJS fullstack generator for Yeoman
+        * [Grunt](http://gruntjs.com/) for task automation
+        * [Bower](http://bower.io/) for client-side dependency management
+        * [Karma](http://karma-runner.github.io/0.12/index.html) for unit testing
 
-6. Execute the following commands: 
-
-    ```CLI
-    gem update --system
-    gem install compass
-    ```
-    
-    This updates ruby and installs the Compass package.    
-
-7. Execute the following command:
+5. Execute the following command:
 
     ```CLI
     npm install
@@ -93,7 +66,7 @@ Development Workflow
 
     This installs the local dependencies for the repository listed in package.json.
     
-8. Execute the following command:
+6. Execute the following command:
     
     ```CLI
     bower install
@@ -101,25 +74,24 @@ Development Workflow
 
     This installs the client-side dependencies for the web app listed in bower.json.
 
-9. Now you can run the basic grunt development server using:
+7. Now you can run the included Express.js development server using:
     
     ```CLI
     grunt serve
     ```
     
-    This should open a new browser tab pointing to the address of the dev server. Grunt's livereload feature will 
+    This should open a new browser tab pointing to the address of the Express.js dev server. Express's livereload feature will 
         automatically reload the page when it detects any file changes.
 
-10. You can also run tests using:
+8. You can also run tests using:
 
     ```CLI
     grunt test
     ```
     
-    At the moment the tests I wrote are broken because of Jasmine's poor async support. I'm planning on migrating over 
-         to Mocha for some better test coverage for our Angular services.
+    All tests are using Mocha at the moment. Coverage is something I plan to improve on after finishing the early phases.
         
-11. Lastly decide on an IDE to use. I recommend one of the following:
+9. Lastly decide on an IDE to use. I recommend one of the following:
     
     * [WebStorm](http://www.jetbrains.com/webstorm/). This is what I use. 30 day trial and $30 to buy for the Academic 
         Licence. Has code analytics, refactoring support, full-featured JS debugger, and a huge repository of plugins.
@@ -134,18 +106,24 @@ Let me know if you encounter any problems with any of the above steps and I can 
     guide with additional information if necessary.
 
 For now just try to take a look through my code and the AngularJS docs to get a feel for the overall structure of the 
-    app. I have only the Telehash user id generation and user info saving/loading from local storage implemented so 
-    far. We can meet sometime in the near future to discuss the code and divide work for later stages of the project.
+    app. We can meet sometime in the near future to discuss the code and divide work for later stages of the project.
 
 ### Learning Resources:
 
 * Taking a look at some [free books](http://resrc.io/list/10/list-of-free-programming-books/#javascript) to brush 
-    up on the basics of JS and Angular is always a good idea. This [one](http://jstherightway.org/) is a great quick reference.
+    up on the basics of JS and Angular is always a good idea. 
 * [CodeSchool](https://www.codeschool.com/) has some nice interactive courses on web development in general, and on 
     AngularJS and Javascript.
 * Here's a nice article on 
     [Javascript Promises](http://strongloop.com/strongblog/promises-in-node-js-with-q-an-alternative-to-callbacks/) and 
     their implementation in Angular in the form of the $q service.
+
+My personal reading commendations: 
+
+    * [JS: The Right Way](http://jstherightway.org/), great quick overview/reference.
+    * [Idiomatic.js](https://github.com/rwaldron/idiomatic.js), describes coding conventions and best practices. 
+    * [A Baseline for Front-End Developers](http://rmurphey.com/blog/2012/04/12/a-baseline-for-front-end-developers/), concepts, tools and workflows for efficent front-end development. 
+    * [Eloquent JavaScript](http://eloquentjavascript.net/), my favorite "full" JS book, there's a version 2 as a work in progress [here](https://github.com/marijnh/Eloquent-JavaScript).
 
 If you come across anything else you found useful for learning, please share it here.
 
