@@ -38,7 +38,7 @@ angular.module('dtmsgApp')
         function packetHandler (error, packet, channel, callback) {
           if (error) return $log.error(error);
 
-          $log.info(packet.js);
+          $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
           callback(true);
         };
@@ -68,7 +68,7 @@ angular.module('dtmsgApp')
           return;
         }
 
-        $log.info(packet.js);
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
         callback(true);
       };
