@@ -79,8 +79,12 @@ angular.module('dtmsgApp')
         });
       };
 
+      var channelName = this.createChannelName(id, user.id);
+
       $log.info('listening to ' + id);
-      this.session.listen(this.createChannelName(id, user.id), packetHandler);
+      $log.info('on channel ' + channelName);
+
+      this.session.listen(channelName, packetHandler);
     };
 
     this.send = function (user, id, message) {
@@ -100,7 +104,11 @@ angular.module('dtmsgApp')
         callback(true);
       };
 
+      var channelName = this.createChannelName(id, user.id);
+
       $log.info(JSON.stringify({m: message}) + ' to ' + id);
-      this.session.start(id, this.createChannelName(id, user.id), {js: {m: message}}, packetHandler.bind(this));
+      $log.info('sent on channel ' + channelName);
+
+      this.session.start(id, channelName, {js: {m: message}}, packetHandler.bind(this));
     }.bind(this);
   });
