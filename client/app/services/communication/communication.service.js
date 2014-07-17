@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($q, $log, Telehash, Storage) {
+  .service('Communication', function Communication($rootScope, $q, $log, Telehash, Storage) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
 
@@ -66,21 +66,16 @@ angular.module('dtmsgApp')
     }.bind(this);
 
     this.listen = function (user, contact, messages) {
+      var deferredMessage = $q.defer();
+
       function packetHandler (error, packet, channel, callback) {
-        if (error) return $log.error(error);
+        if (error) { return deferredMessage.reject(error); }
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
         callback(true);
 
-        if (packet.js.m) {
-          messages.push({
-            contact: packet.from.hashname,
-            content: packet.js.m
-          });
-        } else if (packet.js.s) {
-          contact.status = packet.js.s;
-        }
+        deferredMessage.resolve(packet);
       };
 
       var channelName = this.createChannelName(contact.id, user.id);
@@ -88,7 +83,31 @@ angular.module('dtmsgApp')
       $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
 
-      this.session.listen(channelName, packetHandler);
+      this.session.listen(channelName, function (error, packet, channel, callback) {
+        if (error) { return deferredMessage.reject(error); }
+
+        callback(true);
+
+        deferredMessage.resolve(packet);
+      });
+
+      deferredMessage.promise.then(function (packet) {
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
+
+        //$rootScope.$apply(function () {
+          if (packet.js.m) {
+            messages.push({
+              contact: packet.from.hashname,
+              content: packet.js.m
+            });
+          } else if (packet.js.s) {
+            contact.status = packet.js.s;
+          }
+        //});
+      }).then(null, function(error) {
+        $log.error('failed to listen to message');
+        $log.error(error);
+      });
     };
 
     this.send = function (user, contact, channelName, payload) {
