@@ -71,8 +71,6 @@ angular.module('dtmsgApp')
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
-        callback(true);
-
         channel.send({js: {s: 'online'}});
 
         messages.push({
@@ -103,7 +101,6 @@ angular.module('dtmsgApp')
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
-        callback(true);
       };
 
       var channelName = this.createChannelName(id, user.id);
@@ -111,7 +108,7 @@ angular.module('dtmsgApp')
       $log.info(JSON.stringify(payload) + ' to ' + id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(id, channelName, {js: payload}, packetHandler.bind(this));
+      this.session.start(id, channelName, {js: payload}, packetHandler);
     }.bind(this);
 
     this.sendMessage = function (user, id, message) {
