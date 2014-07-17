@@ -9,7 +9,7 @@ angular.module('dtmsgApp')
       Communication.sendMessage(Identity.currentUser, id, message);
     };
 
-    $scope.getChatName = function (id) {
+    $scope.getContactName = function (id) {
       return Identity.contacts[id].name;
     };
   });

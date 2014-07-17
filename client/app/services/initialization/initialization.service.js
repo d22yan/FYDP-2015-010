@@ -13,7 +13,7 @@ angular.module('dtmsgApp')
     if (Identity.currentUser.keypair) {
       Communication.connect(Identity.currentUser).then(function() {
         for (var conversation in Conversation.conversations) {
-          Communication.listen(Identity.currentUser, conversation, conversation.messages);
+          Communication.listen(Identity.currentUser, conversation, Conversation.conversations[conversation].messages);
           Communication.sendStatusUpdate(Identity.currentUser, conversation, 'online');
         }
       }).then(null, function(error) {

@@ -73,9 +73,11 @@ angular.module('dtmsgApp')
 
         callback(true);
 
+        channel.send({js: {s: 'online'}});
+
         messages.push({
           contact: packet.from.hashname,
-          message: packet.js.m
+          content: packet.js.m
         });
       };
 
