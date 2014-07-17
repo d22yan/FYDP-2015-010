@@ -12,9 +12,9 @@ angular.module('dtmsgApp')
 
     if (Identity.currentUser.keypair) {
       Communication.connect(Identity.currentUser).then(function() {
-        for (var conversation in Conversation.conversations) {
-          Communication.listen(Identity.currentUser, conversation, Conversation.conversations[conversation].messages);
-          Communication.sendStatusUpdate(Identity.currentUser, conversation, 'online');
+        for (var contact in Identity.contacts) {
+          Communication.listen(Identity.currentUser, Identity.contacts[contact], Conversation.conversations[contact].messages);
+          Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact], 'online');
         }
       }).then(null, function(error) {
           $log.error('failed to listen to all conversations');

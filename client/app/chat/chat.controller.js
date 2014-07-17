@@ -5,11 +5,7 @@ angular.module('dtmsgApp')
     $scope.user = Identity.currentUser;
     $scope.chats = Conversation.conversations;
 
-    $scope.send = function (id, message) {
-      Communication.sendMessage(Identity.currentUser, id, message);
-    };
-
-    $scope.getContactName = function (id) {
-      return Identity.contacts[id].name;
+    $scope.send = function (contact, message) {
+      Communication.sendMessage(Identity.currentUser, contact, message);
     };
   });

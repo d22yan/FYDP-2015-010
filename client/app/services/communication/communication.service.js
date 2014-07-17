@@ -65,7 +65,7 @@ angular.module('dtmsgApp')
       });
     }.bind(this);
 
-    this.listen = function (user, id, messages) {
+    this.listen = function (user, contact, messages) {
       function packetHandler (error, packet, channel, callback) {
         if (error) return $log.error(error);
 
@@ -73,21 +73,25 @@ angular.module('dtmsgApp')
 
         callback(true);
 
-        messages.push({
-          contact: packet.from.hashname,
-          content: packet.js.m
-        });
+        if (packet.js.m) {
+          messages.push({
+            contact: packet.from.hashname,
+            content: packet.js.m
+          });
+        } else if (packet.js.s) {
+          contact.status = packet.js.s;
+        }
       };
 
-      var channelName = this.createChannelName(id, user.id);
+      var channelName = this.createChannelName(contact.id, user.id);
 
-      $log.info('listening to ' + id);
+      $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
 
       this.session.listen(channelName, packetHandler);
     };
 
-    this.send = function (user, id, payload) {
+    this.send = function (user, contact, channelName, payload) {
       if (!this.session) return $log.error('cannot send message: not connected to network');
 
       function packetHandler (error, packet, channel, callback) {
@@ -105,27 +109,33 @@ angular.module('dtmsgApp')
         callback(true);
       };
 
-      var channelName = this.createChannelName(id, user.id);
-
-      $log.info(JSON.stringify(payload) + ' to ' + id);
+      $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(id, channelName, {js: payload}, packetHandler.bind(this));
+      this.session.start(contact.id, channelName, {js: payload}, packetHandler.bind(this));
     }.bind(this);
 
-    this.sendMessage = function (user, id, message) {
+    this.sendMessage = function (user, contact, message) {
       var payload = {
         m: message
       };
 
-      this.send(user, id, payload);
+      this.send(user, contact, this.createChannelName(contact.id, user.id), payload);
     };
 
-    this.sendStatusUpdate = function (user, id, status) {
+    this.sendStatusUpdate = function (user, contact, status) {
       var payload = {
         s: status
       };
 
-      this.send(user, id, payload);
+      this.send(user, contact, this.createChannelName(contact.id, user.id), payload);
+    };
+
+    this.sendInvite = function (user, contact) {
+      var payload = {
+        i: user.name
+      };
+
+      this.send(user, contact, 'dtmsg-invite', payload);
     };
   });
