@@ -73,8 +73,6 @@ angular.module('dtmsgApp')
 
         callback(true);
 
-        channel.send({js: {s: 'online'}});
-
         messages.push({
           contact: packet.from.hashname,
           content: packet.js.m
@@ -97,7 +95,7 @@ angular.module('dtmsgApp')
           $log.error(error);
           //reconnection on timeouts
           if (error === 'timeout') {
-            this.send(user, id, payload);
+
           }
           return;
         }
@@ -105,8 +103,6 @@ angular.module('dtmsgApp')
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
         callback(true);
-
-        channel.send({js: {s: 'online'}});
       };
 
       var channelName = this.createChannelName(id, user.id);
