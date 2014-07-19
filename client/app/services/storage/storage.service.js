@@ -16,7 +16,7 @@ angular.module('dtmsgApp')
       var data = localStorageService.get(id);
 
       if (!data) { $log.debug('failed to read id: ' + id); }
-      else { $log.info('read id: ' + id + ', ' + data); }
+      else { $log.info('read id: ' + id + ', ' + JSON.stringify(data)); }
 
       return data;
     };

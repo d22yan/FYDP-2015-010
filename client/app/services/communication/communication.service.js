@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($rootScope, $q, $log, Telehash, Storage) {
+  .service('Communication', function Communication($rootScope, $q, $log, Telehash, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
 
     this.createChannelName = function (id1, id2) {
       var channelName = id1 < id2 ? id1 + id2 : id2 + id1;
-      return 'dtmsg-' + channelName;
+      return Constants.channelName.prefix + channelName;
     };
 
     //generate new user with id and keypair
@@ -38,16 +38,16 @@ angular.module('dtmsgApp')
         $log.info('new session established');
         $log.info(this.session);
 
-        var channelName = 'dtmsg-invite';
+        var channelName = Constants.channelName.prefix + Constants.channelName.invite;
 
         //handles new invites
         function packetHandler (error, packet, channel, callback) {
-          if (error) return $log.error(error);
+          if (error) { return $log.error(error); }
 
           $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
           callback(true);
-        };
+        }
 
         //listen for new invites
         this.session.listen(channelName, packetHandler);
@@ -56,14 +56,11 @@ angular.module('dtmsgApp')
         //this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
 
         $log.info('listening');
-      }.bind(this), function (error) {
-        $log.error('unable to connect to network');
-        $log.error(error);
-      }).then(null, function(error) {
+      }.bind(this)).catch(function(error) {
         $log.error('unable to start listening');
         $log.error(error);
       });
-    }.bind(this);
+    };
 
     this.listen = function (user, contact, messages) {
       var deferredMessage = $q.defer();
@@ -76,7 +73,7 @@ angular.module('dtmsgApp')
         callback(true);
 
         deferredMessage.resolve(packet);
-      };
+      }
 
       var channelName = this.createChannelName(contact.id, user.id);
 
@@ -111,7 +108,7 @@ angular.module('dtmsgApp')
     };
 
     this.send = function (user, contact, channelName, payload) {
-      if (!this.session) return $log.error('cannot send message: not connected to network');
+      if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
       function packetHandler (error, packet, channel, callback) {
         if (error) {
@@ -120,19 +117,18 @@ angular.module('dtmsgApp')
           if (error === 'timeout') {
 
           }
-          return;
         }
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
         callback(true);
-      };
+      }
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
       this.session.start(contact.id, channelName, {js: payload}, packetHandler.bind(this));
-    }.bind(this);
+    };
 
     this.sendMessage = function (user, contact, message) {
       var payload = {

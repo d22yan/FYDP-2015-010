@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .controller('UserCtrl', function ($scope, $log, Communication, Identity) {
+  .controller('UserCtrl', function ($scope, $log, Initialization, Communication, Identity) {
     $scope.accordion = {
       open: true
     };
@@ -9,7 +9,9 @@ angular.module('dtmsgApp')
     $scope.user = Identity.currentUser;
 
     $scope.createUser = function() {
-      Identity.createUser($scope.user);
+      Identity.createUser($scope.user)
+        .then(Initialization.reinitialize)
+        .catch($log.error);
     };
 
     $scope.updateUser = function() {
@@ -18,13 +20,5 @@ angular.module('dtmsgApp')
 
     $scope.deleteUser = function() {
       Identity.deleteUser();
-    };
-
-    $scope.connectUser = function() {
-      Communication.connect(Identity.currentUser);
-    };
-
-    $scope.startListening = function() {
-      Communication.listen();
     };
   });
