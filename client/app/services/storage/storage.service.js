@@ -1,23 +1,23 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Storage', function Storage($log, localStorageService) {
+  .service('Storage', function Storage($log, Cryptography, localStorageService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-    this.save = function (id, data) {
-      var result = localStorageService.set(id, data);
+    this.save = function (key, value) {
+      var result = localStorageService.set(Cryptography.encrypt(key), Cryptography.encrypt(value));
 
-      if (!result) { $log.debug('failed to save id data pair: ' + id + ', ' + JSON.stringify(data)); }
-      else { $log.info('saved id data pair: ' + id + ', ' + JSON.stringify(data)); }
+      if (!result) { $log.debug('failed to save key value pair: ' + key + ', ' + JSON.stringify(value)); }
+      else { $log.info('saved key value pair: ' + key + ', ' + JSON.stringify(value)); }
 
       return result;
     };
 
-    this.read = function (id) {
-      var data = localStorageService.get(id);
+    this.read = function (key) {
+      var value = Cryptography.decrypt(localStorageService.get(Cryptography.encrypt(key)));
 
-      if (!data) { $log.debug('failed to read id: ' + id); }
-      else { $log.info('read id: ' + id + ', ' + JSON.stringify(data)); }
+      if (!value) { $log.debug('failed to read key: ' + key); }
+      else { $log.info('read key: ' + key + ', ' + JSON.stringify(value)); }
 
-      return data;
+      return value;
     };
   });
