@@ -23,6 +23,10 @@ angular.module('dtmsgApp')
       '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac': {
         contact: Identity.contacts['03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac'],
         isOpen: false, isActive: false, hasUnread: false, open: open, close: close, messages: []
+      },
+      'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9': {
+        contact: Identity.contacts['bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9'],
+        isOpen: false, isActive: false, hasUnread: false, open: open, close: close, messages: []
       }
     };
   });

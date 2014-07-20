@@ -17,6 +17,9 @@ angular.module('dtmsgApp')
       },
       '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac': {
         id: '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac', name: 'SangHoon', status: Constants.userStatus.offline
+      },
+      'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9': {
+        id: 'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9', name: 'Danny', status: Constants.userStatus.offline
       }
     };
 
