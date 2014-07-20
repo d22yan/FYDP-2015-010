@@ -113,10 +113,10 @@ angular.module('dtmsgApp')
       function packetHandler (error, packet, channel, callback) {
         if (error) {
           $log.error(error);
-          //reconnection on timeouts
-          if (error === 'timeout') {
+        }
 
-          }
+        if (!contact.channel) {
+          contact.channel = channel;
         }
 
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
@@ -127,7 +127,11 @@ angular.module('dtmsgApp')
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(contact.id, channelName, {js: payload}, packetHandler.bind(this));
+      if (!contact.channel) {
+        this.session.start(contact.id, channelName, {js: payload}, packetHandler.bind(this));
+      } else {
+        contact.channel.send({js: payload});
+      }
     };
 
     this.sendMessage = function (user, contact, message) {
