@@ -16,6 +16,9 @@ angular.module('dtmsgApp')
       if (Identity.currentUser.keypair) {
         Communication.connect(Identity.currentUser).then(function() {
           for (var contact in Identity.contacts) {
+            if (contact === Identity.currentUser.id) {
+              continue;
+            }
             Communication.listen(
               Identity.currentUser,
               Identity.contacts[contact],
