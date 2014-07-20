@@ -129,13 +129,8 @@ angular.module('dtmsgApp')
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      if (!contact.channel) {
         $log.info('"m" sent through start');
         this.session.start(contact.id, channelName, {js: payload}, packetHandler);
-      } else {
-        $log.info('"m" sent through channel');
-        contact.channel.send({js: payload});
-      }
     };
 
     this.sendMessage = function (user, contact, message) {
