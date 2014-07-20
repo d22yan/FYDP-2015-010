@@ -16,15 +16,10 @@ angular.module('dtmsgApp')
       if (Identity.currentUser.keypair) {
         Communication.connect(Identity.currentUser).then(function() {
           for (var contact in Identity.contacts) {
-            //Communication.listen(
-            //  Identity.currentUser,
-            //  Identity.contacts[contact],
-            //  Conversation.conversations[contact].messages
-            //);
-            Communication.sendStatusUpdate(
+            Communication.listen(
               Identity.currentUser,
               Identity.contacts[contact],
-              Configuration.loginStatus
+              Conversation.conversations[contact].messages
             );
           }
         }).catch(function(error) {

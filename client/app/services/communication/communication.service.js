@@ -4,6 +4,7 @@ angular.module('dtmsgApp')
   .service('Communication', function Communication($rootScope, $q, $log, Telehash, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
+    this.inviteChannel = null;
 
     this.createChannelName = function (id1, id2) {
       var channelName = id1 < id2 ? id1 + id2 : id2 + id1;
@@ -46,6 +47,10 @@ angular.module('dtmsgApp')
 
           $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
+          if (!this.inviteChannel) {
+            this.inviteChannel = channel;
+          }
+
           callback(true);
         }
 
@@ -83,24 +88,26 @@ angular.module('dtmsgApp')
       this.session.listen(channelName, function (error, packet, channel, callback) {
         if (error) { return deferredMessage.reject(error); }
 
+        deferredMessage.resolve(packet, channel);
         callback(true);
-
-        deferredMessage.resolve(packet);
       });
 
-      deferredMessage.promise.then(function (packet) {
+      deferredMessage.promise.then(function (packet, channel) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
-        //$rootScope.$apply(function () {
-          if (packet.js.m) {
-            messages.push({
-              contact: packet.from.hashname,
-              content: packet.js.m
-            });
-          } else if (packet.js.s) {
-            contact.status = packet.js.s;
-          }
-        //});
+        if (!contact.channel || contact.channel.ended) {
+          contact.channel = channel;
+          this.sendStatusUpdate(user, contact, Constants.userStatus.online);
+        }
+
+        if (packet.js.m) {
+          messages.push({
+            contact: packet.from.hashname,
+            content: packet.js.m
+          });
+        } else if (packet.js.s) {
+          contact.status = packet.js.s;
+        }
       }).then(null, function(error) {
         $log.error('failed to listen to message');
         $log.error(error);
