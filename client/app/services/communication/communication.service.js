@@ -144,14 +144,37 @@ angular.module('dtmsgApp')
       //  callback(true);
       //};
 
-      if (!contact.channel || contact.channel.ended) {
-        $log.info('cannot send message, channel not established');
-      }
+      var listener = function (error, packet, channel, callback) {
+        if (error) {
+          $log.error('failed to send message to ' + contact.id);
+          return $log.error(error);
+        }
+
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
+
+        if (packet.js.m) {
+        } else if (packet.js.s) {
+          contact.status = packet.js.s;
+        }
+
+        callback(true);
+      };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      contact.channel.send({js: payload});
+      if (!contact.channel || contact.channel.ended) {
+        this.session.start(contact.id, channelName, {js: payload}, function(error, packet, channel, callback) {
+          listener(error, packet, channel, callback);
+          channel.callback = listener;
+          contact.channel = channel;
+          contact.channel.callback = listener;
+          callback(true);
+        });
+      } else {
+        contact.channel.callback = listener;
+        contact.channel.send({js: payload});
+      }
     };
 
     this.sendMessage = function (user, contact, message) {
