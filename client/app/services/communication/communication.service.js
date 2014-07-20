@@ -88,10 +88,6 @@ angular.module('dtmsgApp')
       deferredMessage.promise.then(function (packet, channel, callback) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
 
-        if (!contact.channel || contact.channel.ended) {
-          contact.channel = channel;
-        }
-
         if (packet.js.m) {
           messages.push({
             contact: packet.from.hashname,
@@ -132,6 +128,7 @@ angular.module('dtmsgApp')
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
 
         if (!contact.channel || contact.channel.ended) {
+          channel.callback = packetHandler;
           contact.channel = channel;
         }
 
