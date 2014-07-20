@@ -6,13 +6,13 @@ angular.module('dtmsgApp')
     this.session = null;
     this.inviteChannel = null;
 
-    this.createSendChannel = function (senderId, receiverId) {
-      var channelName = senderId + receiverId;
+    this.createSendChannel = function (userId, contactId) {
+      var channelName = userId + contactId;
       return Constants.channelName.prefix + channelName;
     };
 
-    this.createListenChannel = function (senderId, receiverId) {
-      var channelName = receiverId + senderId;
+    this.createListenChannel = function (userId, contactId) {
+      var channelName = contactId + userId;
       return Constants.channelName.prefix + channelName;
     };
 
