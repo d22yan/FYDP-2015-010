@@ -23,13 +23,12 @@ angular.module('dtmsgApp')
               Identity.currentUser,
               Identity.contacts[contact],
               Conversation.conversations[contact].messages
-            ).then(function() {
-              Communication.sendStatusUpdate(
-                Identity.currentUser,
-                Identity.contacts[contact],
-                Configuration.loginStatus
-              );
-            }).catch($log.error);
+            );
+            Communication.sendStatusUpdate(
+              Identity.currentUser,
+              Identity.contacts[contact],
+              Configuration.loginStatus
+            );
           }
         }).catch(function(error) {
           $log.error('failed to listen to all conversations');
