@@ -73,11 +73,8 @@ angular.module('dtmsgApp')
       function packetHandler (error, packet, channel, callback) {
         if (error) { return deferredMessage.reject(error); }
 
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
-
+        deferredMessage.resolve(packet, channel);
         callback(true);
-
-        deferredMessage.resolve(packet);
       }
 
       var channelName = this.createChannelName(contact.id, user.id);
@@ -85,19 +82,13 @@ angular.module('dtmsgApp')
       $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
 
-      this.session.listen(channelName, function (error, packet, channel, callback) {
-        if (error) { return deferredMessage.reject(error); }
-
-        deferredMessage.resolve(packet, channel);
-        callback(true);
-      });
+      this.session.listen(channelName, packetHandler);
 
       deferredMessage.promise.then(function (packet, channel) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
         if (!contact.channel || contact.channel.ended) {
           contact.channel = channel;
-          this.sendStatusUpdate(user, contact, Constants.userStatus.online);
         }
 
         if (packet.js.m) {
