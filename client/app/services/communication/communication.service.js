@@ -55,7 +55,7 @@ angular.module('dtmsgApp')
         }
 
         //listen for new invites
-        this.session.listen(channelName, packetHandler);
+        this.session.listen(channelName, packetHandler.bind(this));
 
         //verification by sending empty message to always-on seed
         //this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
@@ -70,34 +70,26 @@ angular.module('dtmsgApp')
     this.listen = function (user, contact, messages) {
       var deferredMessage = $q.defer();
 
-      function packetHandler (error, packet, channel, callback) {
+      var packetHandler = function (error, packet, channel, callback) {
         if (error) { return deferredMessage.reject(error); }
 
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
-
-        callback(true);
-
-        deferredMessage.resolve(packet);
-      }
+        deferredMessage.resolve(packet, channel, callback);
+      };
 
       var channelName = this.createChannelName(contact.id, user.id);
 
       $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
 
-      this.session.listen(channelName, function (error, packet, channel, callback) {
-        if (error) { return deferredMessage.reject(error); }
+      this.session.listen(channelName, packetHandler);
 
-        deferredMessage.resolve(packet, channel);
-        callback(true);
-      });
+      //this.session.start(contact.id, channelName, {js: {m: 'initializing'}}, packetHandler);
 
-      deferredMessage.promise.then(function (packet, channel) {
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
+      deferredMessage.promise.then(function (packet, channel, callback) {
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
 
         if (!contact.channel || contact.channel.ended) {
           contact.channel = channel;
-          this.sendStatusUpdate(user, contact, Constants.userStatus.online);
         }
 
         if (packet.js.m) {
@@ -108,37 +100,43 @@ angular.module('dtmsgApp')
         } else if (packet.js.s) {
           contact.status = packet.js.s;
         }
-      }).then(null, function(error) {
+
+        callback(true);
+      }.bind(this)).then(null, function(error) {
         $log.error('failed to listen to message');
         $log.error(error);
       });
     };
 
     this.send = function (user, contact, channelName, payload) {
+      var deferredMessage = $q.defer();
+
       if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
-      function packetHandler (error, packet, channel, callback) {
-        if (error) {
-          $log.error(error);
-        }
+      var packetHandler = function (error, packet, channel, callback) {
+        if (error) { deferredMessage.reject(error); }
 
-        if (!contact.channel) {
-          contact.channel = channel;
-        }
-
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
-
-        callback(true);
-      }
+        deferredMessage.resolve(packet, channel, callback);
+      };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      if (!contact.channel) {
-        this.session.start(contact.id, channelName, {js: payload}, packetHandler.bind(this));
+      if (!contact.channel || contact.channel.ended) {
+        this.session.start(contact.id, channelName, {js: payload}, packetHandler);
       } else {
         contact.channel.send({js: payload});
       }
+
+      deferredMessage.promise.then(function(packet, channel, callback) {
+        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
+
+        if (!contact.channel || contact.channel.ended) {
+          contact.channel = channel;
+        }
+
+        callback(true);
+      });
     };
 
     this.sendMessage = function (user, contact, message) {
