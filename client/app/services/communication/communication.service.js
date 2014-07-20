@@ -73,7 +73,8 @@ angular.module('dtmsgApp')
       var packetHandler = function (error, packet, channel, callback) {
         if (error) { return deferredMessage.reject(error); }
 
-        deferredMessage.resolve(packet, channel, callback);
+        deferredMessage.resolve(packet);
+        callback(true);
       };
 
       var channelName = this.createChannelName(contact.id, user.id);
@@ -85,7 +86,7 @@ angular.module('dtmsgApp')
 
       //this.session.start(contact.id, channelName, {js: {m: 'initializing'}}, packetHandler);
 
-      deferredMessage.promise.then(function (packet, channel, callback) {
+      deferredMessage.promise.then(function (packet) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
 
         if (packet.js.m) {
@@ -96,10 +97,8 @@ angular.module('dtmsgApp')
         } else if (packet.js.s) {
           contact.status = packet.js.s;
         }
-
-        callback(true);
-      }.bind(this)).then(null, function(error) {
-        $log.error('failed to listen to message');
+      }.bind(this)).catch(function(error) {
+        $log.error('failed to listen to message from ' + contact.id);
         $log.error(error);
       });
     };
@@ -112,7 +111,14 @@ angular.module('dtmsgApp')
       var packetHandler = function (error, packet, channel, callback) {
         if (error) { deferredMessage.reject(error); }
 
-        deferredMessage.resolve(packet, channel, callback);
+        if (!contact.channel || contact.channel.ended) {
+          $log.info('setting new channel for ' + contact.id);
+          channel.callback = packetHandler;
+          contact.channel = channel;
+        }
+
+        deferredMessage.resolve(packet);
+        callback(true);
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
@@ -126,13 +132,9 @@ angular.module('dtmsgApp')
 
       deferredMessage.promise.then(function(packet, channel, callback) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
-
-        if (!contact.channel || contact.channel.ended) {
-          channel.callback = packetHandler;
-          contact.channel = channel;
-        }
-
-        callback(true);
+      }).catch(function(error) {
+        $log.error('failed to send message to ' + contact.id);
+        $log.error(error);
       });
     };
 
