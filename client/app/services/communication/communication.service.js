@@ -92,7 +92,7 @@ angular.module('dtmsgApp')
 
       //this.session.start(contact.id, channelName, {js: {m: 'initializing'}}, packetHandler);
 
-      deferredMessage.promise.then(function (packet) {
+      return deferredMessage.promise.then(function (packet) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
 
         if (packet.js.m) {
