@@ -73,64 +73,79 @@ angular.module('dtmsgApp')
     };
 
     this.listen = function (user, contact, messages) {
-      var deferredMessage = $q.defer();
+      var deferredMessage = [];
+      deferredMessage.push($q.defer());
+
       var channelName = this.createListenChannel(user.id, contact.id);
 
       var packetHandler = function (error, packet, channel, callback) {
+        var currentMessage = deferredMessage.pop();
+        deferredMessage.push($q.defer());
+
         if (error) {
-          return deferredMessage.reject(error);
+          currentMessage.reject(error);
+          return currentMessage.promise;
         }
 
-        deferredMessage.resolve(packet);
+        currentMessage.resolve(packet);
         callback(true);
+
+        return currentMessage.promise;
       };
 
       $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
 
-      this.session.listen(channelName, packetHandler);
+      this.session.listen(channelName, function (error, packet, channel, callback) {
+        packetHandler(error, packet, channel, callback).then(function(packet) {
+          $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
 
-      deferredMessage.promise.then(function(packet) {
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
-
-        if (packet.js.m) {
-          messages.push({
-            contact: packet.from.hashname,
-            content: packet.js.m
-          });
-        } else if (packet.js.s) {
-          contact.status = packet.js.s;
-        }
-      }).catch(function(error){
-        $log.error('failed to listen to ' + contact.id);
-        $log.error(error);
+          if (packet.js.m) {
+            messages.push({
+              contact: packet.from.hashname,
+              content: packet.js.m
+            });
+          } else if (packet.js.s) {
+            contact.status = packet.js.s;
+          }
+        }).catch(function(error){
+          $log.error('failed to listen to ' + contact.id);
+          $log.error(error);
+        });
       });
     };
 
     this.send = function (user, contact, channelName, payload) {
-      var deferredMessage = $q.defer();
+      var deferredMessage = [];
+      deferredMessage.push($q.defer());
 
       if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
       var packetHandler = function (error, packet, channel, callback) {
+        var currentMessage = deferredMessage.pop();
+        deferredMessage.push($q.defer());
+
         if (error) {
-          return deferredMessage.reject(error);
+          currentMessage.reject(error);
+          return currentMessage.promise;
         }
 
-        deferredMessage.resolve(packet);
+        currentMessage.resolve(packet);
         callback(true);
+
+        return currentMessage.promise;
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(contact.id, channelName, {js: payload}, packetHandler);
-
-      deferredMessage.promise.then(function (packet) {
-        $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
-      }).catch(function (error) {
-        $log.error('failed to send message to ' + contact.id);
-        $log.error(error);
+      this.session.start(contact.id, channelName, {js: payload}, function (error, packet, channel, callback) {
+        packetHandler(error, packet, channel, callback).then(function (packet) {
+          $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
+        }).catch(function (error) {
+          $log.error('failed to send message to ' + contact.id);
+          $log.error(error);
+        });
       });
     };
 
