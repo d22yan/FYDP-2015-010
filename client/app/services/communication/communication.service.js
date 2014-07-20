@@ -6,8 +6,13 @@ angular.module('dtmsgApp')
     this.session = null;
     this.inviteChannel = null;
 
-    this.createChannelName = function (id1, id2) {
-      var channelName = id1 < id2 ? id1 + id2 : id2 + id1;
+    this.createSendChannel = function (senderId, receiverId) {
+      var channelName = senderId + receiverId;
+      return Constants.channelName.prefix + channelName;
+    };
+
+    this.createListenChannel = function (senderId, receiverId) {
+      var channelName = receiverId + senderId;
       return Constants.channelName.prefix + channelName;
     };
 
@@ -68,7 +73,7 @@ angular.module('dtmsgApp')
     };
 
     this.listen = function (user, contact, messages) {
-      var deferredMessage = $q.defer();
+      var channelName = this.createListenChannel(user.id, contact.id);
 
       var packetHandler = function (error, packet, channel, callback) {
         if (error) {
@@ -95,8 +100,6 @@ angular.module('dtmsgApp')
 
         callback(true);
       };
-
-      var channelName = this.createChannelName(contact.id, user.id);
 
       $log.info('listening to ' + contact.id);
       $log.info('on channel ' + channelName);
@@ -138,7 +141,7 @@ angular.module('dtmsgApp')
         m: message
       };
 
-      this.send(user, contact, this.createChannelName(contact.id, user.id), payload);
+      this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
     };
 
     this.sendStatusUpdate = function (user, contact, status) {
@@ -146,7 +149,7 @@ angular.module('dtmsgApp')
         s: status
       };
 
-      this.send(user, contact, this.createChannelName(contact.id, user.id), payload);
+      this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
     };
 
     this.sendInvite = function (user, contact) {
