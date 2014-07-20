@@ -73,6 +73,12 @@ angular.module('dtmsgApp')
       var packetHandler = function (error, packet, channel, callback) {
         if (error) { return deferredMessage.reject(error); }
 
+        if (!contact.channel) {
+          $log.info('setting new channel for ' + contact.id + ' in listen');
+          channel.callback = packetHandler;
+          contact.channel = channel;
+        }
+
         deferredMessage.resolve(packet);
         callback(true);
       };
@@ -109,10 +115,10 @@ angular.module('dtmsgApp')
       if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
       var packetHandler = function (error, packet, channel, callback) {
-        if (error) { deferredMessage.reject(error); }
+        if (error) { return deferredMessage.reject(error); }
 
-        if (!contact.channel || contact.channel.ended) {
-          $log.info('setting new channel for ' + contact.id);
+        if (!contact.channel) {
+          $log.info('setting new channel for ' + contact.id + ' in send');
           channel.callback = packetHandler;
           contact.channel = channel;
         }
@@ -124,13 +130,15 @@ angular.module('dtmsgApp')
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      if (!contact.channel || contact.channel.ended) {
+      if (!contact.channel) {
+        $log.info('"m" sent through start');
         this.session.start(contact.id, channelName, {js: payload}, packetHandler);
       } else {
+        $log.info('"m" sent through channel');
         contact.channel.send({js: payload});
       }
 
-      deferredMessage.promise.then(function(packet, channel, callback) {
+      deferredMessage.promise.then(function(packet) {
         $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
       }).catch(function(error) {
         $log.error('failed to send message to ' + contact.id);
