@@ -23,10 +23,8 @@ angular.module('dtmsgApp')
               continue;
             }
             Communication.listen(Identity.currentUser, Identity.contacts[contact]);
-            var sendStatusUpdate = function() {
-              Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]);
-            };
-            $interval(sendStatusUpdate, 5000);
+
+            $interval(Identity.contacts[contact].sendStatusUpdate.bind(contact), 5000);
           }
         }.bind(this)).catch($log.error);
       }
