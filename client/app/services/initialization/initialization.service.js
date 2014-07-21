@@ -28,9 +28,7 @@ angular.module('dtmsgApp')
               var sendStatusUpdate = function() {
                 Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]).catch(function(error) {
                   if(error === Constants.errorTypes.timeout && Identity.contacts[contact].status !== Constants.userStatus.offline) {
-                    Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]).catch(function(error) {
-                      Identity.contacts[contact].status = Constants.userStatus.offline;
-                    });
+                    Identity.contacts[contact].status = Constants.userStatus.offline;
                   }
                 });
               };
