@@ -26,9 +26,16 @@ angular.module('dtmsgApp')
 
             (function(contact) {
               var sendStatusUpdate = function() {
-                Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]);
+                Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]).catch(function(error) {
+                  if(error === Constants.errorTypes.timeout && Identity.contacts[contact].status !== Constants.userStatus.offline) {
+                    Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]).catch(function(error) {
+                      Identity.contacts[contact].status = Constants.userStatus.offline;
+                    });
+                  }
+                });
               };
-              $interval(sendStatusUpdate, 10000);
+              sendStatusUpdate();
+              $interval(sendStatusUpdate, 15000);
             })(contact);
           }
         }.bind(this)).catch($log.error);

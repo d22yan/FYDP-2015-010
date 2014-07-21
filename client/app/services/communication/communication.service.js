@@ -117,20 +117,19 @@ angular.module('dtmsgApp')
 
       var packetHandler = function (error, packet, channel, callback) {
         if (error) {
-          return deferredMessage
-            .reject('failed to send ' + JSON.stringify(payload) + ' to ' + contact.id + ' due to: ' + error);
+          $log.error('failed to send ' + JSON.stringify(payload) + ' to ' + contact.id + ' due to: ' + error);
+          return deferredMessage.reject(error);
         }
 
         callback(true);
-        return deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
+        $log.info('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
+        return deferredMessage.resolve(packet);
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-        this.session.start(contact.id, channelName, {js: payload}, packetHandler);
-
-
+      this.session.start(contact.id, channelName, {js: payload}, packetHandler);
       return deferredMessage.promise;
     };
 

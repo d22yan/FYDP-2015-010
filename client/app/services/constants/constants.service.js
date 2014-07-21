@@ -16,7 +16,9 @@ angular.module('dtmsgApp')
       prefix: 'dtmsg-',
       invite: 'invite'
     },
-
+    errorTypes: {
+      timeout: 'timeout'
+    },
     defaultUserName: 'New User',
     userStatus: {
       online: 'online',
