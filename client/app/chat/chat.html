@@ -12,7 +12,7 @@
           </div>
         </div>
       </div>
-      <div class="footer" ng-show="contact.conversation.isOpen">
+      <div class="footer" ng-show="contact.conversation.isOpen" cg-busy="contact.conversation.sendingPromise">
         <form class="form-horizontal" role="form">
           <div class="form-group">
             <div class="col-xs-10">

@@ -86,6 +86,7 @@ angular.module('dtmsgApp')
 
         deferredMessage.resolve(packet);
         callback(true);
+        channel.send();
 
         return deferredMessage.promise;
       };
@@ -133,6 +134,7 @@ angular.module('dtmsgApp')
       } else {
         contact.conversation.channel.send({js: payload});
       }
+
       return deferredMessage.promise;
     };
 
