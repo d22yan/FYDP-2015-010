@@ -86,7 +86,6 @@ angular.module('dtmsgApp')
 
         deferredMessage.resolve(packet);
         callback(true);
-        channel.send();
 
         return deferredMessage.promise;
       };
