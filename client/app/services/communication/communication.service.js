@@ -86,6 +86,7 @@ angular.module('dtmsgApp')
 
         deferredMessage.resolve(packet);
         callback(true);
+        channel.send();
 
         return deferredMessage.promise;
       };
@@ -121,8 +122,8 @@ angular.module('dtmsgApp')
             .reject('failed to send ' + JSON.stringify(payload) + ' to ' + contact.id + ' due to: ' + error);
         }
 
-        deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
         callback(true);
+        return deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);

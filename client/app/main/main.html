@@ -7,17 +7,26 @@
   </div>
 </div>
 <div snap-content snap-options="{{snapOptions}}" cg-busy="initializationPromise">
-  <div id="page-wrap" class="container-fluid">
-    <div class="header bg-primary">
-        <span class="btn pull-left" snap-toggle>
-          <i class="fa fa-users fa-fw"></i>
-        </span>
-        <span class="btn pull-right" snap-toggle="right">
-          <i class="fa fa-bars fa-fw"></i>
-        </span>
-      <h3 class="text-center">Distributed Messaging</h3>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-2 pull-left">
+          <button type="button" class="btn navbar-btn" snap-toggle>
+            <i class="fa fa-users fa-fw"></i>
+            <span class="xs-hide">People</span>
+          </button>
+        </div>
+        <div class="col-xs-2 col-lg-1 pull-right">
+          <button type="button" class="btn navbar-btn pull-right" snap-toggle="right">
+            <i class="fa fa-bars fa-fw"></i>
+            <span class="xs-hide">Options</span>
+          </button>
+        </div>
+        <a class="navbar-brand">Distributed Messaging</a>
+      </div>
     </div>
-
+  </div>
+  <div class="container-fluid">
     <div ng-include src="'app/chat/chat.html'" ng-controller="ChatCtrl"></div>
   </div>
 </div>
