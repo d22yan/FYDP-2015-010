@@ -113,7 +113,6 @@ angular.module('dtmsgApp')
     this.send = function (user, contact, channelName, payload) {
       var deferredMessage = $q.defer();
 
-
       if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
       var packetHandler = function (error, packet, channel, callback) {
@@ -123,14 +122,18 @@ angular.module('dtmsgApp')
         }
 
         callback(true);
+        contact.conversation.channel = channel;
         return deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(contact.id, channelName, {js: payload}, packetHandler);
-
+      if (!contact.conversation.channel || contact.conversation.channel.ended) {
+        this.session.start(contact.id, channelName, {js: payload}, packetHandler);
+      } else {
+        contact.conversation.channel.send({js: payload});
+      }
       return deferredMessage.promise;
     };
 

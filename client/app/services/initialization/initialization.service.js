@@ -2,7 +2,7 @@
 
 angular.module('dtmsgApp')
   .service('Initialization', function Initialization(
-    $log, Identity, Communication, Storage, Configuration, Constants) {
+    $log, $interval, Identity, Communication, Storage, Configuration, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.initializationPromise = {};
 
@@ -23,7 +23,10 @@ angular.module('dtmsgApp')
               continue;
             }
             Communication.listen(Identity.currentUser, Identity.contacts[contact]);
-            Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]);
+            var sendStatusUpdate = function() {
+              Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]);
+            };
+            $interval(sendStatusUpdate, 5000);
           }
         }.bind(this)).catch($log.error);
       }
