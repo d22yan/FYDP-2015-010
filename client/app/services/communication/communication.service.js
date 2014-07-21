@@ -122,18 +122,14 @@ angular.module('dtmsgApp')
         }
 
         callback(true);
-        contact.conversation.channel = channel;
         return deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      if (!contact.conversation.channel || contact.conversation.channel.ended) {
         this.session.start(contact.id, channelName, {js: payload}, packetHandler);
-      } else {
-        contact.conversation.channel.send({js: payload});
-      }
+
 
       return deferredMessage.promise;
     };
