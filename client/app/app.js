@@ -9,7 +9,8 @@ angular.module('dtmsgApp', [
   'LocalStorageModule',
   'ngClickSelect',
   'underscore',
-  'snap'
+  'snap',
+  'cgBusy'
 ])
   .config(['localStorageServiceProvider', function(localStorageServiceProvider){
     localStorageServiceProvider.setPrefix('dtmsg');

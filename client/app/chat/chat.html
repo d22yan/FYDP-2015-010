@@ -1,27 +1,27 @@
 <tabset>
-  <tab ng-repeat="chat in chats" ng-show="chat.isOpen" active="chat.isActive">
+  <tab ng-repeat="contact in contacts" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
     <tab-heading>
-      <i class="fa fa-comment fa-fw" ng-show="chat.hasUnread"></i> {{chat.contact.name}}
-      <a href="#" ng-click="chat.close()"><i class="fa fa-times fa-fw"></i></a>
+      <i class="fa fa-comment fa-fw" ng-show="contact.conversation.hasUnread"></i> {{contact.name}}
+      <a href="#" ng-click="contact.conversation.close()"><i class="fa fa-times fa-fw"></i></a>
     </tab-heading>
-    <div id="chat-{{chat.contact.name}}" class="tab-content" ng-show="chat.isOpen">
+    <div id="chat-{{contact.name}}" class="tab-content" ng-show="contact.conversation.isOpen">
       <div class="chat-wrap">
-        <div ng-repeat="message in chat.messages">
-          {{chat.contact.name}} said: {{message.content}}
+        <div ng-repeat="message in contact.conversation.messages">
+          {{message.senderId}} said: {{message.content}}
         </div>
       </div>
-      <div class="chat-footer">
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <div class="col-xs-10">
-              <input type="text" class="form-control" id="message" ng-model="chat.message">
-            </div>
-            <div class="col-xs-2">
-              <button type="submit" class="btn btn-success btn-block" ng-click="send(chat.contact, chat.message)">Send</button>
-            </div>
+    </div>
+    <div class="footer" ng-show="contact.conversation.isOpen">
+      <form class="form-horizontal" role="form" cg-busy="contact.conversation.sendingPromise">
+        <div class="form-group">
+          <div class="col-xs-10">
+            <input type="text" class="form-control" ng-model="contact.conversation.currentMessage">
           </div>
-        </form>
-      </div>
+          <div class="col-xs-2">
+            <button type="submit" class="btn btn-success btn-block" ng-click="send(contact)">Send</button>
+          </div>
+        </div>
+      </form>
     </div>
   </tab>
 </tabset>

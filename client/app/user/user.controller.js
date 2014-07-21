@@ -9,9 +9,12 @@ angular.module('dtmsgApp')
     $scope.user = Identity.currentUser;
 
     $scope.createUser = function() {
-      Identity.createUser($scope.user)
-        .then(Initialization.reinitialize)
-        .catch($log.error);
+      angular.copy(
+        Identity.createUser($scope.user)
+          .then(Initialization.initialize)
+          .catch($log.error),
+        Initialization.initializationPromise
+      );
     };
 
     $scope.updateUser = function() {

@@ -72,25 +72,22 @@ angular.module('dtmsgApp')
       });
     };
 
-    this.listen = function (user, contact, messages) {
-      var deferredMessage = [];
-      deferredMessage.push($q.defer());
+    this.listen = function (user, contact) {
+
 
       var channelName = this.createListenChannel(user.id, contact.id);
 
       var packetHandler = function (error, packet, channel, callback) {
-        var currentMessage = deferredMessage.pop();
-        deferredMessage.push($q.defer());
+        var deferredMessage = $q.defer();
 
         if (error) {
-          currentMessage.reject(error);
-          return currentMessage.promise;
+          return deferredMessage.reject('failed to listen to ' + contact.id + ' due to: ' + error);
         }
 
-        currentMessage.resolve(packet);
+        deferredMessage.resolve(packet);
         callback(true);
 
-        return currentMessage.promise;
+        return deferredMessage.promise;
       };
 
       $log.info('listening to ' + contact.id);
@@ -98,71 +95,58 @@ angular.module('dtmsgApp')
 
       this.session.listen(channelName, function (error, packet, channel, callback) {
         packetHandler(error, packet, channel, callback).then(function(packet) {
-          $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname + ' in listen'));
+          $log.info('received ' + JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
 
           if (packet.js.m) {
-            messages.push({
-              contact: packet.from.hashname,
+            contact.conversation.messages.push({
+              senderId: packet.from.hashname,
               content: packet.js.m
             });
           } else if (packet.js.s) {
             contact.status = packet.js.s;
           }
-        }).catch(function(error){
-          $log.error('failed to listen to ' + contact.id);
-          $log.error(error);
-        });
+        }).catch($log.error);
       });
     };
 
     this.send = function (user, contact, channelName, payload) {
-      var deferredMessage = [];
-      deferredMessage.push($q.defer());
+      var deferredMessage = $q.defer();
+
 
       if (!this.session) { return $log.error('cannot send message: not connected to network'); }
 
       var packetHandler = function (error, packet, channel, callback) {
-        var currentMessage = deferredMessage.pop();
-        deferredMessage.push($q.defer());
-
         if (error) {
-          currentMessage.reject(error);
-          return currentMessage.promise;
+          return deferredMessage
+            .reject('failed to send ' + JSON.stringify(payload) + ' to ' + contact.id + ' due to: ' + error);
         }
 
-        currentMessage.resolve(packet);
+        deferredMessage.resolve('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
         callback(true);
-
-        return currentMessage.promise;
       };
 
       $log.info(JSON.stringify(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(contact.id, channelName, {js: payload}, function (error, packet, channel, callback) {
-        packetHandler(error, packet, channel, callback).then(function (packet) {
-          $log.info(JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname) + ' in send');
-        }).catch(function (error) {
-          $log.error('failed to send message to ' + contact.id);
-          $log.error(error);
-        });
-      });
+      this.session.start(contact.id, channelName, {js: payload}, packetHandler);
+
+      return deferredMessage.promise;
     };
 
-    this.sendMessage = function (user, contact, message) {
+    this.sendMessage = function (user, contact) {
       var payload = {
-        m: message
+        m: contact.conversation.currentMessage
       };
 
-      this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
+      return this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
     };
 
-    this.sendStatusUpdate = function (user, contact, status) {
+    this.sendStatusUpdate = function (user, contact) {
       var payload = {
-        s: status
+        s: user.status
       };
 
-      this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
+      return this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
     };
 
     this.sendInvite = function (user, contact) {
@@ -170,6 +154,6 @@ angular.module('dtmsgApp')
         i: user.name
       };
 
-      this.send(user, contact, 'dtmsg-invite', payload);
+      return this.send(user, contact, 'dtmsg-invite', payload);
     };
   });
