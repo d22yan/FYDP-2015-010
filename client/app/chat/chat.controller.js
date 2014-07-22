@@ -13,8 +13,8 @@ angular.module('dtmsgApp')
       contact.conversation.sendingPromise = Communication.sendMessage(Identity.currentUser, contact).then(function(result) {
         $log.info(result);
         contact.conversation.messages.push({
-          senderId: Identity.currentUser.id,
-          content: contact.conversation.currentMessage
+          time: Time.valueOf(),
+          message: contact.conversation.currentMessage
         });
         contact.conversation.currentMessage = '';
       }).catch($log.error);

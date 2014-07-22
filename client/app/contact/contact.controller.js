@@ -11,6 +11,6 @@ angular.module('dtmsgApp')
     $scope.open = function(conversation) {
       conversation.isOpen = true;
       conversation.isActive = true;
-      angular.copy(new Time(), conversation.lastOpened);
+      conversation.lastOpened = Time.valueOf();
     };
   });

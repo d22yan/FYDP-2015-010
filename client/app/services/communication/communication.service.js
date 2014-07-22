@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($rootScope, $q, $log, Telehash, Constants) {
+  .service('Communication', function Communication($rootScope, $q, $log, Telehash, Constants, Time) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
     this.inviteChannel = null;
@@ -100,12 +100,14 @@ angular.module('dtmsgApp')
 
           if (packet.js.m) {
             contact.conversation.messages.push({
-              senderId: packet.from.hashname,
-              content: packet.js.m
+              time: packet.js.t,
+              message: packet.js.m
             });
           } else if (packet.js.s) {
             contact.status = packet.js.s;
           }
+
+          contact.lastUpdate = packet.js.t;
         }).catch($log.error);
       });
     };
@@ -135,14 +137,16 @@ angular.module('dtmsgApp')
 
     this.sendMessage = function (user, contact) {
       var payload = {
+        t: Time.valueOf(),
         m: contact.conversation.currentMessage
       };
 
       return this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
     };
 
-    this.sendStatusUpdate = function (user, contact) {
+    this.sendStatus = function (user, contact) {
       var payload = {
+        t: Time.valueOf(),
         s: user.status
       };
 
@@ -151,6 +155,7 @@ angular.module('dtmsgApp')
 
     this.sendInvite = function (user, contact) {
       var payload = {
+        t: Time.valueOf(),
         i: user.name
       };
 

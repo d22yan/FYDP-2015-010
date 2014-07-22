@@ -2,7 +2,7 @@
 
 angular.module('dtmsgApp')
   .service('Initialization', function Initialization(
-    $log, $interval, Identity, Communication, Storage, Configuration, Constants) {
+    $log, $interval, Identity, Communication, Storage, Configuration, Utility, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.initializationPromise = {};
 
@@ -18,24 +18,25 @@ angular.module('dtmsgApp')
 
       if (Identity.currentUser.keypair) {
         var connectPromise = Communication.connect(Identity.currentUser).then(function() {
-          for (var contact in Identity.contacts) {
-            if (contact === Identity.currentUser.id) {
-              continue;
+          Utility.each(Identity.contacts, function(contact, index, contacts) {
+            if (contact.id === Identity.currentUser.id) {
+              return;
             }
-            Communication.listen(Identity.currentUser, Identity.contacts[contact]);
 
             (function(contact) {
+              Communication.listen(Identity.currentUser, contact);
+
               var sendStatusUpdate = function() {
-                Communication.sendStatusUpdate(Identity.currentUser, Identity.contacts[contact]).catch(function(error) {
-                  if(error === Constants.errorTypes.timeout && Identity.contacts[contact].status !== Constants.userStatus.offline) {
-                    Identity.contacts[contact].status = Constants.userStatus.offline;
+                Communication.sendStatus(Identity.currentUser, contact).catch(function(error) {
+                  if(error === Constants.errorTypes.timeout && contact.status !== Constants.userStatus.offline) {
+                    contact.status = Constants.userStatus.offline;
                   }
                 });
               };
               sendStatusUpdate();
               $interval(sendStatusUpdate, 15000);
             })(contact);
-          }
+          });
         }.bind(this)).catch($log.error);
       }
       return connectPromise;
