@@ -4,31 +4,33 @@
        ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
     {{user.name}}
   </accordion-heading>
-  <div class="user-container">
     <form class="form-horizontal" role="form">
-      <div class="form-group">
-        <label class="col-xs-2 control-label" for="id">ID</label>
-        <div class="col-xs-10">
-          <input type="text" class="form-control" id="id" ng-model="user.id" ng-readonly="true" ng-click-select>
+      <div class="user-container">
+        <div class="form-group">
+          <label class="col-xs-2 control-label" for="id">ID</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" id="id" ng-model="user.id" ng-readonly="true" ng-click-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 control-label" for="name">Name</label>
+          <div class="col-xs-10">
+            <input type="text" class="form-control" id="name" ng-model="user.name">
+          </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-xs-2 control-label" for="name">Name</label>
-        <div class="col-xs-10">
-          <input type="text" class="form-control" id="name" ng-model="user.name">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-xs-6">
-          <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-show="user.keypair">Delete User</button>
-        </div>
-        <div class="col-xs-6" ng-hide="user.keypair">
-          <button type="submit" class="btn btn-primary btn-block" ng-click="createUser()">Create User</button>
-        </div>
-        <div class="col-xs-6" ng-show="user.keypair">
-          <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()">Update</button>
+      <div class="panel-footer">
+        <div class="form-group">
+          <div class="col-xs-6">
+            <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-show="user.keypair">Delete User</button>
+          </div>
+          <div class="col-xs-6" ng-hide="user.keypair">
+            <button type="submit" class="btn btn-primary btn-block" ng-click="createUser()">Create User</button>
+          </div>
+          <div class="col-xs-6" ng-show="user.keypair">
+            <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()">Update</button>
+          </div>
         </div>
       </div>
     </form>
-  </div>
 </accordion-group>

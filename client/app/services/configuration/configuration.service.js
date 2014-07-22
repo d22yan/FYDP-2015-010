@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Configuration', function Configuration(Constants, Storage) {
+  .service('Configuration', function Configuration($window, Constants, Storage) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
     var defaults = {
@@ -18,4 +18,6 @@ angular.module('dtmsgApp')
     var storageType = Storage.read(Constants.storageKeys.Configuration.storageType);
     this.storageType = storageType ? storageType : defaults.storageType;
     if (!loginStatus) { Storage.save(Constants.storageKeys.Configuration.storageType, defaults.storageType); }
+
+    this.dragEnabled = $window.innerWidth <= 768;
   });

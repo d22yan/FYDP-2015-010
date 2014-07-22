@@ -5,5 +5,7 @@
     Contacts
   </accordion-heading>
 
-  <a href="#" ng-repeat="contact in contacts" ng-click="contact.conversation.open()"><div class="contact">{{contact.status | uppercase}} - {{contact.name}}</div></a>
+  <div class="contact" ng-repeat="contact in contacts" ng-click="contact.conversation.open()">
+    {{contact.status | uppercase}} - {{contact.name}}
+  </div>
 </accordion-group>

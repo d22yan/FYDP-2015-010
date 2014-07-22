@@ -1,5 +1,10 @@
 <div id="chat-view">
   <tabset>
+    <tab>
+      <tab-heading>
+        <i class="fa fa-home fa-fw"></i>
+      </tab-heading>
+    </tab>
     <tab ng-repeat="contact in contacts" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
       <tab-heading>
         <i class="fa fa-comment fa-fw" ng-show="contact.conversation.hasUnread"></i> {{contact.name}}
@@ -11,18 +16,25 @@
             {{message.senderId | idToName}} said: {{message.content}}
           </div>
         </div>
-      </div>
-      <div class="footer" ng-show="contact.conversation.isOpen" cg-busy="contact.conversation.sendingPromise">
-        <form class="form-horizontal" role="form">
-          <div class="form-group">
-            <div class="col-xs-10">
-              <input type="text" class="form-control" ng-model="contact.conversation.currentMessage">
-            </div>
-            <div class="col-xs-2">
-              <button type="submit" class="btn btn-success btn-block" ng-click="send(contact)">Send</button>
-            </div>
+        <div class="navbar navbar-default navbar-fixed-bottom navbar-send" cg-busy="contact.conversation.sendingPromise">
+          <div class="container-fluid">
+            <form class="navbar-form" role="form">
+              <div class="row">
+                <div class="form-group">
+                  <div class="col-xs-10">
+                    <input type="text" class="form-control" placeholder="Message" ng-model="contact.conversation.currentMessage">
+                  </div>
+                  <div class="col-xs-2">
+                    <button type="submit" class="btn btn-success btn-block" ng-click="send(contact)">
+                      <i class="fa fa-send fa-fw"></i>
+                      <span class="xs-hide">Send</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     </tab>
   </tabset>

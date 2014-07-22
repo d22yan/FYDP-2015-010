@@ -8,7 +8,7 @@ angular.module('dtmsgApp', [
   'ui.router',
   'LocalStorageModule',
   'ngClickSelect',
-  'underscore',
+  'angular-underscore',
   'snap',
   'cgBusy'
 ])

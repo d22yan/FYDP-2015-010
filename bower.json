@@ -20,9 +20,9 @@
     "fontawesome": "~4.1.0",
     "ng-click-select": "~0.1.3",
     "sjcl": "~1.0.0",
-    "angular-underscore-module": "*",
     "angular-busy": "~4.1.0",
-    "angular-moment": "~0.7.1"
+    "angular-moment": "~0.7.1",
+    "angular-underscore": "*"
   },
   "devDependencies": {
     "angular-mocks": ">=1.2.*",

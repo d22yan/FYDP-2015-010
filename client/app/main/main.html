@@ -7,22 +7,24 @@
   </div>
 </div>
 <div snap-content snap-options="{{snapOptions}}" cg-busy="initializationPromise">
-  <div class="navbar navbar-default navbar-fixed-top">
+  <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-2 pull-left">
-          <button type="button" class="btn navbar-btn" snap-toggle>
-            <i class="fa fa-users fa-fw"></i>
+          <button type="button" class="btn btn-info navbar-btn btn-block" snap-toggle>
+            <i class="fa fa-user fa-fw"></i>
             <span class="xs-hide">People</span>
           </button>
         </div>
-        <div class="col-xs-2 col-lg-1 pull-right">
-          <button type="button" class="btn navbar-btn pull-right" snap-toggle="right">
+        <div class="col-xs-2 pull-right">
+          <button type="button" class="btn btn-info navbar-btn btn-block" snap-toggle="right">
             <i class="fa fa-bars fa-fw"></i>
             <span class="xs-hide">Options</span>
           </button>
         </div>
-        <a class="navbar-brand">Distributed Messaging</a>
+        <div class="col-xs-8">
+          <div class="navbar-brand text-center">Distributed Messaging</div>
+        </div>
       </div>
     </div>
   </div>

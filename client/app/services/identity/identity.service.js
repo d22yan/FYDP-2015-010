@@ -5,8 +5,6 @@ angular.module('dtmsgApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.currentUser = {};
 
-
-
     this.contacts = {
       '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8': {
         id: '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', name: 'Seed',

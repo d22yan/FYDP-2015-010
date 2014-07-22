@@ -1,5 +1,7 @@
 @import 'bootstrap/less/bootstrap.less';
 @import 'font-awesome/less/font-awesome.less';
+@import '../assets/themes/yeti-variables.less';
+@import '../assets/themes/yeti-bootswatch.less';
 
 @icon-font-path: '/bower_components/bootstrap/fonts/';
 @fa-font-path: '/bower_components/font-awesome/fonts';
@@ -37,36 +39,14 @@
   padding: 0;
 }
 
-/* Space out content a bit */
-body {
-  padding-top: @navbar-height;
-  padding-bottom: 20px;
-}
-
 .snap-content {
   background-color: white;
-  box-shadow: 0px 0px 4px #888888;
-}
-
-.panel-group .panel {
-  border-radius: 0px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
 }
 
 .panel-body {
   padding: 0px;
 }
-
-.user-container {
-  padding: 12px;
-}
-
-.contact {
-  box-sizing: border-box;
-  padding: 12px;
-  border-bottom: 1px solid #dddddd;
-}
-
-
 
 // injector
 @import 'chat/chat.less';
