@@ -9,4 +9,8 @@ angular.module('dtmsgApp')
     this.now = function () {
       return (new $moment()).valueOf();
     };
+
+    this.fromNow = function (time) {
+      return (new $moment(time)).fromNow();
+    };
   });

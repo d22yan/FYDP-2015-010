@@ -91,7 +91,7 @@
       <div id="chat-{{contact.name}}" ng-show="contact.conversation.isOpen">
         <div class="chat-wrap">
           <div ng-repeat="message in contact.conversation.messages">
-            {{message.from | idToName : true}} said <span am-time-ago="message.time" am-preproccess="unix"></span> : {{message.message}}
+            {{message.from | idToName : true}} said {{message.time | unixToTimeAgo}}: {{message.message}}
           </div>
         </div>
         <div class="navbar navbar-default navbar-fixed-bottom navbar-send" cg-busy="contact.conversation.sendingPromise">
