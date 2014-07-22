@@ -30,6 +30,11 @@ angular.module('dtmsgApp')
         id: 'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9', name: 'Danny',
         status: Constants.userStatus.offline,
         conversation: Conversation.conversations['bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9']
+      },
+      'da40d455523704cdce91dccb565332310c9b46b5e6b7fe703af71b0229d429af': {
+        id: 'da40d455523704cdce91dccb565332310c9b46b5e6b7fe703af71b0229d429af', name: 'Asif Laptop',
+        status: Constants.userStatus.offline,
+        conversation: Conversation.conversations['da40d455523704cdce91dccb565332310c9b46b5e6b7fe703af71b0229d429af']
       }
     };
 

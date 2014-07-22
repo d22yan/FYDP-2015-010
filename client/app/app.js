@@ -9,6 +9,8 @@ angular.module('dtmsgApp', [
   'LocalStorageModule',
   'ngClickSelect',
   'angular-underscore',
+  'angularMoment',
+  'angular-momentjs',
   'snap',
   'cgBusy'
 ])

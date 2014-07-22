@@ -7,7 +7,7 @@
     </div>
   </accordion-heading>
 
-  <div class="contact" ng-repeat="contact in contacts" ng-click="contact.conversation.open()">
+  <div class="contact" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
     {{contact.status | uppercase}} - {{contact.name}}
   </div>
 </accordion-group>

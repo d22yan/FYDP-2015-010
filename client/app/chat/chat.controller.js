@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .controller('ChatCtrl', function ($scope, $log, Identity, Communication) {
+  .controller('ChatCtrl', function ($scope, $log, Identity, Communication, Time) {
+    $scope.home = {
+      isActive: true
+    };
+
     $scope.user = Identity.currentUser;
     $scope.contacts = Identity.contacts;
 
@@ -14,5 +18,10 @@ angular.module('dtmsgApp')
         });
         contact.conversation.currentMessage = '';
       }).catch($log.error);
+    };
+
+    $scope.close = function(conversation) {
+      conversation.isOpen = false;
+      conversation.isActive = false;
     };
   });
