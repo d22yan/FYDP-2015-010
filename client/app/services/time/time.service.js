@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .factory('Time', function ($log, $moment) {
+  .service('Time', function Time($log, $moment) {
     // Service logic
     // ...
 
     // Public API here
-    return $moment;
+    this.now = function () {
+      return (new $moment()).valueOf();
+    };
   });

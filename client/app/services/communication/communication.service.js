@@ -101,6 +101,7 @@ angular.module('dtmsgApp')
           if (packet.js.m) {
             contact.conversation.messages.push({
               time: packet.js.t,
+              from: packet.from.hashname,
               message: packet.js.m
             });
           } else if (packet.js.s) {
@@ -136,17 +137,26 @@ angular.module('dtmsgApp')
     };
 
     this.sendMessage = function (user, contact) {
+      var currentTime = Time.now();
       var payload = {
-        t: Time.valueOf(),
+        t: Time.now(),
         m: contact.conversation.currentMessage
       };
 
-      return this.send(user, contact, this.createSendChannel(user.id, contact.id), payload);
+      return this.send(user, contact, this.createSendChannel(user.id, contact.id), payload).then(function(packet) {
+        $log.info(packet);
+        contact.conversation.messages.push({
+          time: currentTime,
+          from: user.id,
+          message: contact.conversation.currentMessage
+        });
+        contact.conversation.currentMessage = '';
+      }).catch($log.error);
     };
 
     this.sendStatus = function (user, contact) {
       var payload = {
-        t: Time.valueOf(),
+        t: Time.now(),
         s: user.status
       };
 
@@ -155,7 +165,7 @@ angular.module('dtmsgApp')
 
     this.sendInvite = function (user, contact) {
       var payload = {
-        t: Time.valueOf(),
+        t: Time.now(),
         i: user.name
       };
 

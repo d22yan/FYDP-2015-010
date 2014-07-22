@@ -20,6 +20,7 @@ angular.module('dtmsgApp')
       timeout: 'timeout'
     },
     defaultUserName: 'New User',
+    abbreviatedName: 'You',
     userStatus: {
       online: 'online',
       offline: 'offline'

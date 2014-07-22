@@ -10,14 +10,7 @@ angular.module('dtmsgApp')
     $scope.contacts = Identity.contacts;
 
     $scope.send = function (contact) {
-      contact.conversation.sendingPromise = Communication.sendMessage(Identity.currentUser, contact).then(function(result) {
-        $log.info(result);
-        contact.conversation.messages.push({
-          time: Time.valueOf(),
-          message: contact.conversation.currentMessage
-        });
-        contact.conversation.currentMessage = '';
-      }).catch($log.error);
+      contact.conversation.sendingPromise = Communication.sendMessage(Identity.currentUser, contact);
     };
 
     $scope.close = function(conversation) {
