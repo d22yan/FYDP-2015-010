@@ -1,9 +1,13 @@
 <accordion-group is-open="accordion.open">
-  <accordion-heading>
-    <i class="pull-left fa fa-fw"
-       ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
-    {{user.name}}
-  </accordion-heading>
+
+    <accordion-heading>
+      <div class="panel-heading-inner">
+        <i class="pull-left fa fa-fw"
+           ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
+        {{user.name}}
+      </div>
+    </accordion-heading>
+
     <form class="form-horizontal" role="form">
       <div class="user-container">
         <div class="form-group">
