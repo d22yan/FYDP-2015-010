@@ -4,7 +4,7 @@
       <tab-heading>
         <i class="fa fa-home fa-fw"></i>
       </tab-heading>
-      <div id="chat-home">
+      <div id="chat-home" class="tab-messages">
         Home Screen
         <div>Home Screen</div>
         <div>Home Screen</div>
@@ -77,9 +77,9 @@
         <div>Home Screen</div>
       </div>
 
-      <div class="navbar navbar-default navbar-fixed-bottom">
+      <div class="tab-footer navbar navbar-default navbar-fixed-bottom">
         <div class="container-fluid">
-          <div class="navbar-brand text-center">By uWaterloo ECE Group 10: Asif Arman, Danny Yan, Lewis Liu, SangHoon Lee</div>
+          <div class="navbar-brand text-center">uWaterloo ECE Group 10<span class="xs-hide">: Asif Arman, Danny Yan, Lewis Liu, SangHoon Lee</span></div>
         </div>
       </div>
     </tab>
@@ -89,12 +89,12 @@
         <a href="#" ng-click="close(contact.conversation)"><i class="fa fa-times fa-fw"></i></a>
       </tab-heading>
       <div id="chat-{{contact.name}}" ng-show="contact.conversation.isOpen">
-        <div class="chat-wrap">
+        <div class="tab-messages">
           <div ng-repeat="message in contact.conversation.messages">
             {{message.from | idToName : true}} said {{message.time | unixToTimeAgo}}: {{message.message}}
           </div>
         </div>
-        <div class="navbar navbar-default navbar-fixed-bottom navbar-send" cg-busy="contact.conversation.sendingPromise">
+        <div class="tab-footer navbar navbar-default navbar-fixed-bottom navbar-send" cg-busy="contact.conversation.sendingPromise">
           <div class="container-fluid">
             <form class="navbar-form" role="form">
               <div class="row">
