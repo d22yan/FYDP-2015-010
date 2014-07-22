@@ -6,8 +6,27 @@
       Contacts
     </div>
   </accordion-heading>
+  <ul class="contact-list list-group">
+    <li class="contact list-group-item" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
+      <div class="row">
+        <div class="col-xs-8">
+          <div>
+            <i class="status-indicator fa fa-square fa-fw"
+               ng-class="{'status-online': contact.status === 'online', 'status-offline': contact.status === 'offline'}"></i>
+            <span class="contact-name">{{contact.name}}</span>
+          </div>
+          <div>
+            Last update: <span ng-hide="contact.lastUpdate">Never</span><span am-time-ago="contact.lastUpdate" ng-show="contact.lastUpdate"></span>
+          </div>
 
-  <div class="contact" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
-    {{contact.status | uppercase}} - {{contact.name}}
-  </div>
+        </div>
+        <div class="col-xs-4">
+          <button type="button" class="btn btn-primary pull-right">
+            <i class="fa fa-info fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ul>
+
 </accordion-group>
