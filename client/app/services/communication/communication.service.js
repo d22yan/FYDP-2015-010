@@ -44,10 +44,10 @@ angular.module('dtmsgApp')
         $log.info(this.session);
 
         var channelName = Constants.channelName.prefix + Constants.channelName.invite;
-        var deferredInvite = $q.defer();
 
         //handles new invites
         function packetHandler (error, packet, channel, callback) {
+          var deferredInvite = $q.defer();
           if (error) {
             return deferredInvite.reject('failed to listen to invites due to: ' + error);
           }
@@ -63,23 +63,25 @@ angular.module('dtmsgApp')
 
         //listen for new invites
         this.session.listen(channelName, function (error, packet, channel, callback) {
-          if (!packet.js.i) {
-            return $log.info('received non-invite packet on invite channel');
-          }
-
           packetHandler(error, packet, channel, callback).then(function(packet) {
-            var id = packet.from.hashname;
+            if (!packet.js.i) {
+              return $log.info('received non-invite packet on invite channel');
+            }
+
+            if (Identity.getContact(packet.from.hashname)) {
+              return $log.info('received invite from existing contact: ' + packet.from.hashname);
+            }
 
             Conversation.conversations.push({
-              id: id,
+              id: packet.from.hashname,
               isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
               sendingPromise: {}, lastOpened: null
             });
 
             Identity.contacts.push({
-              id: id, name: packet.js.i,
+              id: packet.from.hashname, name: packet.js.i,
               status: Constants.userStatus.invite, lastUpdate: null,
-              conversation: Conversation.getConversation(id)
+              conversation: Conversation.getConversation(packet.from.hashname)
             });
           });
         });
