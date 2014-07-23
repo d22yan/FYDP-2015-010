@@ -36,7 +36,7 @@ angular.module('dtmsgApp')
     $scope.acceptInvite = function(contact) {
        Communication.sendInvite(Identity.currentUser, contact).then(
          function() {
-            Initialization.initializeContact(contact);
+            Communication.initializeContact(contact);
          }
        );
     };
