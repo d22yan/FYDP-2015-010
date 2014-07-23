@@ -7,6 +7,20 @@
     </div>
   </accordion-heading>
   <ul class="contact-list list-group">
+    <li class="contact list-group-item">
+      <div class="row">
+        <div class="form-group">
+          <div class="col-xs-9">
+            <input type="text" class="form-control" placeholder="Contact ID" ng-model="newContactID">
+          </div>
+          <div class="col-xs-3">
+            <button type="submit" class="btn btn-success btn-block" ng-click="invite(newContactID)">
+              <i class="fa fa-plus fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </li>
     <li class="contact list-group-item" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
       <div class="row">
         <div class="col-xs-9">
@@ -20,7 +34,7 @@
           </div>
         </div>
         <div class="col-xs-3">
-          <button type="button" class="btn btn-primary pull-right">
+          <button type="button" class="btn btn-primary btn-block">
             <i class="fa fa-info fa-fw"></i>
           </button>
         </div>

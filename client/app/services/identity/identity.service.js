@@ -1,9 +1,33 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Identity', function Identity($log, Storage, Communication, Constants, Conversation, Utility) {
+  .service('Identity', function Identity($rootScope, $log, Storage, Constants, Conversation, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.currentUser = {};
+
+//    $rootScope.$watch(function(){
+//      return Communication.receivedInvitePromises;
+//    }, function(newPromises) {
+//      if (newPromises.length === 0) {
+//        return;
+//      }
+//
+//      newPromises.pop().then(function (packet) {
+//        var id = packet.from.hashname;
+//
+//        Conversation.conversations.push({
+//          id: id,
+//          isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
+//          sendingPromise: {}, lastOpened: null
+//        });
+//
+//        this.contacts.push({
+//          id: id, name: packet.js.i,
+//          status: Constants.userStatus.invite, lastUpdate: null,
+//          conversation: Conversation.getConversation(id)
+//        });
+//      }.bind(this)).catch($log.error);
+//    });
 
     this.contacts = [
       {
@@ -15,11 +39,6 @@ angular.module('dtmsgApp')
         id: '020e574ea352bf6a78063d0996840f747fd6a738346481385c6a372ae11712b0', name: 'Asif',
         status: Constants.userStatus.offline, lastUpdate: null,
         conversation: Conversation.getConversation('020e574ea352bf6a78063d0996840f747fd6a738346481385c6a372ae11712b0')
-      },
-      {
-        id: 'b808c525f57d2a8b4dd4b75f4f27181095dc2f9f567165b3e7a7dd34a6881285', name: 'Lewis',
-        status: Constants.userStatus.offline, lastUpdate: null,
-        conversation: Conversation.getConversation('b808c525f57d2a8b4dd4b75f4f27181095dc2f9f567165b3e7a7dd34a6881285')
       },
       {
         id: '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac', name: 'SangHoon',
@@ -44,19 +63,14 @@ angular.module('dtmsgApp')
       });
     };
 
-    this.createUser = function(user) {
-      return Communication.initialize().then(function (newUser) {
-        this.updateUser({
-          id: newUser.hashname,
-          keypair: newUser.id,
-          name: user.name,
-          status: Constants.userStatus.online
-        });
-      }.bind(this)).catch(function (error) {
-        $log.error('unable to create user');
-        $log.error(error);
+    this.createUser = function(newUser) {
+      this.updateUser({
+        id: newUser.hashname,
+        keypair: newUser.id,
+        name: this.currentUser.name,
+        status: Constants.userStatus.online
       });
-    };
+    }.bind(this);
 
     this.updateUser = function(user) {
       if (user !== this.currentUser) {

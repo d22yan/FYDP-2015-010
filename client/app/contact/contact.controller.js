@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .controller('ContactCtrl', function ($scope, Identity, Time) {
+  .controller('ContactCtrl', function ($scope, Communication, Identity, Conversation, Constants, Time) {
     $scope.accordion = {
       open: true
     };
@@ -12,5 +12,23 @@ angular.module('dtmsgApp')
       conversation.isOpen = true;
       conversation.isActive = true;
       conversation.lastOpened = Time.now();
+    };
+
+    $scope.newContactID = '';
+
+    $scope.invite = function(id) {
+      Conversation.conversations.push({
+        id: id,
+        isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
+        sendingPromise: {}, lastOpened: null
+      });
+
+      Identity.contacts.push({
+        id: id, name: 'Invited',
+        status: Constants.userStatus.offline, lastUpdate: null,
+        conversation: Conversation.getConversation(id)
+      });
+
+      Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
     };
   });

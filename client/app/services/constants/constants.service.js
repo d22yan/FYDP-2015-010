@@ -23,7 +23,11 @@ angular.module('dtmsgApp')
     abbreviatedName: 'You',
     userStatus: {
       online: 'online',
-      offline: 'offline'
+      busy: 'busy',
+      away: 'away',
+      offline: 'offline',
+      invite: 'invite',
+      invited: 'invited'
     },
     storageType: {
       local: 'localStorage',

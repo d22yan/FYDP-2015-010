@@ -10,7 +10,8 @@ angular.module('dtmsgApp')
 
     $scope.createUser = function() {
       angular.copy(
-        Identity.createUser($scope.user)
+        Communication.initialize()
+          .then(Identity.createUser)
           .then(Initialization.initialize)
           .catch($log.error),
         Initialization.initializationPromise
