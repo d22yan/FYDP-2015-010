@@ -83,7 +83,7 @@
         </div>
       </div>
     </tab>
-    <tab ng-repeat="contact in contacts" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
+    <tab ng-repeat="contact in contacts | orderBy : 'conversation.lastOpened' : true" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
       <tab-heading>
         <span class="badge">{{contact.conversation.messages | messagesToUnreadCount}}</span> {{contact.name}}
         <a href="#" ng-click="close(contact.conversation)"><i class="fa fa-times fa-fw"></i></a>
