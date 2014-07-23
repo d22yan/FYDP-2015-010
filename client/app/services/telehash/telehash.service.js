@@ -8182,33 +8182,25 @@
   }
 },{"./seeds.json":22}],22:[function(require,module,exports){
   module.exports={
-    "ce9d2cfccf34345b1c1a1c5b6c72cb0cf625ec88cdc64b54921303b26a655949": {
-      "admin":"http://github.com/quartzjer",
+    "5c63d7fb6a101471f15064ed05141b342cce9f3bebeb1616d8fc83dab35e61d5": {
       "paths": [
         {
           "type": "http",
-          "http": "http://208.68.164.253:42424"
+          "http": "http://azure.lewisl.net:42424"
         },
         {
           "type": "ipv4",
-          "ip": "208.68.164.253",
-          "port": 42424
-        },
-        {
-          "type": "ipv6",
-          "ip": "2605:da00:5222:5269:230:48ff:fe35:6572",
+          "ip": "23.100.21.191",
           "port": 42424
         }
       ],
       "parts": {
-        "3a": "61b979399a285ec8a7159ea75f2953090612f26fe8ec80b4bdd3d746c7cba1f8",
-        "2a": "df99cf38a79eb730b7b5c583faa4bcb21ccb044b5548df27837e608a3da8c57a",
-        "1a": "4dd170c2523653dfaca8d2eca6c10ef4f703b3a95f4b77f57b81476d037e40b1"
+        "2a": "8cb716b34f138d72d32ba1d79cab4bb0d713bc3b959936b2273be29a15d9e437",
+        "1a": "0360efab9c139a9e6cd49b945ce93efef3f39b7f0238bb5e087ea0ed4b935835"
       },
       "keys": {
-        "3a": "azQ23XvFzj3238HlcUNsnIntl5VJY7ABMSQZWB6SFgo=",
-        "2a": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6mvKCqjGj7PI2o+NXLRdgwDXx98271HN01ut873FrbJ4kkk3OmA//TpYTRKaE6xmeetXZnocci4q6X09TbfKpm2eNK0d898vWiYpGiRvQuy/5nUGM2bge3CPOS3wQZWv5ZSvpRkhGufekzCg5p6WpdUG0u9D382E9LzdLidFnzHvIdfp0eOc2EMcX7/JSj5w7BbwsXfZNaWpOkUAQEYfPi/qF/teo0y8cTh70JVufCRDx+2/FtA/c8+JpjtgeCZoFO3bYuKjCQiYmm4Zqcu1A6DYttCPkSKPXjirn9pdZFZBRH7IS7Mj5AJo2/L9nFYyLAE5xwMpBCE2rCY6wyzs7wIDAQAB",
-        "1a": "vRQvjqB6PM7QevqIW2YF3hY/AgDlhP7d0YDo1H6dZJAcYxbcsS/1Qw=="
+        "2a": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxlm1hU1Oks9sHFbAiwevgjwirVmyEjxNmMUNV3lZZrejk3K0J59AOpt4ohEsGzySIumALLGpDSX+HAiuvEQF1PQnZW1kqtaGyiHymQH0V56FN5RYzpBXIOkE+eel2Ge3WhIGDP7v2jg6rIL3h0b+H9fbX3ixfPQC0NE796wB2xu5thX7ylM3DSFfcFUGh3P1WDXgejluAsw8AzSC1GjvH+Bw0gtNA7aFHiyrxhvAc5EEaeBQbbdBBANsb41ToWjhnFdgWEZUHFGVXdh0WyHDMNiSp+9JMHpbgb/zct+dVCGMK5HEDB05nPRadLkSbQIUUQLxEYUVC+Yvfangi0NSwQIDAQAB",
+        "1a": "PK+9AzIMgPMTD+rr8v1Oct2KYRslcr3nNznM7jZgWmDneqSFfqI50Q=="
       }
     }
   }

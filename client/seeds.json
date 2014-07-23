@@ -1,0 +1,23 @@
+{
+  "5c63d7fb6a101471f15064ed05141b342cce9f3bebeb1616d8fc83dab35e61d5": {
+    "paths": [
+      {
+        "type": "http",
+        "http": "http://azure.lewisl.net:42424"
+      },
+      {
+        "type": "ipv4",
+        "ip": "23.100.21.191",
+        "port": 42424
+      }
+    ],
+    "parts": {
+      "2a": "8cb716b34f138d72d32ba1d79cab4bb0d713bc3b959936b2273be29a15d9e437",
+      "1a": "0360efab9c139a9e6cd49b945ce93efef3f39b7f0238bb5e087ea0ed4b935835"
+    },
+    "keys": {
+      "2a": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxlm1hU1Oks9sHFbAiwevgjwirVmyEjxNmMUNV3lZZrejk3K0J59AOpt4ohEsGzySIumALLGpDSX+HAiuvEQF1PQnZW1kqtaGyiHymQH0V56FN5RYzpBXIOkE+eel2Ge3WhIGDP7v2jg6rIL3h0b+H9fbX3ixfPQC0NE796wB2xu5thX7ylM3DSFfcFUGh3P1WDXgejluAsw8AzSC1GjvH+Bw0gtNA7aFHiyrxhvAc5EEaeBQbbdBBANsb41ToWjhnFdgWEZUHFGVXdh0WyHDMNiSp+9JMHpbgb/zct+dVCGMK5HEDB05nPRadLkSbQIUUQLxEYUVC+Yvfangi0NSwQIDAQAB",
+      "1a": "PK+9AzIMgPMTD+rr8v1Oct2KYRslcr3nNznM7jZgWmDneqSFfqI50Q=="
+    }
+  }
+}
