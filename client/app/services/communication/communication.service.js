@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($rootScope, $q, $log, Identity, Conversation, Telehash, Constants, Time, $interval) {
+  .service('Communication', function Communication($rootScope, $q, $log, Identity, Conversation, Telehash, Constants, Time, Utility,$interval) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
 
@@ -101,7 +101,23 @@ angular.module('dtmsgApp')
       });
     };
     
-     this.initializeContact = function(contact) {
+    this.initializeContact = function(contact) {
+      $rootScope.$watch(
+        function(){
+          return contact.conversation.isActive;
+        },
+        function(isActive){
+          if (!isActive) {
+            return;
+          }
+          Utility.each(contact.conversation.messages, function(message){
+            if(!message.read){
+              message.read = true;
+            }
+          });
+        }
+      );
+
       this.listen(Identity.currentUser, contact);
       var sendStatusUpdate = function() {
         this.sendStatus(Identity.currentUser, contact).catch(function(error) {
@@ -147,7 +163,7 @@ angular.module('dtmsgApp')
               time: packet.js.t,
               from: packet.from.hashname,
               message: packet.js.m,
-              read: false || contact.conversation.isActive
+              read: contact.conversation.isActive
             });
           } else if (packet.js.s) {
             contact.status = packet.js.s;

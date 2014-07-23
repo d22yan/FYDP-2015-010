@@ -23,7 +23,7 @@
     </li>
     <li class="contact list-group-item" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
       <div class="row">
-        <div ng-class="{'col-xs-6': (contact.status === 'invited' || contact.status === 'invite'), 'col-xs-9': !(contact.status === 'invited' || contact.status=== 'invite')}">
+        <div ng-class="{'col-xs-6': contact.status === 'invite', 'col-xs-9': contact.status !== 'invite'}">
           <div>
             <i class="status-indicator fa fa-square fa-fw"
                ng-class="{'status-online': contact.status === 'online', 'status-offline': contact.status === 'offline'}"></i>
@@ -33,17 +33,17 @@
             Last update: {{contact.lastUpdate | unixToTimeAgo}}
           </div>
         </div>
-        <div class="col-xs-3" ng-show="contact.status === 'invited' || contact.status === 'invite'">
+        <div class="col-xs-3" ng-show="contact.status === 'invite'">
           <button type="button" class="btn btn-success btn-block" ng-click="acceptInvite(contact)">
             <i class="fa fa-check fa-fw"></i>
           </button>
         </div>
-        <div class="col-xs-3" ng-show="contact.status === 'invited' || contact.status === 'invite'">
+        <div class="col-xs-3" ng-show="contact.status === 'invite'">
           <button type="button" class="btn btn-danger btn-block" ng-click="rejectInvite(contact)">
             <i class="fa fa-times fa-fw"></i>
           </button>
         </div>
-        <div class="col-xs-3" ng-hide="contact.status === 'invited' || contact.status === 'invite'">
+        <div class="col-xs-3" ng-hide="contact.status === 'invite'">
           <button type="button" class="btn btn-primary btn-block">
             <i class="fa fa-info fa-fw"></i>
           </button>
