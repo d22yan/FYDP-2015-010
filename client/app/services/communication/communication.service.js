@@ -104,7 +104,9 @@ angular.module('dtmsgApp')
       this.listen(Identity.currentUser, contact);
       var sendStatusUpdate = function() {
         this.sendStatus(Identity.currentUser, contact).catch(function(error) {
-          if(error === Constants.errorTypes.timeout && contact.status !== Constants.userStatus.offline) {
+          if(error === Constants.errorTypes.timeout && 
+              contact.status !== Constants.userStatus.offline && 
+              contact.status !== Constants.userStatus.invited) {
             contact.status = Constants.userStatus.offline;
           }
         });
