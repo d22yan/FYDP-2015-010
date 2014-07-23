@@ -27,9 +27,9 @@ angular.module('dtmsgApp')
         conversation: Conversation.getConversation('03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac')
       },
       {
-        id: 'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9', name: 'Danny',
+        id: '1036186c5b22b24886b894715ebf4558e93742186be4713f7b36e7eeba5ad4d3', name: 'Danny',
         status: Constants.userStatus.offline, lastUpdate: null,
-        conversation: Conversation.getConversation('bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9')
+        conversation: Conversation.getConversation('1036186c5b22b24886b894715ebf4558e93742186be4713f7b36e7eeba5ad4d3')
       },
       {
         id: 'da40d455523704cdce91dccb565332310c9b46b5e6b7fe703af71b0229d429af', name: 'Asif Laptop',
@@ -62,7 +62,7 @@ angular.module('dtmsgApp')
       if (user !== this.currentUser) {
         angular.copy(user, this.currentUser);
       }
-
+      $log.info(user);
       return Storage.save(Constants.storageKeys.Identity.currentUser, user);
     };
 

@@ -26,7 +26,7 @@ angular.module('dtmsgApp')
         sendingPromise: {}, channel: null, lastOpened: null
       },
       {
-        id: 'bac8f97efae606179f747a69aad5d20dfa5ca5add3702e2f865f5501f5f32cd9',
+        id: '1036186c5b22b24886b894715ebf4558e93742186be4713f7b36e7eeba5ad4d3',
         isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
         sendingPromise: {}, channel: null, lastOpened: null
       },
