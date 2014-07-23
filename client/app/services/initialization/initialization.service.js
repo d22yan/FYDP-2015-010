@@ -24,21 +24,13 @@ angular.module('dtmsgApp')
             }
 
             (function(contact) {
-              Communication.listen(Identity.currentUser, contact);
-
-              var sendStatusUpdate = function() {
-                Communication.sendStatus(Identity.currentUser, contact).catch(function(error) {
-                  if(error === Constants.errorTypes.timeout && contact.status !== Constants.userStatus.offline) {
-                    contact.status = Constants.userStatus.offline;
-                  }
-                });
-              };
-              sendStatusUpdate();
-              $interval(sendStatusUpdate, 15000);
-            })(contact);
+              Communication.initializeContact(contact);
+            })(contact).bind(this);
           });
         }.bind(this)).catch($log.error);
       }
       return connectPromise;
     };
+        
+    
   });

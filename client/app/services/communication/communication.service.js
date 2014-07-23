@@ -62,13 +62,17 @@ angular.module('dtmsgApp')
         }
 
         //listen for new invites
-        this.session.listen(channelName, function (error, packet, channel, callback) {
+        this.session.listen(channelName, function (error, packet, channel, callback) { 
           packetHandler(error, packet, channel, callback).then(function(packet) {
             if (!packet.js.i) {
               return $log.info('received non-invite packet on invite channel');
             }
-
-            if (Identity.getContact(packet.from.hashname)) {
+            
+            var existingContact = Identity.getContact(packet.from.hashname);
+            if (existingContact) {
+              if(existingContact.status === Constants.userStatus.invited) {
+                this.initializeContact(existingContact);
+              }
               return $log.info('received invite from existing contact: ' + packet.from.hashname);
             }
 
@@ -94,6 +98,19 @@ angular.module('dtmsgApp')
         $log.error('unable to start listening');
         $log.error(error);
       });
+    };
+    
+     this.initializeContact = function(contact) {
+      this.listen(Identity.currentUser, contact);
+      var sendStatusUpdate = function() {
+        this.sendStatus(Identity.currentUser, contact).catch(function(error) {
+          if(error === Constants.errorTypes.timeout && contact.status !== Constants.userStatus.offline) {
+            contact.status = Constants.userStatus.offline;
+          }
+        });
+      }.bind(this);
+      sendStatusUpdate();
+      $interval(sendStatusUpdate, 15000);
     };
 
     this.listen = function (user, contact) {

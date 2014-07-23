@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .controller('ContactCtrl', function ($scope, Communication, Identity, Conversation, Constants, Time) {
+  .controller('ContactCtrl', function ($scope, Initialization, Communication, Identity, Conversation, Constants, Time) {
     $scope.accordion = {
       open: true
     };
@@ -34,12 +34,11 @@ angular.module('dtmsgApp')
     };
 
     $scope.acceptInvite = function(contact) {
-      // Communication.sendInvite(Identity.currentUser, contact).then(
-      //   function() {
-          
-      //   }
-      // );
-
+       Communication.sendInvite(Identity.currentUser, contact).then(
+         function() {
+            Initialization.initializeContact(contact);
+         }
+       );
     };
 
     $scope.rejectInvite = function(contact) {
