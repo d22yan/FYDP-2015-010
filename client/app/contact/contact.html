@@ -23,19 +23,21 @@
     </li>
     <li class="contact list-group-item" ng-repeat="contact in contacts" ng-click="open(contact.conversation)">
       <div class="row">
-        <div class="col-xs-9">
+        <div class="col-xs-6">
           <div>
             <i class="status-indicator fa fa-square fa-fw"
                ng-class="{'status-online': contact.status === 'online', 'status-offline': contact.status === 'offline'}"></i>
             <span class="contact-name">{{contact.name}}</span>
           </div>
-          <div>
-            Last update: {{contact.lastUpdate | unixToTimeAgo}}
-          </div>
         </div>
         <div class="col-xs-3">
-          <button type="button" class="btn btn-primary btn-block">
-            <i class="fa fa-info fa-fw"></i>
+          <button type="button" class="btn btn-success btn-block" ng-click="acceptInvite(contact)">
+            <i class="fa fa-check fa-fw"></i>
+          </button>
+        </div>
+        <div class="col-xs-3">
+          <button type="button" class="btn btn-danger btn-block" ng-click="rejectInvite(contact)">
+            <i class="fa fa-times fa-fw"></i>
           </button>
         </div>
       </div>

@@ -7,10 +7,18 @@ angular.module('dtmsgApp')
 
     this.contacts = [];
 
-    this.getContact = this.getConversation = function(id) {
+    this.getContact = function(id) {
       return Utility.find(this.contacts, function(contact) {
         return contact.id === id;
       });
+    };
+
+    this.removeContact = function(id) {
+      $log.info('removeContact');
+      var index = this.contacts.indexOf(this.getContact(id));
+      $log.info(index);
+      this.contacts.splice(index, 1);
+      $rootScope.$apply();
     };
 
     this.createUser = function(newUser) {

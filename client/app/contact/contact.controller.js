@@ -30,5 +30,20 @@ angular.module('dtmsgApp')
       });
 
       Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
+
     };
+
+    $scope.acceptInvite = function(contact) {
+      // Communication.sendInvite(Identity.currentUser, contact).then(
+      //   function() {
+          
+      //   }
+      // );
+
+    };
+
+    $scope.rejectInvite = function(contact) {
+      Identity.removeContact(contact.id);
+    };
+
   });
