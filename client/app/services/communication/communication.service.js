@@ -88,7 +88,7 @@ angular.module('dtmsgApp')
               conversation: Conversation.getConversation(packet.from.hashname)
             });
           }.bind(this));
-        });
+        }.bind(this));
 
         //verification by sending empty message to always-on seed
         //this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
