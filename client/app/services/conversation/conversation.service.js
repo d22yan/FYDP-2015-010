@@ -4,38 +4,7 @@ angular.module('dtmsgApp')
   .service('Conversation', function Conversation(Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 
-    this.conversations = [
-      {
-        id: '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      },
-      {
-        id: '020e574ea352bf6a78063d0996840f747fd6a738346481385c6a372ae11712b0',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      },
-      {
-        id: 'b808c525f57d2a8b4dd4b75f4f27181095dc2f9f567165b3e7a7dd34a6881285',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      },
-      {
-        id: '03350c42e8d78e83919afa8fa20259fe6f50fb218a02c08cf7bf583360eaa8ac',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      },
-      {
-        id: '1036186c5b22b24886b894715ebf4558e93742186be4713f7b36e7eeba5ad4d3',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      },
-      {
-        id: 'da40d455523704cdce91dccb565332310c9b46b5e6b7fe703af71b0229d429af',
-        isOpen: false, isActive: false, unreadCount: 0, open: open, close: close, messages: [], currentMessage: '',
-        sendingPromise: {}, channel: null, lastOpened: null
-      }
-    ];
+    this.conversations = [];
 
     this.getConversation = function(id) {
       return Utility.find(this.conversations, function(conversation) {

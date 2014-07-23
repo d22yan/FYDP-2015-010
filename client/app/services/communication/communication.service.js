@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($rootScope, $q, $log, Identity, Telehash, Constants, Time) {
+  .service('Communication', function Communication($rootScope, $q, $log, Identity, Conversation, Telehash, Constants, Time) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
-    this.receivedInvitePromises = [];
 
     this.createSendChannel = function (userId, contactId) {
       var channelName = userId + contactId;
@@ -68,13 +67,22 @@ angular.module('dtmsgApp')
             return $log.info('received non-invite packet on invite channel');
           }
 
-          packetHandler(error, packet, channel, callback).then(function(newInvitePromise) {
+          packetHandler(error, packet, channel, callback).then(function(packet) {
+            var id = packet.from.hashname;
 
-            this.receivedInvitePromises.push(newInvitePromise);
-            $rootScope.$apply();
-            return newInvitePromise;
-          }.bind(this));
-        }.bind(this));
+            Conversation.conversations.push({
+              id: id,
+              isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
+              sendingPromise: {}, lastOpened: null
+            });
+
+            Identity.contacts.push({
+              id: id, name: packet.js.i,
+              status: Constants.userStatus.invite, lastUpdate: null,
+              conversation: Conversation.getConversation(id)
+            });
+          });
+        });
 
         //verification by sending empty message to always-on seed
         //this.send(user, '20caf602a4f4b9dcb3133062af672d9ac877244c16439cbce93c40629bcfd5e8', '');
