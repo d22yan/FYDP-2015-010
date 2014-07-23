@@ -25,7 +25,7 @@ angular.module('dtmsgApp')
 
       Identity.contacts.push({
         id: id, name: 'Invited',
-        status: Constants.userStatus.offline, lastUpdate: null,
+        status: Constants.userStatus.invited, lastUpdate: null,
         conversation: Conversation.getConversation(id)
       });
 
