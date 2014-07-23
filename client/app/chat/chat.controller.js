@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .controller('ChatCtrl', function ($scope, $log, Identity, Communication, Time) {
+  .controller('ChatCtrl', function ($scope, $log, Identity, Communication, Utility, Time) {
     $scope.home = {
       isActive: true
     };
@@ -17,4 +17,26 @@ angular.module('dtmsgApp')
       conversation.isOpen = false;
       conversation.isActive = false;
     };
+
+    Utility.each(Identity.contacts, function(contact){
+        $scope.$watch(
+            function(){
+                return contact.conversation.isActive;
+            },
+            function(isActive){
+                if (!isActive) {
+                    return;
+                }
+                Utility.each(contact.conversation.messages, function(message){
+                    if(!message.read){
+                        message.read = true;
+                    }
+                });
+            }
+        );
+    });
+    /*
+    $scope.$watch(
+        function(){},
+    );*/
   });

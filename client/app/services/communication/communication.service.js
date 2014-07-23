@@ -102,7 +102,8 @@ angular.module('dtmsgApp')
             contact.conversation.messages.push({
               time: packet.js.t,
               from: packet.from.hashname,
-              message: packet.js.m
+              message: packet.js.m,
+              read: false || contact.conversation.isActive
             });
           } else if (packet.js.s) {
             contact.status = packet.js.s;
@@ -148,7 +149,8 @@ angular.module('dtmsgApp')
         contact.conversation.messages.push({
           time: currentTime,
           from: user.id,
-          message: contact.conversation.currentMessage
+          message: contact.conversation.currentMessage,
+          read: true
         });
         contact.conversation.currentMessage = '';
       }).catch($log.error);

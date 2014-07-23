@@ -85,7 +85,7 @@
     </tab>
     <tab ng-repeat="contact in contacts" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
       <tab-heading>
-        <i class="fa fa-comment fa-fw" ng-show="contact.conversation.hasUnread"></i> {{contact.name}}
+        <span class="badge">{{contact.conversation.messages | messagesToUnreadCount}}</span> {{contact.name}}
         <a href="#" ng-click="close(contact.conversation)"><i class="fa fa-times fa-fw"></i></a>
       </tab-heading>
       <div id="chat-{{contact.name}}" ng-show="contact.conversation.isOpen">
