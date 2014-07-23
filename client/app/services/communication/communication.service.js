@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Communication', function Communication($rootScope, $q, $log, Identity, Conversation, Telehash, Constants, Time) {
+  .service('Communication', function Communication($rootScope, $q, $log, Identity, Conversation, Telehash, Constants, Time, $interval) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.session = null;
 
@@ -87,7 +87,7 @@ angular.module('dtmsgApp')
               status: Constants.userStatus.invite, lastUpdate: null,
               conversation: Conversation.getConversation(packet.from.hashname)
             });
-          });
+          }.bind(this));
         });
 
         //verification by sending empty message to always-on seed
