@@ -98,17 +98,17 @@
           <div class="container-fluid">
             <form class="navbar-form" role="form" ng-submit="send(contact)">
               <div class="row">
-                  <div class="form-group">
-                    <div class="col-xs-10">
-                      <input type="text" class="form-control" placeholder="Message to {{contact.name}}..." ng-model="contact.conversation.currentMessage" required>
-                    </div>
-                    <div class="col-xs-2">
-                      <button type="submit" class="btn btn-success btn-block">
-                        <i class="fa fa-send fa-fw"></i>
-                        <span class="xs-hide">Send</span>
-                      </button>
-                    </div>
+                <div class="form-group">
+                  <div class="col-xs-10">
+                    <input type="text" class="form-control" placeholder="Message to {{contact.name}}..." ng-model="contact.conversation.currentMessage" required>
                   </div>
+                  <div class="col-xs-2">
+                    <button type="submit" class="btn btn-success btn-block">
+                      <i class="fa fa-send fa-fw"></i>
+                      <span class="xs-hide">Send</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </form>
           </div>

@@ -4,22 +4,22 @@ angular.module('dtmsgApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngRoute',
   'ui.bootstrap',
-  'ui.router',
   'LocalStorageModule',
   'ngClickSelect',
   'angular-underscore',
-  'angularMoment',
   'angular-momentjs',
   'snap',
   'cgBusy'
 ])
-  .config(['localStorageServiceProvider', function(localStorageServiceProvider){
-    localStorageServiceProvider.setPrefix('dtmsg');
-  }])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-    $urlRouterProvider
-      .otherwise('/');
+  .config(function ($routeProvider, $locationProvider, localStorageServiceProvider) {
+    $routeProvider
+      .otherwise({
+        redirectTo: '/'
+      });
 
     $locationProvider.html5Mode(true);
+
+    localStorageServiceProvider.setPrefix('dtmsg');
   });

@@ -29,7 +29,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
+    <div ng-view=""></div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -47,7 +47,7 @@
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <!-- build:js(client) app/vendor.js -->
+    <!-- build:js(client) app/dependencies.js -->
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
       <script src="bower_components/angular/angular.js"></script>
@@ -55,9 +55,9 @@
       <script src="bower_components/angular-resource/angular-resource.js"></script>
       <script src="bower_components/angular-cookies/angular-cookies.js"></script>
       <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+      <script src="bower_components/angular-route/angular-route.js"></script>
       <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
       <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-      <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/snapjs/snap.js"></script>
       <script src="bower_components/angular-snap/angular-snap.js"></script>
       <script src="bower_components/angular-local-storage/angular-local-storage.js"></script>
@@ -65,37 +65,37 @@
       <script src="bower_components/sjcl/sjcl.js"></script>
       <script src="bower_components/angular-animate/angular-animate.js"></script>
       <script src="bower_components/angular-busy/dist/angular-busy.js"></script>
-      <script src="bower_components/moment/moment.js"></script>
-      <script src="bower_components/angular-moment/angular-moment.js"></script>
-      <script src="bower_components/angular-underscore/angular-underscore.js"></script>
       <script src="bower_components/angular-momentjs/angular-momentjs.js"></script>
+      <script src="bower_components/angular-underscore/angular-underscore.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,client}) app/app.js -->
-        <script src="app/app.js"></script>
-          <!-- injector:js -->
-          <script src="app/chat/chat.controller.js"></script>
-          <script src="app/contact/contact.controller.js"></script>
-          <script src="app/filters/idToName/idToName.filter.js"></script>
-          <script src="app/filters/messagesToUnreadCount/messagesToUnreadCount.filter.js"></script>
-          <script src="app/filters/unixToTimeAgo/unixToTimeAgo.filter.js"></script>
-          <script src="app/main/main.controller.js"></script>
-          <script src="app/main/main.js"></script>
-          <script src="app/option/option.controller.js"></script>
-          <script src="app/services/communication/communication.service.js"></script>
-          <script src="app/services/configuration/configuration.service.js"></script>
-          <script src="app/services/constants/constants.service.js"></script>
-          <script src="app/services/conversation/conversation.service.js"></script>
-          <script src="app/services/cryptography/cryptography.service.js"></script>
-          <script src="app/services/identity/identity.service.js"></script>
-          <script src="app/services/initialization/initialization.service.js"></script>
-          <script src="app/services/storage/storage.service.js"></script>
-          <script src="app/services/telehash/telehash.service.js"></script>
-          <script src="app/services/time/time.service.js"></script>
-          <script src="app/services/utility/utility.service.js"></script>
-          <script src="app/user/user.controller.js"></script>
-          <!-- endinjector -->
-        <!-- endbuild -->
+    <!-- build:js({.tmp,client}) app/app.js -->
+    <script src="app/app.js"></script>
+      <!-- injector:js -->
+      <script src="app/chat/chat.controller.js"></script>
+      <script src="app/contact/contact.controller.js"></script>
+      <script src="app/filters/idToName/idToName.filter.js"></script>
+      <script src="app/filters/messagesToUnreadCount/messagesToUnreadCount.filter.js"></script>
+      <script src="app/filters/unixToTimeAgo/unixToTimeAgo.filter.js"></script>
+      <script src="app/main/main.controller.js"></script>
+      <script src="app/main/main.js"></script>
+      <script src="app/option/option.controller.js"></script>
+      <script src="app/services/communication/communication.service.js"></script>
+      <script src="app/services/configuration/configuration.service.js"></script>
+      <script src="app/services/constants/constants.service.js"></script>
+      <script src="app/services/conversation/conversation.service.js"></script>
+      <script src="app/services/cryptography/cryptography.service.js"></script>
+      <script src="app/services/identity/identity.service.js"></script>
+      <script src="app/services/initialization/initialization.service.js"></script>
+      <script src="app/services/storage/storage.service.js"></script>
+      <script src="app/services/time/time.service.js"></script>
+      <script src="app/services/utility/utility.service.js"></script>
+      <script src="app/user/user.controller.js"></script>
+      <!-- endinjector -->
+    <!-- endbuild -->
+
+    <script src="app/telehash.js"></script>
+
 </body>
 </html>

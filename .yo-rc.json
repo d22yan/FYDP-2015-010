@@ -3,6 +3,8 @@
     "insertRoutes": true,
     "registerRoutesFile": "server/routes.js",
     "routesNeedle": "// Insert routes below",
+    "routesBase": "/api/",
+    "pluralizeRoutes": true,
     "insertSockets": true,
     "registerSocketsFile": "server/config/socketio.js",
     "socketsNeedle": "// Insert sockets below",
@@ -10,7 +12,9 @@
       "js": true,
       "html": true,
       "less": true,
-      "uirouter": true
+      "ngroute": true,
+      "bootstrap": true,
+      "uibootstrap": true
     }
   },
   "generator-ng-component": {
@@ -20,7 +24,7 @@
     "serviceDirectory": "client/app/",
     "basePath": "client",
     "filters": [
-      "uirouter"
+      "ngroute"
     ],
     "extensions": [
       "js",

@@ -17,7 +17,7 @@ angular.module('dtmsgApp')
       }
 
       if (Identity.currentUser.keypair) {
-        var connectPromise = Communication.connect(Identity.currentUser).then(function() {
+        return Communication.connect(Identity.currentUser).then(function() {
           Utility.each(Identity.contacts, function(contact, index, contacts) {
             if (contact.id === Identity.currentUser.id) {
               return;
@@ -25,12 +25,9 @@ angular.module('dtmsgApp')
 
             (function(contact) {
               Communication.initializeContact(contact);
-            })(contact).bind(this);
+            })(contact);
           });
-        }.bind(this)).catch($log.error);
+        }).catch($log.error);
       }
-      return connectPromise;
     };
-        
-    
   });
