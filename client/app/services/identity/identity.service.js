@@ -21,6 +21,12 @@ angular.module('dtmsgApp')
       $rootScope.$apply();
     };
 
+    this.addContact = function(id) {
+      if (this.getContact(id)) {
+
+      }
+    };
+
     this.createUser = function(newUser) {
       this.updateUser({
         id: newUser.hashname,

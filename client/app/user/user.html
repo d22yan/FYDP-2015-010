@@ -2,37 +2,35 @@
 
     <accordion-heading>
       <div class="panel-heading-inner">
-        <i class="pull-left fa fa-fw"
-           ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
-        {{user.name}}
+        <i class="fa fa-fw" ng-class="accordion.open ? 'fa-chevron-down' : 'fa-chevron-right'"></i>{{user.name}}
       </div>
     </accordion-heading>
 
-    <form class="form-horizontal" role="form">
+    <form name="user_form" class="form-horizontal" role="form" novalidate>
       <div class="user-container">
         <div class="form-group">
           <label class="col-xs-2 control-label" for="id">ID</label>
           <div class="col-xs-10">
-            <input type="text" class="form-control" id="id" ng-model="user.id" ng-readonly="true" ng-click-select>
+            <input type="text" class="form-control" id="id" ng-model="user.id" readonly ng-click-select>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error' : user_form.name.$invalid}">
           <label class="col-xs-2 control-label" for="name">Name</label>
           <div class="col-xs-10">
-            <input type="text" class="form-control" id="name" ng-model="user.name">
+            <input name="name" id="name" type="text" class="form-control"  ng-model="user.name" required>
           </div>
         </div>
       </div>
       <div class="panel-footer">
         <div class="form-group">
           <div class="col-xs-6">
-            <button type="submit" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-show="user.keypair">Delete User</button>
+            <button type="button" class="btn btn-danger btn-block" ng-click="deleteUser()" ng-if="user.keypair">Delete User</button>
           </div>
-          <div class="col-xs-6" ng-hide="user.keypair">
-            <button type="submit" class="btn btn-primary btn-block" ng-click="createUser()">Create User</button>
+          <div class="col-xs-6" ng-if="!user.keypair">
+            <button type="submit" class="btn btn-primary btn-block" ng-click="createUser()" ng-disabled="user_form.$invalid">Create User</button>
           </div>
-          <div class="col-xs-6" ng-show="user.keypair">
-            <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()">Update</button>
+          <div class="col-xs-6" ng-if="user.keypair">
+            <button type="submit" class="btn btn-primary btn-block" ng-click="updateUser()" ng-disabled="user_form.$invalid">Update</button>
           </div>
         </div>
       </div>

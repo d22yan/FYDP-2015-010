@@ -1,21 +1,19 @@
 <accordion-group is-open="accordion.open">
   <accordion-heading>
     <div class="panel-heading-inner">
-      <i class="pull-left fa fa-fw"
-         ng-class="{'fa-chevron-down': accordion.open, 'fa-chevron-right': !accordion.open}"></i>
-      Contacts
+      <i class="fa fa-fw" ng-class="accordion.open ? 'fa-chevron-down' : 'fa-chevron-right'"></i>Contacts
     </div>
   </accordion-heading>
   <ul class="contact-list list-group">
-    <li class="contact list-group-item">
+    <li class="list-control list-group-item">
       <div class="row">
-        <form name="form">
-          <div class="form-group">
+        <form name="invite_form" ng-submit="invite(newContactID)" novalidate>
+          <div class="form-group" ng-class="{'has-error': invite_form.$invalid}">
             <div class="col-xs-9">
-              <input type="text" class="form-control" placeholder="Contact ID" ng-model="newContactID" required>
+              <input type="text" class="form-control" placeholder="Contact ID..." ng-model="newContactID" ng-minlength="64" ng-maxlength="64">
             </div>
             <div class="col-xs-3">
-              <button type="submit" class="btn btn-success btn-block" ng-click="invite(newContactID)" ng-disabled="form.$invalid">
+              <button type="submit" class="btn btn-success btn-block" ng-disabled="invite_form.$invalid || newContactID.length === 0">
                 <i class="fa fa-plus fa-fw"></i>
               </button>
             </div>
@@ -32,21 +30,27 @@
             <span class="contact-name">{{contact.name}}</span>
           </div>
           <div ng-hide="contact.status === 'invited' || contact.status === 'invite'">
-            Last update: {{contact.lastUpdate | unixToTimeAgo}}
+            {{contact.status}} since {{contact.lastUpdate | unixToTimeAgo}}
+          </div>
+          <div ng-show="contact.status === 'invite'">
+            Invite received!
+          </div>
+          <div ng-show="contact.status === 'invited'">
+            Invite sent!
           </div>
         </div>
         <div class="col-xs-3" ng-show="contact.status === 'invite'">
-          <button type="button" class="btn btn-success btn-block" ng-click="acceptInvite(contact)">
+          <button type="button" class="btn btn-success btn-block" ng-click="acceptInvite(contact);$event.stopPropagation();">
             <i class="fa fa-check fa-fw"></i>
           </button>
         </div>
         <div class="col-xs-3" ng-show="contact.status === 'invite'">
-          <button type="button" class="btn btn-danger btn-block" ng-click="rejectInvite(contact)">
+          <button type="button" class="btn btn-danger btn-block" ng-click="rejectInvite(contact);$event.stopPropagation();">
             <i class="fa fa-times fa-fw"></i>
           </button>
         </div>
         <div class="col-xs-3" ng-hide="contact.status === 'invite'">
-          <button type="button" class="btn btn-primary btn-block">
+          <button type="button" class="btn btn-primary btn-block" ng-click="$event.stopPropagation();">
             <i class="fa fa-info fa-fw"></i>
           </button>
         </div>

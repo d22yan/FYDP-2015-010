@@ -102,21 +102,21 @@ angular.module('dtmsgApp')
     };
     
     this.initializeContact = function(contact) {
-      $rootScope.$watch(
-        function(){
-          return contact.conversation.isActive;
-        },
-        function(isActive){
-          if (!isActive) {
-            return;
-          }
-          Utility.each(contact.conversation.messages, function(message){
-            if(!message.read){
-              message.read = true;
-            }
-          });
-        }
-      );
+//      $rootScope.$watch(
+//        function(){
+//          return contact.conversation.isActive;
+//        },
+//        function(isActive){
+//          if (!isActive) {
+//            return;
+//          }
+//          Utility.each(contact.conversation.messages, function(message){
+//            if(!message.read){
+//              message.read = true;
+//            }
+//          });
+//        }
+//      );
 
       this.listen(Identity.currentUser, contact);
       var sendStatusUpdate = function() {

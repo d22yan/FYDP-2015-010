@@ -1,11 +1,17 @@
 .contact-list {
+  .form-group {
+    margin-bottom: 0;
+  }
   margin-bottom: 0;
+  .list-group-item {
+    padding: 12px;
+  }
   .contact {
     color: @link-color;
     cursor: pointer;
     box-sizing: border-box;
-    padding: 12px;
-    border: 1px solid @state-info-border;
+    border-top: 1px solid @state-info-border;
+    border-bottom: 1px solid @state-info-border;
     &:hover {
       color: @link-hover-color;
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
@@ -25,13 +31,9 @@
     .contact-text {
       display: inline-block;
       vertical-align: middle;
-      &:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-      }
     }
-
+    &:last-of-type {
+      border-bottom: 0px;
+    }
   }
 }

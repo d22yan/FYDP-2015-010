@@ -9,9 +9,9 @@ angular.module('dtmsgApp')
     $scope.contacts = Identity.contacts;
 
     $scope.open = function(conversation) {
+      conversation.lastOpened = Time.now();
       conversation.isOpen = true;
       conversation.isActive = true;
-      conversation.lastOpened = Time.now();
     };
 
     $scope.newContactID = '';

@@ -1,6 +1,8 @@
 <div id="chat-view">
+  <button ng-click="activate()">activate</button>
+  <button ng-click="deactivate()">deactivate</button>
   <tabset>
-    <tab active="home.isActive">
+    <tab active="homeScreen.isActive">
       <tab-heading>
         <i class="fa fa-home fa-fw"></i>
       </tab-heading>
@@ -83,10 +85,10 @@
         </div>
       </div>
     </tab>
-    <tab ng-repeat="contact in contacts | orderBy : 'conversation.lastOpened' : true" ng-show="contact.conversation.isOpen" active="contact.conversation.isActive">
+    <tab active="contact.conversation.isActive" ng-repeat="contact in contacts | orderBy : 'conversation.lastOpened' : true" ng-show="contact.conversation.isOpen">
       <tab-heading>
         <span class="badge">{{contact.conversation.messages | messagesToUnreadCount}}</span> {{contact.name}}
-        <a href="#" ng-click="close(contact.conversation)"><i class="fa fa-times fa-fw"></i></a>
+        <a ng-click="close(contact.conversation);$event.stopPropagation();"><i class="fa fa-times fa-fw"></i></a>
       </tab-heading>
       <div id="chat-{{contact.name}}" ng-show="contact.conversation.isOpen">
         <div class="tab-messages">
@@ -96,14 +98,14 @@
         </div>
         <div class="tab-footer navbar navbar-default navbar-fixed-bottom navbar-send" cg-busy="contact.conversation.sendingPromise">
           <div class="container-fluid">
-            <form class="navbar-form" role="form" ng-submit="send(contact)">
+            <form name="send_form_{{contact.id}}" class="navbar-form" role="form" ng-submit="send(contact)" novalidate>
               <div class="row">
                 <div class="form-group">
                   <div class="col-xs-10">
                     <input type="text" class="form-control" placeholder="Message to {{contact.name}}..." ng-model="contact.conversation.currentMessage" required>
                   </div>
                   <div class="col-xs-2">
-                    <button type="submit" class="btn btn-success btn-block">
+                    <button type="submit" class="btn btn-success btn-block" ng-disabled="send_form_{{contact.id}}">
                       <i class="fa fa-send fa-fw"></i>
                       <span class="xs-hide">Send</span>
                     </button>
