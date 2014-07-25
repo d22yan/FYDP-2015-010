@@ -1,5 +1,8 @@
 <div snap-drawer cg-busy="initializationPromise">
-
+  <accordion close-others="false">
+    <div ng-include src="'app/user/user.html'" ng-controller="UserCtrl"></div>
+    <div ng-include src="'app/contact/contact.html'" ng-controller="ContactCtrl"></div>
+  </accordion>
 </div>
 <div snap-content snap-options="{{snapOptions}}" cg-busy="initializationPromise">
   <div class="navbar navbar-inverse navbar-fixed-top">
