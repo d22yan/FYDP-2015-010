@@ -22,7 +22,7 @@ angular.module('dtmsgApp')
 
       if (!value) {
         $log.debug('failed to read key: ' + key);
-        return;
+        return false;
       }
 
       $log.info('read key: ' + key + ', ' + angular.toJson(value));

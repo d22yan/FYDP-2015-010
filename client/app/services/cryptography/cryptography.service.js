@@ -3,8 +3,8 @@
 angular.module('dtmsgApp')
   .service('Cryptography', function Cryptography(SJCL) {
     // AngularJS will instantiate a singleton by calling "new" on this function
-    this.passwordHash = [0,0,0,0,0,0,0,0];
-    this.passwordSalt = '';
+    this.passwordHash = null;
+    this.passwordSalt = null;
     this.initializationVector = 'MROZx008/PKmMa7KGqoIag==';
 
 

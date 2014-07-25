@@ -4,6 +4,11 @@ angular.module('dtmsgApp')
   .service('Initialization', function Initialization(
     $log, $interval, Identity, Communication, Storage, Configuration, Cryptography, Utility, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
+    Identity.userIndex = Storage.readPlainText(Constants.storageKeys.Identity.userIndex);
+    if (!Identity.userIndex) {
+      Identity.userIndex = [];
+    }
+
     this.initializationPromise = {};
 
     this.initializeNewUser = function (password) {
@@ -27,8 +32,6 @@ angular.module('dtmsgApp')
     };
 
     this.initialize = function () {
-      Identity.currentUser.status = Configuration.currentConfiguration.loginStatus;
-
       if (Identity.currentUser.keypair) {
         return Communication.connect(Identity.currentUser).then(function() {
           Utility.each(Identity.contacts, function(contact, index, contacts) {

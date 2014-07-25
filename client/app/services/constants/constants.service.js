@@ -8,7 +8,6 @@ angular.module('dtmsgApp')
         currentConfiguration: 'Configuration.currentConfiguration'
       },
       Identity: {
-        currentUser: 'Identity.currentUser',
         userPrefix: 'Identity.user.',
         userIndex: 'Identity.userIndex'
       }

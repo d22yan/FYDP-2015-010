@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Identity', function Identity($rootScope, $window, $log, Storage, Constants, Conversation, Utility) {
+  .service('Identity', function Identity($rootScope, $window, $log, Storage, Constants, Cryptography, Conversation, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.userIndex = [];
 
@@ -48,6 +48,22 @@ angular.module('dtmsgApp')
 
       this.updateIndex(user);
       return Storage.save(Constants.storageKeys.Identity.userPrefix + user.id, user);
+    };
+
+    this.authenticateUser = function (user, password) {
+      Cryptography.passwordHash = Cryptography.hash(password);
+      Cryptography.passwordSalt = user.id;
+
+      var authenticationResult = Storage.read(Constants.storageKeys.Identity.userPrefix + user.id);
+      if (!authenticationResult) {
+        Cryptography.passwordHash = null;
+        Cryptography.passwordSalt = null;
+        return false;
+      }
+
+      angular.copy(authenticationResult, this.currentUser);
+
+      return true;
     };
 
     this.updateIndex = function (user) {
