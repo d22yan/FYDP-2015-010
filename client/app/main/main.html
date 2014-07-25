@@ -1,9 +1,14 @@
-<div snap-drawer cg-busy="initializationPromise">
-  <accordion close-others="false">
-    <div ng-include src="'app/user/user.html'" ng-controller="UserCtrl"></div>
-    <div ng-include src="'app/contact/contact.html'" ng-controller="ContactCtrl"></div>
-  </accordion>
-</div>
+<snap-drawers>
+  <div snap-drawer cg-busy="initializationPromise">
+    <accordion close-others="false">
+      <div ng-include src="'app/user/user.html'" ng-controller="UserCtrl"></div>
+      <div ng-include src="'app/contact/contact.html'" ng-controller="ContactCtrl"></div>
+    </accordion>
+  </div>
+  <div snap-drawer="right" cg-busy="initializationPromise">
+    <div ng-include src="'app/option/option.html'" ng-controller="OptionCtrl"></div>
+  </div>
+</snap-drawers>
 <div snap-content snap-options="{{snapOptions}}" cg-busy="initializationPromise">
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -29,7 +34,4 @@
   <div class="container-fluid">
     <div ng-include src="'app/chat/chat.html'" ng-controller="ChatCtrl"></div>
   </div>
-</div>
-<div snap-drawer="right" cg-busy="initializationPromise">
-  <div ng-include src="'app/option/option.html'" ng-controller="OptionCtrl"></div>
 </div>
