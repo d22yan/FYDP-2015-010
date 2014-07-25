@@ -5,11 +5,12 @@ angular.module('dtmsgApp')
     storageKeys: {
       prefix: 'dtmsg',
       Configuration: {
-        loginStatus: 'Configuration.loginStatus',
-        storageType: 'Configuration.storageType'
+        currentConfiguration: 'Configuration.currentConfiguration'
       },
       Identity: {
-        currentUser: 'user' //TODO: change key to follow naming convention, breaking existing hard-coded hashnames
+        currentUser: 'Identity.currentUser',
+        userPrefix: 'Identity.user.',
+        userIndex: 'Identity.userIndex'
       }
     },
     channelName: {

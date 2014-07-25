@@ -7,6 +7,8 @@ angular.module('dtmsgApp')
     $scope.user = Identity.currentUser;
     $scope.contacts = Identity.contacts;
 
+    $scope.userIndex = Identity.userIndex;
+
     $scope.send = function (contact) {
       contact.conversation.sendingPromise = Communication.sendMessage(Identity.currentUser, contact);
     };

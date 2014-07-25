@@ -9,15 +9,21 @@
     <form name="user_form" class="form-horizontal" role="form" novalidate>
       <div class="user-container">
         <div class="form-group">
-          <label class="col-xs-2 control-label" for="id">ID</label>
-          <div class="col-xs-10">
-            <input type="text" class="form-control" id="id" ng-model="user.id" readonly ng-click-select>
+          <label class="col-xs-4 control-label" for="id">User ID</label>
+          <div class="col-xs-8">
+            <input type="text" class="form-control" id="id" ng-model="user.id" placeholder="To Be Generated" readonly ng-click-select>
           </div>
         </div>
         <div class="form-group" ng-class="{'has-error' : user_form.name.$invalid}">
-          <label class="col-xs-2 control-label" for="name">Name</label>
-          <div class="col-xs-10">
-            <input name="name" id="name" type="text" class="form-control"  ng-model="user.name" required>
+          <label class="col-xs-4 control-label" for="name">Name</label>
+          <div class="col-xs-8">
+            <input name="name" id="name" type="text" class="form-control" placeholder="Name" ng-model="user.name" required>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error' : user_form.password.$invalid}" ng-if="!user.keypair">
+          <label class="col-xs-4 control-label" for="password">Password</label>
+          <div class="col-xs-8">
+            <input name="password" id="password" type="password" class="form-control" placeholder="Password" ng-model="password" required>
           </div>
         </div>
       </div>

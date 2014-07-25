@@ -52,7 +52,7 @@ angular.module('dtmsgApp')
             return deferredInvite.reject('failed to listen to invites due to: ' + error);
           }
 
-          $log.info('received ' + JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
+          $log.info('received ' + angular.toJson(packet.js) + ' from ' + angular.toJson(packet.from.hashname));
 
           deferredInvite.resolve(packet);
           callback(true);
@@ -156,7 +156,7 @@ angular.module('dtmsgApp')
 
       this.session.listen(channelName, function (error, packet, channel, callback) {
         packetHandler(error, packet, channel, callback).then(function(packet) {
-          $log.info('received ' + JSON.stringify(packet.js) + ' from ' + JSON.stringify(packet.from.hashname));
+          $log.info('received ' + angular.toJson(packet.js) + ' from ' + angular.toJson(packet.from.hashname));
 
           if (packet.js.m) {
             contact.conversation.messages.push({
@@ -181,16 +181,16 @@ angular.module('dtmsgApp')
 
       var packetHandler = function (error, packet, channel, callback) {
         if (error) {
-          $log.error('failed to send ' + JSON.stringify(payload) + ' to ' + contact.id + ' due to: ' + error);
+          $log.error('failed to send ' + angular.toJson(payload) + ' to ' + contact.id + ' due to: ' + error);
           return deferredMessage.reject(error);
         }
 
         callback(true);
-        $log.info('sent ' + JSON.stringify(packet.js) + ' to ' + packet.from.hashname);
+        $log.info('sent ' + angular.toJson(packet.js) + ' to ' + packet.from.hashname);
         return deferredMessage.resolve(packet);
       };
 
-      $log.info(JSON.stringify(payload) + ' to ' + contact.id);
+      $log.info(angular.toJson(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
       this.session.start(contact.id, channelName, {js: payload}, packetHandler);
