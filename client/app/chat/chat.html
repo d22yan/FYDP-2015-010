@@ -66,7 +66,7 @@
                     <input type="text" class="form-control" placeholder="Message to {{contact.name}}..." ng-model="contact.conversation.currentMessage" required>
                   </div>
                   <div class="col-xs-2">
-                    <button type="submit" class="btn btn-success btn-block" ng-disabled="send_form_{{contact.id}}">
+                    <button type="submit" class="btn btn-success btn-block" ng-disabled="send_form_{{contact.id}}.$invalid">
                       <i class="fa fa-send fa-fw"></i>
                       <span class="xs-hide">Send</span>
                     </button>
