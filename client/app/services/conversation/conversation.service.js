@@ -11,6 +11,17 @@ angular.module('dtmsgApp')
 
     this.conversations = [];
 
+    this.copyConversationForStorage = function(conversation) {
+      return {
+        id: conversation.id,
+        isOpen: conversation.isOpen, 
+        isActive: conversation.isActive, 
+        unreadCount: conversation.unreadCount,
+        currentMessage: conversation.currentMessage,
+        lastOpened: conversation.lastOpened
+      };
+    };
+
     this.addConversation = function(id) {
       if (this.getConversation(id)) {
         return;
@@ -24,7 +35,18 @@ angular.module('dtmsgApp')
 
       this.conversations.push(newConversation);
       this.updateConversationIndex(newConversation);
-      Storage.save(Constants.storageKeys.Conversation.conversation + id, newConversation);
+      Storage.save(Constants.storageKeys.Conversation.conversation + id, this.copyConversationForStorage(newConversation));
+    };
+
+    this.updateConversation = function(conversation) {
+      var existingConversation = this.getConversation(conversation.id);
+      existingConversation.id = conversation.id;
+      existingConversation.isOpen = conversation.isOpen;
+      existingConversation.isActive = conversation.isActive;
+      existingConversation.unreadCount = conversation.unreadCount;
+      existingConversation.currentMessage = conversation.currentMessage;
+      existingConversation.lastOpened = conversation.lastOpened;
+      Storage.save(Constants.storageKeys.Conversation.conversation + existingConversation.id, this.copyConversationForStorage(existingConversation));
     };
 
     this.getConversationInIndex = function(id) {

@@ -2,7 +2,7 @@
 
 angular.module('dtmsgApp')
   .service('Initialization', function Initialization(
-    $log, $interval, Identity, Communication, Storage, Configuration, Cryptography, Utility, Constants) {
+    $log, $interval, Identity, Communication, Storage, Configuration, Conversation, Cryptography, Utility, Constants) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     Identity.userIndex = Storage.readPlainText(Constants.storageKeys.Identity.userIndex);
     if (!Identity.userIndex) {
@@ -35,6 +35,23 @@ angular.module('dtmsgApp')
 
     this.initialize = function () {
       if (Identity.currentUser.keypair) {
+
+        Identity.contactIndex = Storage.read(Constants.storageKeys.Identity.contactIndex);
+        Conversation.conversationIndex = Storage.read(Constants.storageKeys.Conversation.conversationIndex);
+
+        Utility.each(Conversation.conversationIndex, function(conversation) {
+          var existingConversation = Storage.read(Constants.storageKeys.Conversation.conversation + conversation.id)
+          existingConversation.messages = [];
+          existingConversation.sendingPromise = {};
+          Conversation.conversation.push(existingConversation);
+        });
+
+        Utility.each(Identity.contactIndex, function(contact) {
+          var existingContact = Storage.read(Constants.storageKeys.Identity.contact + contact.id);
+          existingContact.conversation = Conversation.getConversation(contact.id);
+          Identity.contacts.push(existingContact);
+        });
+
         return Communication.connect(Identity.currentUser).then(function() {
           Utility.each(Identity.contacts, function(contact, index, contacts) {
             if (contact.id === Identity.currentUser.id) {
