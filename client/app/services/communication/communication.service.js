@@ -72,6 +72,7 @@ angular.module('dtmsgApp')
               if(existingContact.status === Constants.userStatus.invited) {
                 this.initializeContact(existingContact);
                 existingContact.name = packet.js.i;
+                existingContact.status = Constants.userStatus.online;
                 Identity.updateContact(existingContact);
               }
               return $log.info('received invite from existing contact: ' + packet.from.hashname);
