@@ -199,7 +199,7 @@ angular.module('dtmsgApp')
             Utility.each(Identity.contacts, function(contact) {
               this.listen(Identity.currentUser, contact);
             }.bind(this));
-          });
+          }.bind(this));
         }
       }
 
