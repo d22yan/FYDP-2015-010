@@ -39,6 +39,14 @@ angular.module('dtmsgApp')
         Identity.contactIndex = Storage.read(Constants.storageKeys.Identity.contactIndex);
         Conversation.conversationIndex = Storage.read(Constants.storageKeys.Conversation.conversationIndex);
 
+        if (!Identity.contactIndex) {
+          Identity.contactIndex = [];
+        }
+
+        if (!Conversation.conversationIndex) {
+          Conversation.conversationIndex = [];
+        }
+
         Utility.each(Conversation.conversationIndex, function(conversation) {
           var existingConversation = Storage.read(Constants.storageKeys.Conversation.conversation + conversation.id)
           existingConversation.messages = [];
