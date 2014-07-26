@@ -120,6 +120,7 @@ For now just try to take a look through my code and the AngularJS docs to get a 
 * Here's a nice article on 
     [Javascript Promises](http://strongloop.com/strongblog/promises-in-node-js-with-q-an-alternative-to-callbacks/) and 
     their implementation in Angular in the form of the $q service.
+* Here's a very thorough answer on [StackOverflow](http://stackoverflow.com/questions/14049480/what-are-the-nuances-of-scope-prototypal-prototypical-inheritance-in-angularjs/14049482#14049482) regarding the nuances of Javascript's prototypical inheritance model and its implications on Angular's scope inheritance. I honestly didn't quite understand it as well as I thought I did until I came across this piece.
 
 My personal reading commendations: 
 
