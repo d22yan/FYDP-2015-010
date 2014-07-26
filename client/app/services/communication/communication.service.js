@@ -99,6 +99,7 @@ angular.module('dtmsgApp')
             var existingContact = Identity.getContact(packet.from.hashname);
             if (existingContact) {
               this.listen(Identity.currentUser, existingContact);
+              $log.info('resync completed for ' + existingContact.id);
             }
           }.bind(this));
         }.bind(this));
