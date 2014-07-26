@@ -210,9 +210,13 @@ angular.module('dtmsgApp')
         this.session.start(contact.id, channelName, {js: payload}, packetHandler);
       } catch(error) {
         $log.error(error);
-
+        $log.error('network error detected, resetting connection');
         if (error.name === 'NetworkError') {
-          this.session.start(contact.id, Constants.channelName.prefix + Constants.channelName.resync, {js: {r: ''}}, packetHandler);
+          this.connect(Identity.currentUser).then(function () {
+            Utility.each(Identity.contacts, function(contact) {
+              this.listen(Identity.currentUser, contact);
+            }.bind(this));
+          });
         }
       }
 
