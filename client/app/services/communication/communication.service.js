@@ -42,7 +42,9 @@ angular.module('dtmsgApp')
         $log.info('new session established');
         $log.info(this.session);
 
-        var channelName = Constants.channelName.prefix + Constants.channelName.invite;
+        var inviteChannel = Constants.channelName.prefix + Constants.channelName.invite;
+
+        var resyncChannel = Constants.channelName.prefix + Constants.channelName.resync;
 
         //handles new invites
         function packetHandler (error, packet, channel, callback) {
@@ -62,7 +64,7 @@ angular.module('dtmsgApp')
         }
 
         //listen for new invites
-        this.session.listen(channelName, function (error, packet, channel, callback) { 
+        this.session.listen(inviteChannel, function (error, packet, channel, callback) {
           packetHandler(error, packet, channel, callback).then(function(packet) {
             if (!packet.js.i) {
               return $log.info('received non-invite packet on invite channel');
@@ -84,6 +86,20 @@ angular.module('dtmsgApp')
             newContact.status = Constants.userStatus.invite;
 
             Identity.updateContact(newContact);
+          }.bind(this));
+        }.bind(this));
+
+        //listen for resync requests
+        this.session.listen(resyncChannel, function (error, packet, channel, callback) {
+          packetHandler(error, packet, channel, callback).then(function(packet) {
+            if (!packet.js.r) {
+              return $log.info('received non-resync packet on resync channel');
+            }
+
+            var existingContact = Identity.getContact(packet.from.hashname);
+            if (existingContact) {
+              this.listen(Identity.currentUser, existingContact);
+            }
           }.bind(this));
         }.bind(this));
 
@@ -189,7 +205,16 @@ angular.module('dtmsgApp')
       $log.info(angular.toJson(payload) + ' to ' + contact.id);
       $log.info('sent on channel ' + channelName);
 
-      this.session.start(contact.id, channelName, {js: payload}, packetHandler);
+      try{
+        this.session.start(contact.id, channelName, {js: payload}, packetHandler);
+      } catch(error) {
+        $log.error(error);
+
+        if (error.name === 'NetworkError') {
+          this.session.start(contact.id, Constants.channelName.prefix + Constants.channelName.resync, {js: {r: ''}}, packetHandler);
+        }
+      }
+
       return deferredMessage.promise;
     };
 
@@ -209,7 +234,9 @@ angular.module('dtmsgApp')
           read: true
         });
         contact.conversation.currentMessage = '';
-      }).catch($log.error);
+      }).catch(function(error) {
+        $log.error(error);
+      });
     };
 
     this.sendStatus = function (user, contact) {
