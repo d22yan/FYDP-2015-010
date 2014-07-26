@@ -44,8 +44,6 @@ angular.module('dtmsgApp')
 
         var inviteChannel = Constants.channelName.prefix + Constants.channelName.invite;
 
-        var resyncChannel = Constants.channelName.prefix + Constants.channelName.resync;
-
         //handles new invites
         function packetHandler (error, packet, channel, callback) {
           var deferredInvite = $q.defer();
@@ -86,21 +84,6 @@ angular.module('dtmsgApp')
             newContact.status = Constants.userStatus.invite;
 
             Identity.updateContact(newContact);
-          }.bind(this));
-        }.bind(this));
-
-        //listen for resync requests
-        this.session.listen(resyncChannel, function (error, packet, channel, callback) {
-          packetHandler(error, packet, channel, callback).then(function(packet) {
-            if (!packet.js.r) {
-              return $log.info('received non-resync packet on resync channel');
-            }
-
-            var existingContact = Identity.getContact(packet.from.hashname);
-            if (existingContact) {
-              this.listen(Identity.currentUser, existingContact);
-              $log.info('resync completed for ' + existingContact.id);
-            }
           }.bind(this));
         }.bind(this));
 

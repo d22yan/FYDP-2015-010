@@ -20,8 +20,7 @@ angular.module('dtmsgApp')
     },
     channelName: {
       prefix: 'dtmsg-',
-      invite: 'invite',
-      resync: 'resync'
+      invite: 'invite'
     },
     errorTypes: {
       timeout: 'timeout'
