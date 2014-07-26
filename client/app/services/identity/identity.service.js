@@ -10,12 +10,7 @@ angular.module('dtmsgApp')
     this.currentUser = {};
 
     this.contacts = [];
-
-    this.inviteContact = function(id) {
-      this.addContact(id);
-      Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
-    };
-
+    
     this.addContact = function(id) {
       if (this.getContact(id)) {
         return;
@@ -31,7 +26,7 @@ angular.module('dtmsgApp')
 
       this.contacts.push(newContact);
       this.updateContactIndex(newContact);
-      Storage.save(Constants.Identity.contact + id, newContact);
+      Storage.save(Constants.storageKeys.Identity.contact + id, newContact);
     };
 
     this.getContact = function(id) {

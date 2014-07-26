@@ -17,7 +17,9 @@ angular.module('dtmsgApp')
     $scope.newContactID = '';
 
     $scope.invite = function(id) {
-      Identity.inviteContact(id);
+      Identity.addContact(id);
+
+      Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
     };
 
     $scope.acceptInvite = function(contact) {

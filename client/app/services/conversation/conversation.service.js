@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .service('Conversation', function Conversation(Utility) {
+  .service('Conversation', function Conversation(Constants, Storage, Utility) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.homeScreen = {
       isActive: true
@@ -23,16 +23,16 @@ angular.module('dtmsgApp')
       };
 
       this.conversations.push(newConversation);
-      updateConversationIndex(newConversation);
-      Storage.save(Constants.Conversation.conversation + id, newConversation);
+      this.updateConversationIndex(newConversation);
+      Storage.save(Constants.storageKeys.Conversation.conversation + id, newConversation);
     };
 
-    this.getConverstationInIndex = function(id) {
+    this.getConversationInIndex = function(id) {
       return Utility.findById(this.conversationIndex, id);
     };
 
     this.updateConversationIndex = function(conversation) {
-      var existingConversation = this.getConverstationInIndex(conversation.id);
+      var existingConversation = this.getConversationInIndex(conversation.id);
 
       if (existingConversation) {
         return;
@@ -40,7 +40,7 @@ angular.module('dtmsgApp')
       this.conversationIndex.push({id: conversation.id});
 
       return Storage.save(Constants.storageKeys.Identity.conversationIndex, this.conversationIndex);
-    }
+    };
 
     this.getConversation = function (id) {
       return Utility.findById(this.conversations, id);
