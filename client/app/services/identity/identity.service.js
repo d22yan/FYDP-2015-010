@@ -5,14 +5,37 @@ angular.module('dtmsgApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
     this.userIndex = [];
 
+    this.contactIndex = [];
+
     this.currentUser = {};
 
     this.contacts = [];
 
+    this.inviteContact = function(id) {
+      this.addContact(id);
+      Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
+    };
+
+    this.addContact = function(id) {
+      if (this.getContact(id)) {
+        return;
+      }
+
+      Conversation.addConversation(id);
+
+      var newContact = {
+        id: id, name: 'Invited',
+        status: Constants.userStatus.invited, lastUpdate: null,
+        conversation: Conversation.getConversation(id)
+      };
+
+      this.contacts.push(newContact);
+      this.updateContactIndex(newContact);
+      Storage.save(Constants.Identity.contact + id, newContact);
+    };
+
     this.getContact = function(id) {
-      return Utility.find(this.contacts, function(contact) {
-        return contact.id === id;
-      });
+      return Utility.findById(this.contacts, id);
     };
 
     this.removeContact = function(id) {
@@ -21,14 +44,6 @@ angular.module('dtmsgApp')
       $log.info(index);
       this.contacts.splice(index, 1);
       $rootScope.$apply();
-    };
-
-    this.addContact = function(id) {
-      if (this.getContact(id)) {
-        return Utility.find(this.contacts, function(contact) {
-          return contact.id === id;
-        });
-      }
     };
 
     this.createUser = function(newUser) {
@@ -46,18 +61,21 @@ angular.module('dtmsgApp')
       }
       $log.info(user);
 
-      this.updateIndex(user);
-      return Storage.save(Constants.storageKeys.Identity.userPrefix + user.id, user);
+      this.updateUserIndex(user);
+      return Storage.save(Constants.storageKeys.Identity.user, user);
     };
 
     this.authenticateUser = function (user, password) {
       Cryptography.passwordHash = angular.toJson(Cryptography.hash(password));
       Cryptography.passwordSalt = user.id;
 
-      var authenticationResult = Storage.read(Constants.storageKeys.Identity.userPrefix + user.id);
+      Storage.storagePrefix = user.id;
+
+      var authenticationResult = Storage.read(Constants.storageKeys.Identity.user);
       if (!authenticationResult) {
         Cryptography.passwordHash = null;
         Cryptography.passwordSalt = null;
+        Storage.storagePrefix = '';
         return false;
       }
 
@@ -66,7 +84,7 @@ angular.module('dtmsgApp')
       return true;
     };
 
-    this.updateIndex = function (user) {
+    this.updateUserIndex = function (user) {
       var existingUser = this.getUserInIndex(user.id);
 
       if (existingUser) {
@@ -78,10 +96,23 @@ angular.module('dtmsgApp')
       return Storage.savePlainText(Constants.storageKeys.Identity.userIndex, this.userIndex);
     };
 
+    this.updateContactIndex = function(contact) {
+      var existingContact = this.getContactInIndex(contact.id);
+
+      if (existingContact) {
+        return;
+      }
+      this.contactIndex.push({id: contact.id});
+
+      return Storage.save(Constants.storageKeys.Identity.contactIndex, this.contactIndex);
+    };
+
+    this.getContactInIndex = function(id) {
+      return Utility.findById(this.contactIndex, id);
+    };
+
     this.getUserInIndex = function (id) {
-      return Utility.find(this.userIndex, function(user) {
-        return user.id === id;
-      });
+      return Utility.findById(this.userIndex, id);
     };
 
     this.deleteUser = function () {
@@ -90,7 +121,7 @@ angular.module('dtmsgApp')
 
       Storage.savePlainText(Constants.storageKeys.Identity.userIndex, this.userIndex);
 
-      Storage.remove(Constants.storageKeys.Identity.userPrefix + this.currentUser.id);
+      Storage.remove(Constants.storageKeys.Identity.user + this.currentUser.id);
 
       return $window.location.reload();
     };

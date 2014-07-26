@@ -8,8 +8,14 @@ angular.module('dtmsgApp')
         currentConfiguration: 'Configuration.currentConfiguration'
       },
       Identity: {
-        userPrefix: 'Identity.user.',
-        userIndex: 'Identity.userIndex'
+        user: '.Identity.user',
+        userIndex: 'Identity.userIndex',
+        contactIndex: '.Identity.contactIndex',
+        contact: '.Identity.contact.'
+      },
+      Conversation: {
+        conversationIndex: '.Conversation.conversationIndex',
+        conversation: '.Conversation.conversation.'
       }
     },
     channelName: {

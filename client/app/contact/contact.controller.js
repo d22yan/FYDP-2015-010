@@ -17,20 +17,7 @@ angular.module('dtmsgApp')
     $scope.newContactID = '';
 
     $scope.invite = function(id) {
-      Conversation.conversations.push({
-        id: id,
-        isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
-        sendingPromise: {}, lastOpened: null
-      });
-
-      Identity.contacts.push({
-        id: id, name: 'Invited',
-        status: Constants.userStatus.invited, lastUpdate: null,
-        conversation: Conversation.getConversation(id)
-      });
-
-      Communication.sendInvite(Identity.currentUser, Identity.getContact(id));
-
+      Identity.inviteContact(id);
     };
 
     $scope.acceptInvite = function(contact) {

@@ -1,10 +1,18 @@
 'use strict';
 
 angular.module('dtmsgApp')
-  .factory('Utility', function () {
+  .service('Utility', function Utility(Underscore) {
     // Service logic
     // ...
 
-    // Public API here
-    return window._;
+    this.findById = function(list, id) {
+    	return Underscore.find(list, function(item) {
+    		return item.id === id;
+    	});
+    };
+
+    this.each = Underscore.each;
+
+    this.filter = Underscore.filter;
+
   });

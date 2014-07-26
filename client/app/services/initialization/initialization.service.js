@@ -17,6 +17,8 @@ angular.module('dtmsgApp')
       angular.copy(Communication.initialize().then(function (newUser) {
         Cryptography.passwordSalt = newUser.hashname;
 
+        Storage.storagePrefix = newUser.hashname;
+
         return newUser;
       }).then(Identity.createUser)
         .then(this.initialize)

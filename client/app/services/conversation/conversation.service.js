@@ -7,12 +7,43 @@ angular.module('dtmsgApp')
       isActive: true
     };
 
+    this.conversationIndex = [];
+
     this.conversations = [];
 
+    this.addConversation = function(id) {
+      if (this.getConversation(id)) {
+        return;
+      }
+
+      var newConversation = {
+        id: id,
+        isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
+        sendingPromise: {}, lastOpened: null
+      };
+
+      this.conversations.push(newConversation);
+      updateConversationIndex(newConversation);
+      Storage.save(Constants.Conversation.conversation + id, newConversation);
+    };
+
+    this.getConverstationInIndex = function(id) {
+      return Utility.findById(this.conversationIndex, id);
+    };
+
+    this.updateConversationIndex = function(conversation) {
+      var existingConversation = this.getConverstationInIndex(conversation.id);
+
+      if (existingConversation) {
+        return;
+      }
+      this.conversationIndex.push({id: conversation.id});
+
+      return Storage.save(Constants.storageKeys.Identity.conversationIndex, this.conversationIndex);
+    }
+
     this.getConversation = function (id) {
-      return Utility.find(this.conversations, function(conversation) {
-        return conversation.id === id;
-      });
+      return Utility.findById(this.conversations, id);
     };
 
     this.getOpenConversations = function () {
