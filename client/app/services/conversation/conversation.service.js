@@ -61,7 +61,7 @@ angular.module('dtmsgApp')
       }
       this.conversationIndex.push({id: conversation.id});
 
-      return Storage.save(Constants.storageKeys.Identity.conversationIndex, this.conversationIndex);
+      return Storage.save(Constants.storageKeys.Conversation.conversationIndex, this.conversationIndex);
     };
 
     this.getConversation = function (id) {
