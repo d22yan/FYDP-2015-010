@@ -8,11 +8,13 @@ angular.module('dtmsgApp')
 
     $scope.user = Identity.currentUser;
 
-    $scope.password = '';
+    $scope.signupForm = {
+      password: ''
+    };
 
     $scope.createUser = function() {
-      Initialization.initializeNewUser($scope.password).then(function() {
-        $scope.password = '';
+      Initialization.initializeNewUser($scope.signupForm.password).then(function() {
+        $scope.signupForm.password = '';
       });
     };
 

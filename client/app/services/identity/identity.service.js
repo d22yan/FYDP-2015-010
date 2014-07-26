@@ -51,7 +51,7 @@ angular.module('dtmsgApp')
     };
 
     this.authenticateUser = function (user, password) {
-      Cryptography.passwordHash = Cryptography.hash(password);
+      Cryptography.passwordHash = angular.toJson(Cryptography.hash(password));
       Cryptography.passwordSalt = user.id;
 
       var authenticationResult = Storage.read(Constants.storageKeys.Identity.userPrefix + user.id);

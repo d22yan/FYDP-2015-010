@@ -7,8 +7,11 @@ angular.module('dtmsgApp')
     $scope.user = Identity.currentUser;
     $scope.contacts = Identity.contacts;
 
-    $scope.selectedUser = null;
-    $scope.userPassword = '';
+    $scope.loginForm = {
+      selectedUser: null,
+      userPassword: '',
+      authenticationError: false
+    };
 
     $scope.userIndex = Identity.userIndex;
 
@@ -16,9 +19,9 @@ angular.module('dtmsgApp')
 
     $scope.authenticateUser = function () {
 
-      if (!Identity.authenticateUser($scope.selectedUser, $scope.userPassword)) {
-        $scope.authenticationError = true;
-        $scope.userPassword = '';
+      if (!Identity.authenticateUser($scope.loginForm.selectedUser, $scope.loginForm.userPassword)) {
+        $scope.loginForm.authenticationError = true;
+        $scope.loginForm.userPassword = '';
         return;
       }
 

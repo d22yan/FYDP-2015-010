@@ -6,40 +6,44 @@
       </tab-heading>
       <div id="chat-home" class="tab-messages">
 
-        <form class="login-form" ng-if="!user.keypair">
+        <form name="login_form" class="login-form" ng-if="!user.keypair">
           <div>Log in here:</div>
-          <div class="form-group">
-            <label class="col-xs-2 control-label" for="id">ID</label>
+          <div class="row form-group">
+            <label class="col-xs-2 control-label" for="login-id">User ID</label>
             <div class="col-xs-10">
-              <select class="form-control" id="id" ng-model="selectedUser" ng-options="user.id for user in userIndex">
+              <select class="form-control" id="login-id" ng-model="loginForm.selectedUser"
+                      ng-options="user.id for user in userIndex" required>
                 <option value="">Select from list</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-xs-2 control-label" for="name">Name</label>
+          <div class="row form-group">
+            <label class="col-xs-2 control-label" for="login-name">Name</label>
             <div class="col-xs-10">
-              <select class="form-control" id="name" ng-model="selectedUser" ng-options="user.name for user in userIndex">
+              <select class="form-control" id="login-name" ng-model="loginForm.selectedUser"
+                      ng-options="user.name for user in userIndex" required>
                 <option value="">Select from list</option>
               </select>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-xs-2 control-label" for="password">Password</label>
+          <div class="row form-group">
+            <label class="col-xs-2 control-label" for="login-password">Password</label>
             <div class="col-xs-10">
-              <input type="text" class="form-control" id="password" ng-model="userPassword" placeholder="Password">
+              <input type="password" class="form-control" id="login-password" ng-model="loginForm.userPassword" placeholder="Password" required>
             </div>
           </div>
-          <div class="form-group">
+          <div class="row form-group">
             <div class="col-xs-6">
               <button type="button" class="btn btn-primary btn-block"  snap-toggle>Create User</button>
             </div>
             <div class="col-xs-6">
-              <button type="submit" class="btn btn-success btn-block" ng-click="authenticateUser()">Sign In</button>
+              <button type="submit" class="btn btn-success btn-block" ng-click="authenticateUser()" ng-disabled="login_form.$invalid">Sign In</button>
             </div>
           </div>
-          <div class="alert alert-dismissable alert-danger" ng-show="authenticationError">
-            Login failed.
+          <div class="row" ng-show="loginForm.authenticationError">
+            <div class="col-xs-12 alert alert-dismissable alert-danger">
+              Login failed.
+            </div>
           </div>
         </form>
       </div>
