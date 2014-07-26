@@ -48,7 +48,8 @@ angular.module('dtmsgApp')
         function packetHandler (error, packet, channel, callback) {
           var deferredInvite = $q.defer();
           if (error) {
-            return deferredInvite.reject('failed to listen to invites due to: ' + error);
+            deferredInvite.reject('failed to listen to invites due to: ' + error);
+            return deferredInvite.promise;
           }
 
           $log.info('received ' + angular.toJson(packet.js) + ' from ' + angular.toJson(packet.from.hashname));
@@ -135,7 +136,8 @@ angular.module('dtmsgApp')
         var deferredMessage = $q.defer();
 
         if (error) {
-          return deferredMessage.reject('failed to listen to ' + contact.id + ' due to: ' + error);
+          deferredMessage.reject('failed to listen to ' + contact.id + ' due to: ' + error);
+          return deferredMessage.promise;
         }
 
         deferredMessage.resolve(packet);
