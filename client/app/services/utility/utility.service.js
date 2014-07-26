@@ -15,4 +15,6 @@ angular.module('dtmsgApp')
 
     this.filter = Underscore.filter;
 
+    this.reduce = Underscore.reduce;
+
   });
