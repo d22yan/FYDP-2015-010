@@ -48,10 +48,10 @@ angular.module('dtmsgApp')
         }
 
         Utility.each(Conversation.conversationIndex, function(conversation) {
-          var existingConversation = Storage.read(Constants.storageKeys.Conversation.conversation + conversation.id)
+          var existingConversation = Storage.read(Constants.storageKeys.Conversation.conversation + conversation.id);
           existingConversation.messages = [];
           existingConversation.sendingPromise = {};
-          Conversation.conversation.push(existingConversation);
+          Conversation.conversations.push(existingConversation);
         });
 
         Utility.each(Identity.contactIndex, function(contact) {

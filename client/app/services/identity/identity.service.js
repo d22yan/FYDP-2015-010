@@ -28,14 +28,18 @@ angular.module('dtmsgApp')
       this.updateContactIndex(newContact);
 
       Storage.save(Constants.storageKeys.Identity.contact + id, this.copyContactForStorage(newContact));
+
+      return newContact;
     };
 
     this.updateContact = function(contact) {
       var existingContact = this.getContact(contact.id);
-      existingContact.id = contact.id;
-      existingContact.name = contact.name;
-      existingContact.status = contact.status;
-      existingContact.lastUpdate = contact.lastUpdate;
+      if (contact !== existingContact) {
+        existingContact.id = contact.id;
+        existingContact.name = contact.name;
+        existingContact.status = contact.status;
+        existingContact.lastUpdate = contact.lastUpdate;
+      }
       Storage.save(Constants.storageKeys.Identity.contact + existingContact.id, this.copyContactForStorage(existingContact));
     };
 

@@ -17,7 +17,6 @@ angular.module('dtmsgApp')
 
     //generate new user with id and keypair
     this.initialize = function() {
-
       var deferredUser = $q.defer();
 
       Telehash.init({}, function (error, newUser) {
@@ -73,21 +72,16 @@ angular.module('dtmsgApp')
               if(existingContact.status === Constants.userStatus.invited) {
                 this.initializeContact(existingContact);
                 existingContact.name = packet.js.i;
+                Identity.updateContact(existingContact);
               }
               return $log.info('received invite from existing contact: ' + packet.from.hashname);
             }
 
-            Conversation.conversations.push({
-              id: packet.from.hashname,
-              isOpen: false, isActive: false, unreadCount: 0, messages: [], currentMessage: '',
-              sendingPromise: {}, lastOpened: null
-            });
+            var newContact = Identity.addContact(packet.from.hashname);
+            newContact.name = packet.js.i;
+            newContact.status = Constants.userStatus.invite;
 
-            Identity.contacts.push({
-              id: packet.from.hashname, name: packet.js.i,
-              status: Constants.userStatus.invite, lastUpdate: null,
-              conversation: Conversation.getConversation(packet.from.hashname)
-            });
+            Identity.updateContact(newContact);
           }.bind(this));
         }.bind(this));
 
@@ -125,6 +119,7 @@ angular.module('dtmsgApp')
               contact.status !== Constants.userStatus.offline && 
               contact.status !== Constants.userStatus.invited) {
             contact.status = Constants.userStatus.offline;
+            Identity.updateContact(contact);
           }
         });
       }.bind(this);
@@ -133,8 +128,6 @@ angular.module('dtmsgApp')
     };
 
     this.listen = function (user, contact) {
-
-
       var channelName = this.createListenChannel(user.id, contact.id);
 
       var packetHandler = function (error, packet, channel, callback) {
